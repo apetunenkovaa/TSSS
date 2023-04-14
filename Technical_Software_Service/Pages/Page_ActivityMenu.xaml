@@ -144,7 +144,8 @@
                         </StackPanel>
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
                             <WrapPanel>
-                                <TextBlock Text="LVL: " Name="tbLVL" Margin="10 5 0 0" Padding="2px" FontSize="18px"/>                                
+                                <TextBlock Text="LVL: " Name="tbLVL" Margin="10 5 0 0" Padding="2px" FontSize="18px"/>
+                                <ProgressBar x:Name="ProgressBar" Value="0" Minimum="0" Maximum="100" Width="200" Height="20" Margin="5" Style="{StaticResource ProgressBarStyle}"/>
                             </WrapPanel>
                             <TextBlock Name="tbUserName" Text="ФИО: " Margin="5 5 0 0" Padding="2px" FontSize="18px"/>
                             <TextBlock Name="tbUserRole" Text="Роль: " Margin="5 5 0 0" Padding="2px" FontSize="18px"/>
