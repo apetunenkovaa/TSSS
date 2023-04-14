@@ -51,6 +51,7 @@ namespace Technical_Software_Service
             if (user.Roles.Kind == "Администратор")
             {
                 tcUsers.Visibility = Visibility.Visible;
+                titNotifications.Visibility = Visibility.Visible;
             }
         }
         /// <summary>
@@ -89,6 +90,28 @@ namespace Technical_Software_Service
                 listFilter = listFilter.Where(x => x.Title.ToLower().Contains(tbSearch.Text.ToLower())).ToList(); // Поиск по наименованию
             }
 
+            // Фильтрация
+            //switch (cboxFilter.SelectedIndex)
+            //{
+            //    case 1:
+
+            //        break;
+            //    case 2:
+
+            //        break;
+            //}
+
+            ListAnything.ItemsSource = listFilter;
+            if (listFilter.Count == 0)
+            {
+                MessageBox.Show("Нет записей");
+            }
+        }
+        /// <summary>
+        ///  Поиск и фильтрация страницы История заявок
+        /// </summary>
+        public void HistoryFilter()
+        {
             List<HistoryEntries> listFilterhistory = DataBase.Base.HistoryEntries.ToList();
             // Поиск
             if (!string.IsNullOrWhiteSpace(tboxSearch.Text))
@@ -100,6 +123,28 @@ namespace Technical_Software_Service
                 listFilterhistory = listFilterhistory.Where(x => x.Users.LastName.ToLower().Contains(tboxSearch.Text.ToLower())).ToList(); // Поиск по фамилии пользователя
             }
 
+            // Фильтрация
+            //switch (cboxFilter.SelectedIndex)
+            //{
+            //    case 1:
+
+            //        break;
+            //    case 2:
+
+            //        break;
+            //}
+
+            ListHistory.ItemsSource = listFilterhistory;
+            if (listFilterhistory.Count == 0)
+            {
+                MessageBox.Show("Нет записей");
+            }
+        }
+        /// <summary>
+        /// Поиск страницы Пользователи
+        /// </summary>
+        public void UsersFilter()
+        {
             List<Users> listFilterUsers = DataBase.Base.Users.ToList();
             // Поиск
             if (!string.IsNullOrWhiteSpace(tbSearchUsers.Text))
@@ -111,22 +156,11 @@ namespace Technical_Software_Service
                 listFilterUsers = listFilterUsers.Where(x => x.FirstName.ToLower().Contains(tbSearchUsers.Text.ToLower())).ToList(); // Поиск по имени
             }
 
-            // Присвоение 
-            //ListAnything.ItemsSource = listFilter;
-            //if (listFilter.Count == 0)
-            //{
-            //    MessageBox.Show("Нет записей");
-            //}
-            //ListHistory.ItemsSource = listFilterhistory;
-            //if (listFilterhistory.Count == 0)
-            //{
-            //    MessageBox.Show("Нет записей");
-            //}
-            //dgUsers.ItemsSource = listFilterUsers;
-            //if (listFilterUsers.Count == 0)
-            //{
-            //    MessageBox.Show("Нет записей");
-            //}
+            dgUsers.ItemsSource = listFilterUsers;
+            if (listFilterUsers.Count == 0)
+            {
+                MessageBox.Show("Нет записей");
+            }
         }
 
         private void tbSearch_TextChanged(object sender, TextChangedEventArgs e)
@@ -139,20 +173,15 @@ namespace Technical_Software_Service
         }
         private void tboxSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Filter();
+            HistoryFilter();
         }
         private void cboxFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Filter();
+            HistoryFilter();
         }
         private void tbSearchUsers_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Filter();
-        }
-        private void btnAddTickets_Click(object sender, RoutedEventArgs e) // Добавление заявки
-        {
-            Window_AddUpdateTickets tickets = new Window_AddUpdateTickets(user);
-            tickets.ShowDialog();
+            UsersFilter();
         }
         private void btnDailytasks_Click(object sender, RoutedEventArgs e) // Переход к ежедневным задачам
         {
@@ -251,7 +280,7 @@ namespace Technical_Software_Service
             tbBody.Text = mime.TextBody.ToString();
         }
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        private void btnAdd_Click(object sender, RoutedEventArgs e) // Добавление заявки
         {
             int id = Convert.ToInt32(notificationsLV.SelectedValue);
             MimeMessage mime = messages.FirstOrDefault(x => x.id == id).message;
@@ -264,7 +293,7 @@ namespace Technical_Software_Service
             };
         }
 
-        private void btnUpdate_Click_1(object sender, RoutedEventArgs e)
+        private void btnUpdate_Click_1(object sender, RoutedEventArgs e) // Обновление листа 
         {
             UpdateList();
         }

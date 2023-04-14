@@ -34,7 +34,7 @@
            
             <StackPanel Margin="10" Orientation="Vertical">
                 <TextBlock Text="Описание" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
-                <TextBox Name="tbDescription" Padding="2px" FontSize="16px" Height="70" Width="400" FontFamily="Manrope" HorizontalAlignment="Left" TextWrapping="Wrap"/>
+                    <TextBox Name="tbDescription" Padding="2px" FontSize="16px" Height="100" Width="580" FontFamily="Manrope" HorizontalAlignment="Left" TextWrapping="Wrap"/>
             </StackPanel>
 
             <WrapPanel>

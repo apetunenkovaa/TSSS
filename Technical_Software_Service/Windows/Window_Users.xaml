@@ -44,7 +44,17 @@
                         <TextBlock Text="Логин*" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
                         <TextBox Name="tbUserName" Padding="2px" FontSize="16px" Height="30px" Width="200" FontFamily="Manrope"/>
                         <TextBlock Text="Пароль*" FontSize="16px" FontFamily="Manrope" Margin="10 5 5 0"/>
-                        <TextBox Name="pbPassword" Padding="2px" FontSize="16px" Height="30px" Width="200"/>
+                    <Grid>
+                        <Border SnapsToDevicePixels="True">
+                            <PasswordBox Name="pbPassword" Padding="2px" FontSize="16px" Height="30px" Width="200"/>
+                        </Border>
+                        <TextBox Name="tbPassword" Padding="2px" FontSize="18px" Height="32px" Visibility="Hidden" MaxLength="30"/>
+                    </Grid>
+                    <WrapPanel Margin="332 0 0 0">
+                        <TextBlock Text="Показать пароль" FontSize="16px"/>
+                        <CheckBox Name="cbShowPassword" VerticalAlignment="Center" HorizontalAlignment="Center" Width="15px" Height="15px" Margin="5px" Click="cbShowPassword_Click"/>
+                    </WrapPanel>
+                    <!--<TextBox Name="pbPassword" Padding="2px" FontSize="16px" Height="30px" Width="200"/>-->
                     </WrapPanel>
 
                     <WrapPanel Margin="10">

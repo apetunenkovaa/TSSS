@@ -32,25 +32,6 @@ namespace Technical_Software_Service
 
         private void btnEnter_Click(object sender, RoutedEventArgs e)
         {
-            //string login = tbLogin.Text;
-            //string password = pbPassword.Password;
-            //if (tbLogin.Text == "" || pbPassword.Password == "")
-            //{
-            //    MessageBox.Show("Не все обязательные поля заполнены!");
-            //}
-            //else
-            //{
-            //    Users user = DataBase.Base.Users.FirstOrDefault(z => z.UserName == login && z.Password == password);
-            //    if (user == null)
-            //    {
-            //        MessageBox.Show("Пользователя не существует!", "Авторизация", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    }
-            //    else
-            //    {
-            //        ClassFrame.MainF.Navigate(new Page_Anything(user));
-            //    }
-            //}
-
             string login = tbLogin.Text;
             string password = pbPassword.Password;
             bool isAuth = false;
@@ -68,7 +49,6 @@ namespace Technical_Software_Service
             {
                 MessageBox.Show("Логин или пароль неверен");
             }
-
         }
 
         private void cbShowPassword_Click(object sender, RoutedEventArgs e) // Показ пароля

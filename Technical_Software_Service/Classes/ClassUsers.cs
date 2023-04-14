@@ -12,7 +12,14 @@ namespace Technical_Software_Service
         {
             get
             {
-                return LastName + " " + FirstName[0] + "." + " " + MiddleName[0] + ".";
+                if (MiddleName == null)
+                {
+                    return LastName + " " + FirstName[0] + ".";
+                }
+                else
+                {
+                    return LastName + " " + FirstName[0] + "." + " " + MiddleName[0] + ".";
+                }
             }
         }
     }

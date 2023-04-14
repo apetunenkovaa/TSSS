@@ -29,7 +29,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="5*"/>
-                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="35"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Grid.ColumnSpan="2">
                         <Grid.ColumnDefinitions>
@@ -62,8 +62,7 @@
                                 </Border>
                             </DataTemplate>
                         </ListView.ItemTemplate>
-                    </ListView>
-                    <Button Grid.Row="2" Name="btnAddTickets" Content="Добавить заявку" Click="btnAddTickets_Click" Style="{StaticResource Btn}" HorizontalAlignment="Right" Grid.Column="1" Margin="0,22,10,22"/>
+                    </ListView>                    
                 </Grid>
             </TabItem>
 
@@ -134,8 +133,7 @@
                         </StackPanel>
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
                             <WrapPanel>
-                                <TextBlock Text="LVL" Margin="10 5 0 0" Padding="2px" FontSize="18px" Height="30px"/>
-                                <TextBox Name="tbLVL" Margin="10 5 0 0" Padding="2px" FontSize="18px" Height="30" Width="160"/>
+                                <TextBlock Text="LVL: " Name="tbLVL" Margin="10 5 0 0" Padding="2px" FontSize="18px"/>                                
                             </WrapPanel>
                             <TextBlock Name="tbUserName" Text="ФИО: " Margin="5 5 0 0" Padding="2px" FontSize="18px"/>
                             <TextBlock Name="tbUserRole" Text="Роль: " Margin="5 5 0 0" Padding="2px" FontSize="18px"/>
@@ -196,7 +194,7 @@
                     <Button Grid.Row="2" Name="btnAddUser" Content="Добавить пользователя" Click="btnAddUser_Click" Width="200" Style="{StaticResource Btn}" HorizontalAlignment="Right"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Уведомления" FontSize="18px" VerticalAlignment="Center" FontFamily="Manrope" >
+            <TabItem Name="titNotifications" Header="Уведомления" FontSize="18px" VerticalAlignment="Center" FontFamily="Manrope" Visibility="Collapsed">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -205,8 +203,8 @@
 
                     <Button x:Name="btnUpdate" Content="Обновить список" Style="{StaticResource Button}" HorizontalAlignment="Left" Click="btnUpdate_Click_1" />
                     <Button x:Name="btnAdd" Content="Добавить заявку" Style="{StaticResource Button}" HorizontalAlignment="Right" Click="btnAdd_Click"/>
+                    
                     <Grid Grid.Row="1">
-
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width ="*"/>
                             <ColumnDefinition Width ="*"/>
