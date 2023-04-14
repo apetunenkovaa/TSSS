@@ -102,6 +102,7 @@
     <Compile Include="Classes\ClassFrame.cs" />
     <Compile Include="Classes\ClassMessage.cs" />
     <Compile Include="Classes\ClassUsers.cs" />
+    <Compile Include="Classes\DailyTask.cs" />
     <Compile Include="DailyTasks.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

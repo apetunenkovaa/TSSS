@@ -37,7 +37,7 @@ namespace Technical_Software_Service
         {
             try
             {
-                if (tbTitle.Text == "" || tbScore.Text == "" || tbXP.Text == "")
+                if (tbTitle.Text == "" || tbDescription.Text == "" || tbScore.Text == "" || tbXP.Text == "")
                 {
                     MessageBox.Show("Обязательные поля не заполнены", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
@@ -63,7 +63,8 @@ namespace Technical_Software_Service
                     }
                     daily.Score = Convert.ToInt32(tbScore.Text);
                     daily.XP = Convert.ToInt32(tbXP.Text);
-                    DataBase.Base.DailyTasks.Add(daily);
+                    HelpdeskEntities.GetContext().DailyTasks.Add(daily);
+                    HelpdeskEntities.GetContext().SaveChanges();
                     //UserDailyTasks userDaily = new UserDailyTasks();
                     //userDaily.DailyTasksID = daily.Id;
                     //userDaily.UserId = user.Id;

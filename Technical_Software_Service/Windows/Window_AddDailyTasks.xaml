@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
-        <TextBlock Name="tbHeader" Text="Добавление ежедневных задач" Style="{StaticResource Header}"/>
+        <TextBlock Name="tbHeader" Text="Ежедневная задача" Style="{StaticResource Header}"/>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -42,13 +42,13 @@
                 </StackPanel>
 
                 <WrapPanel Margin="10">
-                    <TextBlock Text="Счет" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
+                    <TextBlock Text="Очки" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
                     <TextBox Name="tbScore" Padding="2px" FontSize="16px" Height="30px" Width="50" FontFamily="Manrope"/>
-                    <TextBlock Text="XP" FontSize="16px" FontFamily="Manrope" Margin="10 5 5 0"/>
+                    <TextBlock Text="Опыт" FontSize="16px" FontFamily="Manrope" Margin="10 5 5 0"/>
                     <TextBox Name="tbXP" Padding="2px" FontSize="16px" Height="30px" Width="50" FontFamily="Manrope"/>
                 </WrapPanel>                
             </StackPanel>
         </Grid>
-        <Button Name="btnSave" Grid.Row="2" Content="Добавить" Style="{StaticResource Button}" Click="btnSave_Click"/>
+        <Button Name="btnSave" Grid.Row="2" Content="Cохранить" Style="{StaticResource Button}" Click="btnSave_Click" HorizontalAlignment="Center"/>
     </Grid>
 </Window>

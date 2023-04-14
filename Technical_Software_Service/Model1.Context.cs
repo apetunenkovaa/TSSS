@@ -15,10 +15,18 @@ namespace Technical_Software_Service
     
     public partial class HelpdeskEntities : DbContext
     {
+        private static HelpdeskEntities _context;
         public HelpdeskEntities()
             : base("name=HelpdeskEntities")
         {
         }
+
+        public static HelpdeskEntities GetContext()
+        {
+             if (_context == null)
+                _context = new HelpdeskEntities();
+             return _context;
+        }   
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

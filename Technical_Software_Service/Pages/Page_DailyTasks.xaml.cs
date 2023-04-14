@@ -23,7 +23,7 @@ namespace Technical_Software_Service
         Users user;
         public Page_DailyTasks(Users user)
         {
-            InitializeComponent();
+            InitializeComponent();//
             this.user = user;
         }
 

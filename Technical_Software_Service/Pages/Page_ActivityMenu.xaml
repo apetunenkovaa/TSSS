@@ -41,7 +41,13 @@
                         <TextBlock Grid.Column="0" Text="Поиск" FontSize="18px" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Manrope"/>
                         <TextBox Grid.Column="1" Name="tbSearch" FontSize="16px" TextChanged="tbSearch_TextChanged" Height="30" Width="250"/>
                         <TextBlock Grid.Column="2" Text="Фильтр" FontSize="18px" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Manrope"/>
-                        <ComboBox Name="cbFilter" SelectionChanged="cbFilter_SelectionChanged" FontSize="16px" Grid.Column="3" Height="35" Width="250"/>
+                        <ComboBox Name="cbFilter" SelectionChanged="cbFilter_SelectionChanged" FontSize="16px" Grid.Column="3" Height="35" Width="250">
+                            <ComboBoxItem Content="Все"/>
+                            <ComboBoxItem Content="Срочно"/>
+                            <ComboBoxItem Content="Очень срочно"/>
+                            <ComboBoxItem Content="Средний"/>
+                            <ComboBoxItem Content="Низкий"/>
+                        </ComboBox>
                     </Grid>
                     <ListView Name="ListAnything" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Grid.ColumnSpan="2">
                         <ListView.ItemTemplate>
@@ -85,7 +91,12 @@
                         <TextBlock Grid.Column="0" Text="Поиск" Margin="0 0 5 0" FontSize="18px" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Manrope"/>
                         <TextBox Grid.Column="1" Name="tboxSearch" TextChanged="tboxSearch_TextChanged" FontSize="16px" Height="35" Width="250"/>
                         <TextBlock Grid.Column="2" Text="Фильтр" Margin="0 0 5 0" FontSize="18px" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Manrope"/>
-                        <ComboBox Name="cboxFilter" SelectionChanged="cboxFilter_SelectionChanged" Grid.Column="3" FontSize="16px" Height="35" Width="250"/>
+                        <ComboBox Name="cboxFilter" SelectionChanged="cboxFilter_SelectionChanged" Grid.Column="3" FontSize="16px" Height="35" Width="250">
+                            <ComboBoxItem Content="Все состояния"/>
+                            <ComboBoxItem Content="В ожидании принятия"/>
+                            <ComboBoxItem Content="Закрыта"/>
+                            <ComboBoxItem Content="В процессе выполнения"/>
+                        </ComboBox>
                     </Grid>
                     <ListView Name="ListHistory" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10">
                         <ListView.ItemTemplate>

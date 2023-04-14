@@ -29,7 +29,6 @@ namespace Technical_Software_Service
         {
             InitializeComponent();
             this.user = user;
-            ListFild();
             UpdateList();
             Filter();
             ListAnything.ItemsSource = DataBase.Base.Tickets.ToList();
@@ -47,39 +46,18 @@ namespace Technical_Software_Service
                 PhotoUser.ImageSource = img;
 
             }
-
+            // Отображение только для администратора
             if (user.Roles.Kind == "Администратор")
             {
                 tcUsers.Visibility = Visibility.Visible;
                 titNotifications.Visibility = Visibility.Visible;
             }
-        }
-        /// <summary>
-        /// Заполнение ComboBox
-        /// </summary>
-        public void ListFild()
-        {
-            // Заполнение ComboBox с фильтрацией для заявок
-            List<Tickets> ticket = DataBase.Base.Tickets.ToList();
-            cbFilter.Items.Add("Все");
-            foreach (Tickets tick in ticket)
-            {
-                //cbFilter.Items.Add(tick. );
-            }
-            cbFilter.SelectedIndex = 0;
-
-            // Заполнение ComboBox с фильтрацией для истории заявок
-            List<HistoryEntries> history = DataBase.Base.HistoryEntries.ToList();
-            cboxFilter.Items.Add("Все");
-            foreach (Tickets tick in ticket)
-            {
-                //cboxFilter.Items.Add(tick.);
-            }
-            cboxFilter.SelectedIndex = 0;
+            cbFilter.SelectedIndex = 0; // Фильтр для заявок
+            cboxFilter.SelectedIndex = 0; // Фильтр для истории заявок
         }
 
         /// <summary>
-        ///  Поиск и фильтрация страниц Заявки и История заявок
+        ///  Поиск и фильтрация страницы Заявки
         /// </summary>
         public void Filter()
         {
@@ -91,15 +69,21 @@ namespace Technical_Software_Service
             }
 
             // Фильтрация
-            //switch (cboxFilter.SelectedIndex)
-            //{
-            //    case 1:
-
-            //        break;
-            //    case 2:
-
-            //        break;
-            //}
+            switch (cbFilter.SelectedIndex)
+            {
+                case 1:
+                    listFilter = listFilter.Where(z=>z.ImportanceTypeId == 1).ToList();
+                    break;
+                case 2:
+                    listFilter = listFilter.Where(z => z.ImportanceTypeId == 2).ToList();
+                    break;
+                case 3:
+                    listFilter = listFilter.Where(z => z.ImportanceTypeId == 3).ToList();
+                    break;
+                case 4:
+                    listFilter = listFilter.Where(z => z.ImportanceTypeId == 4).ToList();
+                    break;
+            }
 
             ListAnything.ItemsSource = listFilter;
             if (listFilter.Count == 0)
@@ -123,14 +107,17 @@ namespace Technical_Software_Service
                 listFilterhistory = listFilterhistory.Where(x => x.Users.LastName.ToLower().Contains(tboxSearch.Text.ToLower())).ToList(); // Поиск по фамилии пользователя
             }
 
-            // Фильтрация
+            //// Фильтрация
             //switch (cboxFilter.SelectedIndex)
-            //{
+            //{                
             //    case 1:
-
+            //        
             //        break;
             //    case 2:
-
+            //      
+            //        break;
+            //    case 3:
+            //      
             //        break;
             //}
 
@@ -141,7 +128,7 @@ namespace Technical_Software_Service
             }
         }
         /// <summary>
-        /// Поиск страницы Пользователи
+        /// Поиск на странице Пользователи
         /// </summary>
         public void UsersFilter()
         {

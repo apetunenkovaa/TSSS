@@ -35,7 +35,7 @@ namespace Technical_Software_Service
         {
             //try
             //{
-            if (tbTitle.Text == "")
+            if (tbTitle.Text == "" || tbDescription.Text == "")
             {
                 MessageBox.Show("Обязательные поля не заполнены", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
@@ -60,7 +60,8 @@ namespace Technical_Software_Service
                 {
                     achievm.Image = newFilePath;
                 }
-                DataBase.Base.Achievements.Add(achievm);
+                HelpdeskEntities.GetContext().Achievements.Add(achievm);
+                HelpdeskEntities.GetContext().SaveChanges();
                 //UserAchievements userAchievements = new UserAchievements();
                 //userAchievements.AchievementID = achievm.Id;
                 //userAchievements.UserId = user.Id;
