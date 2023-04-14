@@ -141,10 +141,10 @@
     <Compile Include="Pages\Page_DailyTasks.xaml.cs">
       <DependentUpon>Page_DailyTasks.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page_InfoTickets.xaml.cs">
+    <Compile Include="Pages\Page_InfoTickets.xaml.cs">
       <DependentUpon>Page_InfoTickets.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PartialDailyTasks.cs" />
+    <Compile Include="Classes\PartialDailyTasks.cs" />
     <Compile Include="Positions.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -224,7 +224,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page_InfoTickets.xaml">
+    <Page Include="Pages\Page_InfoTickets.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

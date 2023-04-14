@@ -16,6 +16,7 @@ using MailKit;
 using MimeKit;
 using MailKit.Net.Imap;
 using MailKit.Security;
+using Technical_Software_Service;
 
 namespace Technical_Software_Service
 {
@@ -190,11 +191,6 @@ namespace Technical_Software_Service
             dgUsers.ItemsSource = DataBase.Base.Users.ToList();
         }
 
-        private void btnUpdate_Click(object sender, RoutedEventArgs e) // Редактирование заявки
-        {
-
-        }
-
         private void btnUpdateAccount_Click(object sender, RoutedEventArgs e) //Редактирование данных
         {
             Window_UpdatePassword updatePassword = new Window_UpdatePassword(user);
@@ -309,6 +305,36 @@ namespace Technical_Software_Service
             {
                 MessageBox.Show("Нажмите на 1 объект!!!");
             }
+        }
+
+        private void btnDeleteUser_Click(object sender, RoutedEventArgs e)
+        {
+            //if (dgUsers.SelectedItems.Count == 0)
+            //{
+            //    MessageBox.Show("Не выбран ни один пользователь!");
+            //}
+            //else
+            //{
+            //    foreach (Users user in dgUsers.SelectedItems)
+            //    {
+            //        List<HistoryEntries> history = DataBase.Base.HistoryEntries.Where(x => x.UserId == user.Id).ToList();
+            //        foreach (HistoryEntries historyEntries in history)
+            //        {
+            //            if (historyEntries.)
+            //            {
+            //                MessageBox.Show($"Данный пользователь не может быть удален, так как находится в числе подходящих отелей для актуальных туров");
+            //            }
+            //        }
+            //        //удаление отеля
+            //        if (MessageBox.Show("Вы уверены, что хотите удалить данного пользователя?", "Системное сообщение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            //        {
+            //            DataBase.Base.Users.Remove(user);
+            //            MessageBox.Show("Успешное удаление!");
+            //            DataBase.Base.SaveChanges();
+            //            dgUsers.ItemsSource = DataBase.Base.Users.ToList();
+            //        }
+            //    }
+            //}
         }
     }
 }

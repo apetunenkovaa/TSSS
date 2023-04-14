@@ -21,10 +21,12 @@ namespace Technical_Software_Service
     public partial class Page_InfoTickets : Page
     {
         Users user;
+        Tickets tickets;
         public Page_InfoTickets(Users user, Tickets tickets)
         {
             InitializeComponent();
             this.user = user;
+            this.tickets = tickets;
             tbTitle.Text = "Наименование заявки: " + tickets.Title;
             tbDateOpen.Text = "Дата открытия заявки: " + string.Format("{0:dd.MM.yyyy}", tickets.OpeningDate);
             tbRequester.Text = "Заказчик: " + tickets.Requesters;
@@ -44,7 +46,7 @@ namespace Technical_Software_Service
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            Window_AddUpdateTickets updateTickets = new Window_AddUpdateTickets(user);
+            Window_AddUpdateTickets updateTickets = new Window_AddUpdateTickets(user, tickets);
             updateTickets.ShowDialog();
         }
     }

@@ -22,13 +22,29 @@ namespace Technical_Software_Service
     public partial class Window_AddUpdateTickets : Window
     {
         Users user;
+        bool flag = false;
+        Tickets tickets;
         public Window_AddUpdateTickets(Users user)
         {
             InitializeComponent();
             CBUpload();
+            this.user = user;            
+        }
+        public Window_AddUpdateTickets(Users user, Tickets tickets)
+        {
+            InitializeComponent();
+            CBUpload();
             this.user = user;
+            this.tickets = tickets;
+            flag = true;
+            tbTitle.Text = tickets.Title;            
+            cbCategories.SelectedIndex = tickets .CategoryId - 1;
+            cbImportance.SelectedIndex = tickets.ImportanceTypeId - 1;
+            cbStates.SelectedIndex = tickets.TicketStateId - 1;  
+            cbSolutions.SelectedIndex = tickets.SolutionId - 1;
+            tbHeader.Text = "Редатирование заявки";
+            btnAdd.Content = "Изменить";
 
-            
         }
         public Window_AddUpdateTickets(Users user,MimeMessage message)
         {

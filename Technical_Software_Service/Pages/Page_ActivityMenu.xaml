@@ -55,15 +55,13 @@
                                 <Border Padding="1" CornerRadius="5" BorderThickness="0.5" BorderBrush="Black" >
                                     <Grid Name="gridM">
                                         <StackPanel>
-                                            <TextBlock Text="{Binding Title}" FontSize="16px" FontFamily="Manrope" FontWeight="Bold"/>
-                                            <TextBlock Text="{Binding Description}" TextWrapping="Wrap" FontSize="16px" FontFamily="Manrope"/>
+                                            <TextBlock Text="{Binding Title}" FontSize="16px" FontFamily="Manrope" FontWeight="Bold"/>                                            
                                             <TextBlock Text="{Binding Requesters}" FontSize="16px" FontFamily="Manrope"/>
                                             <TextBlock Text="{Binding Date}" FontSize="16px" FontFamily="Manrope"/>
                                             <TextBlock Text="{Binding Category}" FontSize="16px" FontFamily="Manrope"/>
                                             <TextBlock Text="{Binding States}" FontSize="16px" FontFamily="Manrope"/>
                                             <TextBlock Text="{Binding Importance}" FontSize="16px" FontFamily="Manrope"/>
-                                        </StackPanel>
-                                        <!--<Button Name="btnUpdate" Content="Редактировать" Style="{StaticResource Button}" Click="btnUpdate_Click" Uid="{Binding Id}"/>-->
+                                        </StackPanel>                                       
                                     </Grid>
                                 </Border>
                             </DataTemplate>
@@ -227,8 +225,10 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
-
-                    <Button Grid.Row="2" Name="btnAddUser" Content="Добавить пользователя" Click="btnAddUser_Click" Width="200" Style="{StaticResource Btn}" HorizontalAlignment="Right"/>
+                    <StackPanel Grid.Row="2" Orientation="Horizontal">
+                        <Button Name="btnAddUser" Content="Добавить пользователя" Click="btnAddUser_Click" Width="200" Style="{StaticResource Btn}" HorizontalAlignment="Right"/>
+                        <Button Name="btnDeleteUser" Content="Удалить" Click="btnDeleteUser_Click" Width="200" Style="{StaticResource Btn}"/>
+                    </StackPanel>                    
                 </Grid>
             </TabItem>
             <TabItem Name="titNotifications" Header="Уведомления" FontSize="18px" VerticalAlignment="Center" FontFamily="Manrope" Visibility="Collapsed">
