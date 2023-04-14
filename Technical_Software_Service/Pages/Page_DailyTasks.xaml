@@ -9,46 +9,43 @@
       Background="White"
       Title="Page_DailyTasks">
 
-    <ScrollViewer>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <TextBlock Style="{StaticResource Header}" Text="Ежедневные задания" Grid.Row="0"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Style="{StaticResource Header}" Text="Ежедневные задания" Grid.Row="0"/>
 
-            <ListView x:Name="lstDailyTasks" Grid.Row="1" ItemsSource="{Binding Tasks}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Border BorderBrush="#E7835F" BorderThickness="3" Height="200" Width="650" CornerRadius="15" Margin="0 0 0 10">
-                            <Grid>
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <Ellipse Width="100" Height="100" Margin="10" Stroke="#F5C0A3" StrokeThickness="3">
-                                        <Ellipse.Fill>
-                                            <ImageBrush ImageSource="/Resources/Achievement.png"/>
-                                        </Ellipse.Fill>
-                                    </Ellipse>
-                                    <StackPanel Margin="10,0,0,0" Width="400" Height="180">
-                                        <TextBlock HorizontalAlignment="Left" Text="{Binding Title}" FontFamily="Manrope" FontWeight="Bold" FontSize="20" Margin="0,10,0,0"/>
-                                        <TextBlock Text="{Binding Description}" Height="20" FontFamily="Manrope" FontSize="15" Margin="0,10,0,0"/>
-                                        <TextBlock Text="{Binding XP}" Height="20" FontFamily="Manrope" FontSize="15" Margin="0,10,0,0"/>
-                                        <TextBlock Text="{Binding Score}" Height="20" FontFamily="Manrope" FontSize="15" Margin="0,10,0,0"/>
-                                        <TextBlock Text="{Binding Progress}" FontFamily="Manrope" FontSize="15" Margin="0,10,0,0"/>
-                                        <Button Style="{StaticResource Button}" Content="Завершить" Margin="0,10,0,0" HorizontalAlignment="Left"/>
-                                    </StackPanel>
+        <ListView x:Name="lstDailyTasks" Grid.Row="1" ItemsSource="{Binding Tasks}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="#E7835F" BorderThickness="3" CornerRadius="15" Margin="0 0 0 10">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="100" Height="100" Margin="10" Stroke="#F5C0A3" StrokeThickness="3">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="/Resources/Achievement.png"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <StackPanel Margin="10,0,0,0">
+                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Title}" FontFamily="Manrope" FontWeight="Bold" FontSize="20" Margin="0,10,0,0"/>
+                                    <TextBlock Text="{Binding Description}" Height="20" FontFamily="Manrope" FontSize="15" Margin="0,10,0,0"/>
+                                    <TextBlock Text="{Binding xp}" Height="20" FontFamily="Manrope" FontSize="15" Margin="0,10,0,0"/>
+                                    <TextBlock Text="{Binding score}" Height="20" FontFamily="Manrope" FontSize="15" Margin="0,10,0,0"/>
+                                    <TextBlock Text="{Binding Progress}" FontFamily="Manrope" FontSize="15" Margin="0,10,0,0"/>
+                                    <Button Style="{StaticResource Button}" Content="Завершить" Margin="0,10,0,10" HorizontalAlignment="Left"/>
                                 </StackPanel>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="3">
-                <Button Name="btnBack" Content="Назад" Click="btnBack_Click" Style="{StaticResource Button}" HorizontalAlignment="Left"/>
-                <Button Name="btnAdd" Content="Добавить" Click="btnAdd_Click" Style="{StaticResource Button}" HorizontalAlignment="Center"/>
-            </StackPanel>
-        </Grid>
-    </ScrollViewer>
+        <StackPanel Orientation="Horizontal" Grid.Row="3">
+            <Button Name="btnBack" Content="Назад" Click="btnBack_Click" Style="{StaticResource Button}" HorizontalAlignment="Left"/>
+            <Button Name="btnAdd" Content="Добавить" Click="btnAdd_Click" Style="{StaticResource Button}" HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
 </Page>

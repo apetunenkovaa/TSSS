@@ -25,6 +25,7 @@ namespace Technical_Software_Service
         {
             InitializeComponent();//
             this.user = user;
+            lstDailyTasks.ItemsSource = DataBase.Base.DailyTasks.ToList();
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)

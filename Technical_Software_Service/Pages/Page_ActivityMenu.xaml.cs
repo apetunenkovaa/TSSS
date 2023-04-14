@@ -284,6 +284,31 @@ namespace Technical_Software_Service
         {
             UpdateList();
         }
+
+        private void ListAnything_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Tickets ticket = new Tickets();
+                foreach (Tickets tickets in ListAnything.SelectedItems)
+                {
+                    ticket = tickets;
+                }
+                if (ticket == null)
+                {
+                    return;
+                }
+                else
+                {
+                    ClassFrame.MainF.Navigate(new Page_InfoTickets());
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("Нажмите на 1 объект!!!");
+            }
+        }
     }
 }
 
