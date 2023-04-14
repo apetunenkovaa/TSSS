@@ -45,7 +45,7 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="3">
             <Button Name="btnBack" Content="Назад" Click="btnBack_Click" Style="{StaticResource Button}" HorizontalAlignment="Left"/>
-            <Button Name="btnAdd" Content="Добавить" Click="btnAdd_Click" Style="{StaticResource Button}" HorizontalAlignment="Center"/>
+            <Button Name="btnAdd" Content="Добавить" Click="btnAdd_Click" Style="{StaticResource Button}" HorizontalAlignment="Center" Visibility="Collapsed"/>
         </StackPanel>
     </Grid>
 </Page>

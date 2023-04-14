@@ -23,9 +23,13 @@ namespace Technical_Software_Service
         Users user;
         public Page_DailyTasks(Users user)
         {
-            InitializeComponent();//
+            InitializeComponent();
             this.user = user;
             lstDailyTasks.ItemsSource = DataBase.Base.DailyTasks.ToList();
+            if (user.Roles.Kind == "Администратор")
+            {
+                btnAdd.Visibility = Visibility.Visible;
+            }
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)

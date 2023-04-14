@@ -26,6 +26,11 @@ namespace Technical_Software_Service
         {
             InitializeComponent();
             this.user = user;
+            lstAchievment.ItemsSource = DataBase.Base.Achievements.ToList();
+            if (user.Roles.Kind == "Администратор")
+            {
+                btnAdd.Visibility = Visibility.Visible;
+            }
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
