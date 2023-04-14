@@ -37,11 +37,16 @@ namespace Technical_Software_Service
             this.user = user;
             this.tickets = tickets;
             flag = true;
-            tbTitle.Text = tickets.Title;            
+            tbTitle.Text = tickets.Title;      
+            tbRequester.Text = tickets.Requester;
+            dpOpeningDate.SelectedDate = tickets.OpeningDate;
+            tbDescription.Text = tickets.Description;
+            dpLastUpdate.SelectedDate = tickets.LastUpdate;
             cbCategories.SelectedIndex = tickets .CategoryId - 1;
             cbImportance.SelectedIndex = tickets.ImportanceTypeId - 1;
             cbStates.SelectedIndex = tickets.TicketStateId - 1;  
             cbSolutions.SelectedIndex = tickets.SolutionId - 1;
+            cbUsers.SelectedIndex = user.Id - 1;
             tbHeader.Text = "Редатирование заявки";
             btnAdd.Content = "Изменить";
 
