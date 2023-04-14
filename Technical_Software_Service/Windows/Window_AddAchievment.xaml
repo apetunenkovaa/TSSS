@@ -1,0 +1,48 @@
+﻿<Window x:Class="Technical_Software_Service.Window_AddAchievment"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Technical_Software_Service"
+        mc:Ignorable="d"
+        Title="Window_AddAchievment" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Name="tbHeader" Text="Добавление достижений" Style="{StaticResource Header}"/>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <Rectangle RadiusX="100" RadiusY="100" Height="200" Width="200">
+                    <Rectangle.Fill>
+                        <ImageBrush x:Name="imgAchievment" Stretch="UniformToFill" ImageSource="/Resources/Achievement.png"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Button Name="btnAddPhoto" Content="Добавить фото" Style="{StaticResource Button}" Click="btnAddPhoto_Click"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="10">
+                <StackPanel Margin="10" Orientation="Vertical">
+                    <TextBlock Text="Название" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
+                    <TextBox Name="tbTitle" Padding="2px" FontSize="16px" Height="30px" Width="200" FontFamily="Manrope" HorizontalAlignment="Left"/>
+                </StackPanel>
+
+                <StackPanel Margin="10" Orientation="Vertical">
+                    <TextBlock Text="Описание" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
+                    <TextBox Name="tbDescription" Padding="2px" FontSize="16px" Height="70" Width="400" FontFamily="Manrope" HorizontalAlignment="Left" TextWrapping="Wrap"/>
+                </StackPanel>                
+
+                <Button Margin="10" Name="btnSave" Content="Добавить" Style="{StaticResource Button}" Click="btnSave_Click"/>
+            </StackPanel>
+        </Grid>        
+    </Grid>
+</Window>

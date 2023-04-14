@@ -1,0 +1,79 @@
+﻿<Window x:Class="Technical_Software_Service.Window_AddUpdateTickets"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Technical_Software_Service"
+        mc:Ignorable="d"
+        Title="Window_AddUpdateTickets" Height="450" Width="800">
+    <ScrollViewer>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Name="tbHeader" Text="Добавление заявки" Style="{StaticResource Header}"/>
+
+        <StackPanel Grid.Row="1">
+            <WrapPanel>
+                <StackPanel Margin="10" Orientation="Vertical">
+                    <TextBlock Text="Название" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
+                    <TextBox Name="tbTitle" Padding="2px" FontSize="16px" Height="30px" Width="200" FontFamily="Manrope" HorizontalAlignment="Left"/>
+                </StackPanel>
+                <StackPanel Margin="10" Orientation="Vertical">
+                    <TextBlock Text="Заказчик" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
+                <TextBox Name="tbRequester" Padding="2px" FontSize="16px" Height="30px" Width="230" FontFamily="Manrope" HorizontalAlignment="Left"/>
+                </StackPanel>
+                <StackPanel Margin="10" Orientation="Vertical">
+                    <TextBlock Text="Дата открытия" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
+                    <DatePicker Name="dpOpeningDate" Padding="2px" FontSize="16px" Height="30px" Width="200" FontFamily="Manrope" HorizontalAlignment="Left"/>
+                </StackPanel>
+            </WrapPanel>
+           
+            <StackPanel Margin="10" Orientation="Vertical">
+                <TextBlock Text="Описание" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
+                <TextBox Name="tbDescription" Padding="2px" FontSize="16px" Height="70" Width="400" FontFamily="Manrope" HorizontalAlignment="Left" TextWrapping="Wrap"/>
+            </StackPanel>
+
+            <WrapPanel>
+                <StackPanel Margin="10" Orientation="Vertical">
+                    <TextBlock Text="Состояние" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
+                    <ComboBox Name="cbStates" Padding="2px" FontSize="16px" Height="30px" Width="200" IsEditable="True" IsReadOnly="True"/>
+                </StackPanel>
+                <StackPanel Margin="10" Orientation="Vertical">
+                    <TextBlock Text="Категория" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
+                    <ComboBox Name="cbCategories" Padding="2px" FontSize="16px" Height="30px" Width="200" IsEditable="True" IsReadOnly="True"/>
+                </StackPanel>
+                <StackPanel Margin="10" Orientation="Vertical">
+                    <TextBlock Text="Важность" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
+                    <ComboBox Name="cbImportance" Padding="2px" FontSize="16px" Height="30px" Width="200" IsEditable="True" IsReadOnly="True" />
+                </StackPanel>
+            </WrapPanel>
+
+            <StackPanel Name="spUpdateTickets">
+                <StackPanel Margin="10" Orientation="Vertical">
+                    <TextBlock Text="Решение" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
+                    <ComboBox Name="cbSolutions" Padding="2px" FontSize="16px" Height="30px" Width="230" IsEditable="True" IsReadOnly="True" HorizontalAlignment="Left"/>
+                </StackPanel>
+                    <WrapPanel>
+                        <StackPanel Margin="10" Orientation="Vertical">
+                            <TextBlock Text="Исполнитель" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
+                            <ComboBox Name="cbUsers" Padding="2px" FontSize="16px" Height="30px" Width="200" IsEditable="True" IsReadOnly="True" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                        <StackPanel Margin="10" Orientation="Vertical">
+                            <TextBlock Text="Последнее обновление" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
+                            <DatePicker Name="dpLastUpdate" Padding="2px" FontSize="16px" Height="30px" Width="200" FontFamily="Manrope" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                    </WrapPanel>              
+                </StackPanel>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Name="btnBack" Content="Назад" Style="{StaticResource Button}" Click="btnBack_Click"/>
+            <Button Name="btnAdd" Content="Добавить" Style="{StaticResource Button}" Click="btnAdd_Click"/>
+        </StackPanel>
+    </Grid>
+    </ScrollViewer>
+</Window>

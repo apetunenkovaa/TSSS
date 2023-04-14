@@ -1,0 +1,1199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище HelpdeskModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Achievements">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Image" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kind" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DailyTasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Image" Type="nvarchar(max)" />
+          <Property Name="XP" Type="int" Nullable="false" />
+          <Property Name="Score" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Documents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Executors">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TicketId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HistoryEntries">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="TicketId" Type="int" Nullable="false" />
+          <Property Name="UpdateDescription" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ImportanceTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kind" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Levels">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kind" Type="int" Nullable="false" />
+          <Property Name="RequiredScore" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Positions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kind" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kind" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Solutions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TicketDocuments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TicketId" Type="int" Nullable="false" />
+          <Property Name="DocumentId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tickets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Requester" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OpeningDate" Type="date" Nullable="false" />
+          <Property Name="TicketStateId" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="ImportanceTypeId" Type="int" Nullable="false" />
+          <Property Name="SolutionId" Type="int" Nullable="false" />
+          <Property Name="LastUpdate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TicketStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kind" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserAchievements">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AchievementID" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserDailyTasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DailyTasksID" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar(max)" />
+          <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="PositionId" Type="int" Nullable="false" />
+          <Property Name="UserStateId" Type="int" Nullable="false" />
+          <Property Name="Visible" Type="bit" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Photo" Type="nvarchar(max)" />
+          <Property Name="Score" Type="int" />
+          <Property Name="Level" Type="int" />
+          <Property Name="XP" Type="int" />
+        </EntityType>
+        <EntityType Name="UserStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kind" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Executors_Tickets">
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="1" />
+          <End Role="Executors" Type="Self.Executors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tickets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Executors">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Executors_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Executors" Type="Self.Executors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Executors">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoryEntries_Tickets">
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="1" />
+          <End Role="HistoryEntries" Type="Self.HistoryEntries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tickets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HistoryEntries">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoryEntries_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="HistoryEntries" Type="Self.HistoryEntries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HistoryEntries">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketDocuments_Documents">
+          <End Role="Documents" Type="Self.Documents" Multiplicity="1" />
+          <End Role="TicketDocuments" Type="Self.TicketDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documents">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketDocuments">
+              <PropertyRef Name="DocumentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketDocuments_Tickets">
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="1" />
+          <End Role="TicketDocuments" Type="Self.TicketDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tickets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketDocuments">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_ImportanceTypes">
+          <End Role="ImportanceTypes" Type="Self.ImportanceTypes" Multiplicity="1" />
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportanceTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="ImportanceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_Solutions">
+          <End Role="Solutions" Type="Self.Solutions" Multiplicity="1" />
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solutions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="SolutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_TicketStates">
+          <End Role="TicketStates" Type="Self.TicketStates" Multiplicity="1" />
+          <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="TicketStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAchievements_Achievements">
+          <End Role="Achievements" Type="Self.Achievements" Multiplicity="1" />
+          <End Role="UserAchievements" Type="Self.UserAchievements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Achievements">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAchievements">
+              <PropertyRef Name="AchievementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAchievements_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserAchievements" Type="Self.UserAchievements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAchievements">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDailyTasks_DailyTasks">
+          <End Role="DailyTasks" Type="Self.DailyTasks" Multiplicity="1" />
+          <End Role="UserDailyTasks" Type="Self.UserDailyTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DailyTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDailyTasks">
+              <PropertyRef Name="DailyTasksID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDailyTasks_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserDailyTasks" Type="Self.UserDailyTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDailyTasks">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Positions">
+          <End Role="Positions" Type="Self.Positions" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="PositionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_UserStates">
+          <End Role="UserStates" Type="Self.UserStates" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="UserStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище HelpdeskModelContainer">
+          <EntitySet Name="Achievements" EntityType="Self.Achievements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DailyTasks" EntityType="Self.DailyTasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Executors" EntityType="Self.Executors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HistoryEntries" EntityType="Self.HistoryEntries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImportanceTypes" EntityType="Self.ImportanceTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Levels" EntityType="Self.Levels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Positions" EntityType="Self.Positions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Solutions" EntityType="Self.Solutions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TicketDocuments" EntityType="Self.TicketDocuments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tickets" EntityType="Self.Tickets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TicketStates" EntityType="Self.TicketStates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAchievements" EntityType="Self.UserAchievements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDailyTasks" EntityType="Self.UserDailyTasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserStates" EntityType="Self.UserStates" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Executors_Tickets" Association="Self.FK_Executors_Tickets">
+            <End Role="Tickets" EntitySet="Tickets" />
+            <End Role="Executors" EntitySet="Executors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Executors_Users" Association="Self.FK_Executors_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Executors" EntitySet="Executors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoryEntries_Tickets" Association="Self.FK_HistoryEntries_Tickets">
+            <End Role="Tickets" EntitySet="Tickets" />
+            <End Role="HistoryEntries" EntitySet="HistoryEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoryEntries_Users" Association="Self.FK_HistoryEntries_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="HistoryEntries" EntitySet="HistoryEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketDocuments_Documents" Association="Self.FK_TicketDocuments_Documents">
+            <End Role="Documents" EntitySet="Documents" />
+            <End Role="TicketDocuments" EntitySet="TicketDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketDocuments_Tickets" Association="Self.FK_TicketDocuments_Tickets">
+            <End Role="Tickets" EntitySet="Tickets" />
+            <End Role="TicketDocuments" EntitySet="TicketDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_Categories" Association="Self.FK_Tickets_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_ImportanceTypes" Association="Self.FK_Tickets_ImportanceTypes">
+            <End Role="ImportanceTypes" EntitySet="ImportanceTypes" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_Solutions" Association="Self.FK_Tickets_Solutions">
+            <End Role="Solutions" EntitySet="Solutions" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_TicketStates" Association="Self.FK_Tickets_TicketStates">
+            <End Role="TicketStates" EntitySet="TicketStates" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAchievements_Achievements" Association="Self.FK_UserAchievements_Achievements">
+            <End Role="Achievements" EntitySet="Achievements" />
+            <End Role="UserAchievements" EntitySet="UserAchievements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAchievements_Users" Association="Self.FK_UserAchievements_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserAchievements" EntitySet="UserAchievements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDailyTasks_DailyTasks" Association="Self.FK_UserDailyTasks_DailyTasks">
+            <End Role="DailyTasks" EntitySet="DailyTasks" />
+            <End Role="UserDailyTasks" EntitySet="UserDailyTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDailyTasks_Users" Association="Self.FK_UserDailyTasks_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserDailyTasks" EntitySet="UserDailyTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Positions" Association="Self.FK_Users_Positions">
+            <End Role="Positions" EntitySet="Positions" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_UserStates" Association="Self.FK_Users_UserStates">
+            <End Role="UserStates" EntitySet="UserStates" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HelpdeskModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="HelpdeskEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Achievements" EntityType="HelpdeskModel.Achievements" />
+          <EntitySet Name="Categories" EntityType="HelpdeskModel.Categories" />
+          <EntitySet Name="DailyTasks" EntityType="HelpdeskModel.DailyTasks" />
+          <EntitySet Name="Documents" EntityType="HelpdeskModel.Documents" />
+          <EntitySet Name="Executors" EntityType="HelpdeskModel.Executors" />
+          <EntitySet Name="HistoryEntries" EntityType="HelpdeskModel.HistoryEntries" />
+          <EntitySet Name="ImportanceTypes" EntityType="HelpdeskModel.ImportanceTypes" />
+          <EntitySet Name="Levels" EntityType="HelpdeskModel.Levels" />
+          <EntitySet Name="Positions" EntityType="HelpdeskModel.Positions" />
+          <EntitySet Name="Roles" EntityType="HelpdeskModel.Roles" />
+          <EntitySet Name="Solutions" EntityType="HelpdeskModel.Solutions" />
+          <EntitySet Name="sysdiagrams" EntityType="HelpdeskModel.sysdiagrams" />
+          <EntitySet Name="TicketDocuments" EntityType="HelpdeskModel.TicketDocuments" />
+          <EntitySet Name="Tickets" EntityType="HelpdeskModel.Tickets" />
+          <EntitySet Name="TicketStates" EntityType="HelpdeskModel.TicketStates" />
+          <EntitySet Name="UserAchievements" EntityType="HelpdeskModel.UserAchievements" />
+          <EntitySet Name="UserDailyTasks" EntityType="HelpdeskModel.UserDailyTasks" />
+          <EntitySet Name="Users" EntityType="HelpdeskModel.Users" />
+          <EntitySet Name="UserStates" EntityType="HelpdeskModel.UserStates" />
+          <AssociationSet Name="FK_UserAchievements_Achievements" Association="HelpdeskModel.FK_UserAchievements_Achievements">
+            <End Role="Achievements" EntitySet="Achievements" />
+            <End Role="UserAchievements" EntitySet="UserAchievements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_Categories" Association="HelpdeskModel.FK_Tickets_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDailyTasks_DailyTasks" Association="HelpdeskModel.FK_UserDailyTasks_DailyTasks">
+            <End Role="DailyTasks" EntitySet="DailyTasks" />
+            <End Role="UserDailyTasks" EntitySet="UserDailyTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketDocuments_Documents" Association="HelpdeskModel.FK_TicketDocuments_Documents">
+            <End Role="Documents" EntitySet="Documents" />
+            <End Role="TicketDocuments" EntitySet="TicketDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Executors_Tickets" Association="HelpdeskModel.FK_Executors_Tickets">
+            <End Role="Tickets" EntitySet="Tickets" />
+            <End Role="Executors" EntitySet="Executors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Executors_Users" Association="HelpdeskModel.FK_Executors_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Executors" EntitySet="Executors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoryEntries_Tickets" Association="HelpdeskModel.FK_HistoryEntries_Tickets">
+            <End Role="Tickets" EntitySet="Tickets" />
+            <End Role="HistoryEntries" EntitySet="HistoryEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoryEntries_Users" Association="HelpdeskModel.FK_HistoryEntries_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="HistoryEntries" EntitySet="HistoryEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_ImportanceTypes" Association="HelpdeskModel.FK_Tickets_ImportanceTypes">
+            <End Role="ImportanceTypes" EntitySet="ImportanceTypes" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Positions" Association="HelpdeskModel.FK_Users_Positions">
+            <End Role="Positions" EntitySet="Positions" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="HelpdeskModel.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_Solutions" Association="HelpdeskModel.FK_Tickets_Solutions">
+            <End Role="Solutions" EntitySet="Solutions" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TicketDocuments_Tickets" Association="HelpdeskModel.FK_TicketDocuments_Tickets">
+            <End Role="Tickets" EntitySet="Tickets" />
+            <End Role="TicketDocuments" EntitySet="TicketDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_TicketStates" Association="HelpdeskModel.FK_Tickets_TicketStates">
+            <End Role="TicketStates" EntitySet="TicketStates" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAchievements_Users" Association="HelpdeskModel.FK_UserAchievements_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserAchievements" EntitySet="UserAchievements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDailyTasks_Users" Association="HelpdeskModel.FK_UserDailyTasks_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserDailyTasks" EntitySet="UserDailyTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_UserStates" Association="HelpdeskModel.FK_Users_UserStates">
+            <End Role="UserStates" EntitySet="UserStates" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Achievements">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserAchievements" Relationship="HelpdeskModel.FK_UserAchievements_Achievements" FromRole="Achievements" ToRole="UserAchievements" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kind" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tickets" Relationship="HelpdeskModel.FK_Tickets_Categories" FromRole="Categories" ToRole="Tickets" />
+        </EntityType>
+        <EntityType Name="DailyTasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="XP" Type="Int32" Nullable="false" />
+          <Property Name="Score" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserDailyTasks" Relationship="HelpdeskModel.FK_UserDailyTasks_DailyTasks" FromRole="DailyTasks" ToRole="UserDailyTasks" />
+        </EntityType>
+        <EntityType Name="Documents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TicketDocuments" Relationship="HelpdeskModel.FK_TicketDocuments_Documents" FromRole="Documents" ToRole="TicketDocuments" />
+        </EntityType>
+        <EntityType Name="Executors">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tickets" Relationship="HelpdeskModel.FK_Executors_Tickets" FromRole="Executors" ToRole="Tickets" />
+          <NavigationProperty Name="Users" Relationship="HelpdeskModel.FK_Executors_Users" FromRole="Executors" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="HistoryEntries">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="TicketId" Type="Int32" Nullable="false" />
+          <Property Name="UpdateDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tickets" Relationship="HelpdeskModel.FK_HistoryEntries_Tickets" FromRole="HistoryEntries" ToRole="Tickets" />
+          <NavigationProperty Name="Users" Relationship="HelpdeskModel.FK_HistoryEntries_Users" FromRole="HistoryEntries" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="ImportanceTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kind" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tickets" Relationship="HelpdeskModel.FK_Tickets_ImportanceTypes" FromRole="ImportanceTypes" ToRole="Tickets" />
+        </EntityType>
+        <EntityType Name="Levels">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kind" Type="Int32" Nullable="false" />
+          <Property Name="RequiredScore" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Positions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kind" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="HelpdeskModel.FK_Users_Positions" FromRole="Positions" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kind" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="HelpdeskModel.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Solutions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tickets" Relationship="HelpdeskModel.FK_Tickets_Solutions" FromRole="Solutions" ToRole="Tickets" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TicketDocuments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketId" Type="Int32" Nullable="false" />
+          <Property Name="DocumentId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Documents" Relationship="HelpdeskModel.FK_TicketDocuments_Documents" FromRole="TicketDocuments" ToRole="Documents" />
+          <NavigationProperty Name="Tickets" Relationship="HelpdeskModel.FK_TicketDocuments_Tickets" FromRole="TicketDocuments" ToRole="Tickets" />
+        </EntityType>
+        <EntityType Name="Tickets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Requester" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OpeningDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TicketStateId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="ImportanceTypeId" Type="Int32" Nullable="false" />
+          <Property Name="SolutionId" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Categories" Relationship="HelpdeskModel.FK_Tickets_Categories" FromRole="Tickets" ToRole="Categories" />
+          <NavigationProperty Name="Executors" Relationship="HelpdeskModel.FK_Executors_Tickets" FromRole="Tickets" ToRole="Executors" />
+          <NavigationProperty Name="HistoryEntries" Relationship="HelpdeskModel.FK_HistoryEntries_Tickets" FromRole="Tickets" ToRole="HistoryEntries" />
+          <NavigationProperty Name="ImportanceTypes" Relationship="HelpdeskModel.FK_Tickets_ImportanceTypes" FromRole="Tickets" ToRole="ImportanceTypes" />
+          <NavigationProperty Name="Solutions" Relationship="HelpdeskModel.FK_Tickets_Solutions" FromRole="Tickets" ToRole="Solutions" />
+          <NavigationProperty Name="TicketDocuments" Relationship="HelpdeskModel.FK_TicketDocuments_Tickets" FromRole="Tickets" ToRole="TicketDocuments" />
+          <NavigationProperty Name="TicketStates" Relationship="HelpdeskModel.FK_Tickets_TicketStates" FromRole="Tickets" ToRole="TicketStates" />
+        </EntityType>
+        <EntityType Name="TicketStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kind" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tickets" Relationship="HelpdeskModel.FK_Tickets_TicketStates" FromRole="TicketStates" ToRole="Tickets" />
+        </EntityType>
+        <EntityType Name="UserAchievements">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AchievementID" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Achievements" Relationship="HelpdeskModel.FK_UserAchievements_Achievements" FromRole="UserAchievements" ToRole="Achievements" />
+          <NavigationProperty Name="Users" Relationship="HelpdeskModel.FK_UserAchievements_Users" FromRole="UserAchievements" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UserDailyTasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DailyTasksID" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DailyTasks" Relationship="HelpdeskModel.FK_UserDailyTasks_DailyTasks" FromRole="UserDailyTasks" ToRole="DailyTasks" />
+          <NavigationProperty Name="Users" Relationship="HelpdeskModel.FK_UserDailyTasks_Users" FromRole="UserDailyTasks" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="PositionId" Type="Int32" Nullable="false" />
+          <Property Name="UserStateId" Type="Int32" Nullable="false" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Score" Type="Int32" />
+          <Property Name="Level" Type="Int32" />
+          <Property Name="XP" Type="Int32" />
+          <NavigationProperty Name="Executors" Relationship="HelpdeskModel.FK_Executors_Users" FromRole="Users" ToRole="Executors" />
+          <NavigationProperty Name="HistoryEntries" Relationship="HelpdeskModel.FK_HistoryEntries_Users" FromRole="Users" ToRole="HistoryEntries" />
+          <NavigationProperty Name="Positions" Relationship="HelpdeskModel.FK_Users_Positions" FromRole="Users" ToRole="Positions" />
+          <NavigationProperty Name="Roles" Relationship="HelpdeskModel.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+          <NavigationProperty Name="UserAchievements" Relationship="HelpdeskModel.FK_UserAchievements_Users" FromRole="Users" ToRole="UserAchievements" />
+          <NavigationProperty Name="UserDailyTasks" Relationship="HelpdeskModel.FK_UserDailyTasks_Users" FromRole="Users" ToRole="UserDailyTasks" />
+          <NavigationProperty Name="UserStates" Relationship="HelpdeskModel.FK_Users_UserStates" FromRole="Users" ToRole="UserStates" />
+        </EntityType>
+        <EntityType Name="UserStates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kind" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="HelpdeskModel.FK_Users_UserStates" FromRole="UserStates" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_UserAchievements_Achievements">
+          <End Type="HelpdeskModel.Achievements" Role="Achievements" Multiplicity="1" />
+          <End Type="HelpdeskModel.UserAchievements" Role="UserAchievements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Achievements">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAchievements">
+              <PropertyRef Name="AchievementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_Categories">
+          <End Type="HelpdeskModel.Categories" Role="Categories" Multiplicity="1" />
+          <End Type="HelpdeskModel.Tickets" Role="Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDailyTasks_DailyTasks">
+          <End Type="HelpdeskModel.DailyTasks" Role="DailyTasks" Multiplicity="1" />
+          <End Type="HelpdeskModel.UserDailyTasks" Role="UserDailyTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DailyTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDailyTasks">
+              <PropertyRef Name="DailyTasksID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketDocuments_Documents">
+          <End Type="HelpdeskModel.Documents" Role="Documents" Multiplicity="1" />
+          <End Type="HelpdeskModel.TicketDocuments" Role="TicketDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documents">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketDocuments">
+              <PropertyRef Name="DocumentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Executors_Tickets">
+          <End Type="HelpdeskModel.Tickets" Role="Tickets" Multiplicity="1" />
+          <End Type="HelpdeskModel.Executors" Role="Executors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tickets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Executors">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Executors_Users">
+          <End Type="HelpdeskModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="HelpdeskModel.Executors" Role="Executors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Executors">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoryEntries_Tickets">
+          <End Type="HelpdeskModel.Tickets" Role="Tickets" Multiplicity="1" />
+          <End Type="HelpdeskModel.HistoryEntries" Role="HistoryEntries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tickets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HistoryEntries">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HistoryEntries_Users">
+          <End Type="HelpdeskModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="HelpdeskModel.HistoryEntries" Role="HistoryEntries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HistoryEntries">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_ImportanceTypes">
+          <End Type="HelpdeskModel.ImportanceTypes" Role="ImportanceTypes" Multiplicity="1" />
+          <End Type="HelpdeskModel.Tickets" Role="Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportanceTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="ImportanceTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Positions">
+          <End Type="HelpdeskModel.Positions" Role="Positions" Multiplicity="1" />
+          <End Type="HelpdeskModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="PositionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Type="HelpdeskModel.Roles" Role="Roles" Multiplicity="1" />
+          <End Type="HelpdeskModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_Solutions">
+          <End Type="HelpdeskModel.Solutions" Role="Solutions" Multiplicity="1" />
+          <End Type="HelpdeskModel.Tickets" Role="Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Solutions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="SolutionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TicketDocuments_Tickets">
+          <End Type="HelpdeskModel.Tickets" Role="Tickets" Multiplicity="1" />
+          <End Type="HelpdeskModel.TicketDocuments" Role="TicketDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tickets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TicketDocuments">
+              <PropertyRef Name="TicketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tickets_TicketStates">
+          <End Type="HelpdeskModel.TicketStates" Role="TicketStates" Multiplicity="1" />
+          <End Type="HelpdeskModel.Tickets" Role="Tickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TicketStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tickets">
+              <PropertyRef Name="TicketStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAchievements_Users">
+          <End Type="HelpdeskModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="HelpdeskModel.UserAchievements" Role="UserAchievements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAchievements">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDailyTasks_Users">
+          <End Type="HelpdeskModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="HelpdeskModel.UserDailyTasks" Role="UserDailyTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserDailyTasks">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_UserStates">
+          <End Type="HelpdeskModel.UserStates" Role="UserStates" Multiplicity="1" />
+          <End Type="HelpdeskModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserStates">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="UserStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище HelpdeskModelContainer" CdmEntityContainer="HelpdeskEntities">
+          <EntitySetMapping Name="Achievements">
+            <EntityTypeMapping TypeName="HelpdeskModel.Achievements">
+              <MappingFragment StoreEntitySet="Achievements">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="HelpdeskModel.Categories">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="Kind" ColumnName="Kind" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DailyTasks">
+            <EntityTypeMapping TypeName="HelpdeskModel.DailyTasks">
+              <MappingFragment StoreEntitySet="DailyTasks">
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="XP" ColumnName="XP" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documents">
+            <EntityTypeMapping TypeName="HelpdeskModel.Documents">
+              <MappingFragment StoreEntitySet="Documents">
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Executors">
+            <EntityTypeMapping TypeName="HelpdeskModel.Executors">
+              <MappingFragment StoreEntitySet="Executors">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HistoryEntries">
+            <EntityTypeMapping TypeName="HelpdeskModel.HistoryEntries">
+              <MappingFragment StoreEntitySet="HistoryEntries">
+                <ScalarProperty Name="UpdateDescription" ColumnName="UpdateDescription" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImportanceTypes">
+            <EntityTypeMapping TypeName="HelpdeskModel.ImportanceTypes">
+              <MappingFragment StoreEntitySet="ImportanceTypes">
+                <ScalarProperty Name="Kind" ColumnName="Kind" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Levels">
+            <EntityTypeMapping TypeName="HelpdeskModel.Levels">
+              <MappingFragment StoreEntitySet="Levels">
+                <ScalarProperty Name="RequiredScore" ColumnName="RequiredScore" />
+                <ScalarProperty Name="Kind" ColumnName="Kind" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Positions">
+            <EntityTypeMapping TypeName="HelpdeskModel.Positions">
+              <MappingFragment StoreEntitySet="Positions">
+                <ScalarProperty Name="Kind" ColumnName="Kind" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="HelpdeskModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Kind" ColumnName="Kind" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Solutions">
+            <EntityTypeMapping TypeName="HelpdeskModel.Solutions">
+              <MappingFragment StoreEntitySet="Solutions">
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="HelpdeskModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketDocuments">
+            <EntityTypeMapping TypeName="HelpdeskModel.TicketDocuments">
+              <MappingFragment StoreEntitySet="TicketDocuments">
+                <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tickets">
+            <EntityTypeMapping TypeName="HelpdeskModel.Tickets">
+              <MappingFragment StoreEntitySet="Tickets">
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="SolutionId" ColumnName="SolutionId" />
+                <ScalarProperty Name="ImportanceTypeId" ColumnName="ImportanceTypeId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="TicketStateId" ColumnName="TicketStateId" />
+                <ScalarProperty Name="OpeningDate" ColumnName="OpeningDate" />
+                <ScalarProperty Name="Requester" ColumnName="Requester" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TicketStates">
+            <EntityTypeMapping TypeName="HelpdeskModel.TicketStates">
+              <MappingFragment StoreEntitySet="TicketStates">
+                <ScalarProperty Name="Kind" ColumnName="Kind" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAchievements">
+            <EntityTypeMapping TypeName="HelpdeskModel.UserAchievements">
+              <MappingFragment StoreEntitySet="UserAchievements">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AchievementID" ColumnName="AchievementID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDailyTasks">
+            <EntityTypeMapping TypeName="HelpdeskModel.UserDailyTasks">
+              <MappingFragment StoreEntitySet="UserDailyTasks">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DailyTasksID" ColumnName="DailyTasksID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="HelpdeskModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="XP" ColumnName="XP" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Visible" ColumnName="Visible" />
+                <ScalarProperty Name="UserStateId" ColumnName="UserStateId" />
+                <ScalarProperty Name="PositionId" ColumnName="PositionId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserStates">
+            <EntityTypeMapping TypeName="HelpdeskModel.UserStates">
+              <MappingFragment StoreEntitySet="UserStates">
+                <ScalarProperty Name="Kind" ColumnName="Kind" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

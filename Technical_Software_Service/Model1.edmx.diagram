@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="36a7c12b41094317b09085081884cbe6" Name="Diagram1" ZoomLevel="67">
+        <EntityTypeShape EntityType="HelpdeskModel.Achievements" Width="1.5" PointX="3" PointY="12" />
+        <EntityTypeShape EntityType="HelpdeskModel.Categories" Width="1.5" PointX="0.75" PointY="13" />
+        <EntityTypeShape EntityType="HelpdeskModel.DailyTasks" Width="1.5" PointX="6" PointY="0.75" />
+        <EntityTypeShape EntityType="HelpdeskModel.Documents" Width="1.5" PointX="3" PointY="20.5" />
+        <EntityTypeShape EntityType="HelpdeskModel.Executors" Width="1.5" PointX="5.25" PointY="4" />
+        <EntityTypeShape EntityType="HelpdeskModel.HistoryEntries" Width="1.5" PointX="5.25" PointY="6.875" />
+        <EntityTypeShape EntityType="HelpdeskModel.ImportanceTypes" Width="1.5" PointX="0.75" PointY="17.625" />
+        <EntityTypeShape EntityType="HelpdeskModel.Levels" Width="1.5" PointX="7.75" PointY="4.125" />
+        <EntityTypeShape EntityType="HelpdeskModel.Positions" Width="1.5" PointX="0.75" PointY="7.125" />
+        <EntityTypeShape EntityType="HelpdeskModel.Roles" Width="1.5" PointX="0.75" PointY="4" />
+        <EntityTypeShape EntityType="HelpdeskModel.Solutions" Width="1.5" PointX="0.75" PointY="20" />
+        <EntityTypeShape EntityType="HelpdeskModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="10.125" />
+        <EntityTypeShape EntityType="HelpdeskModel.TicketDocuments" Width="1.5" PointX="5.25" PointY="16.375" />
+        <EntityTypeShape EntityType="HelpdeskModel.Tickets" Width="1.5" PointX="3" PointY="15.25" />
+        <EntityTypeShape EntityType="HelpdeskModel.TicketStates" Width="1.5" PointX="0.75" PointY="15.375" />
+        <EntityTypeShape EntityType="HelpdeskModel.UserAchievements" Width="1.5" PointX="5.25" PointY="10" />
+        <EntityTypeShape EntityType="HelpdeskModel.UserDailyTasks" Width="1.5" PointX="8.25" PointY="7" />
+        <EntityTypeShape EntityType="HelpdeskModel.Users" Width="1.5" PointX="3" PointY="5.25" />
+        <EntityTypeShape EntityType="HelpdeskModel.UserStates" Width="1.5" PointX="0.75" PointY="10.25" />
+        <AssociationConnector Association="HelpdeskModel.FK_UserAchievements_Achievements" />
+        <AssociationConnector Association="HelpdeskModel.FK_Tickets_Categories" />
+        <AssociationConnector Association="HelpdeskModel.FK_UserDailyTasks_DailyTasks" />
+        <AssociationConnector Association="HelpdeskModel.FK_TicketDocuments_Documents" />
+        <AssociationConnector Association="HelpdeskModel.FK_Executors_Tickets" />
+        <AssociationConnector Association="HelpdeskModel.FK_Executors_Users" />
+        <AssociationConnector Association="HelpdeskModel.FK_HistoryEntries_Tickets" />
+        <AssociationConnector Association="HelpdeskModel.FK_HistoryEntries_Users" />
+        <AssociationConnector Association="HelpdeskModel.FK_Tickets_ImportanceTypes" />
+        <AssociationConnector Association="HelpdeskModel.FK_Users_Positions" />
+        <AssociationConnector Association="HelpdeskModel.FK_Users_Roles" />
+        <AssociationConnector Association="HelpdeskModel.FK_Tickets_Solutions" />
+        <AssociationConnector Association="HelpdeskModel.FK_TicketDocuments_Tickets" />
+        <AssociationConnector Association="HelpdeskModel.FK_Tickets_TicketStates" />
+        <AssociationConnector Association="HelpdeskModel.FK_UserAchievements_Users" />
+        <AssociationConnector Association="HelpdeskModel.FK_UserDailyTasks_Users" />
+        <AssociationConnector Association="HelpdeskModel.FK_Users_UserStates" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
