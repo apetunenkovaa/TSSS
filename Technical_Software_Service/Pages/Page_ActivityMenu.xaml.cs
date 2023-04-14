@@ -73,7 +73,7 @@ namespace Technical_Software_Service
             cboxFilter.Items.Add("Все");
             foreach (Tickets tick in ticket)
             {
-                //cboxFilter.Items.Add(tick. );
+                //cboxFilter.Items.Add(tick.);
             }
             cboxFilter.SelectedIndex = 0;
         }
