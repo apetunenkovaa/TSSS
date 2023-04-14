@@ -34,6 +34,7 @@ namespace Technical_Software_Service
             ListAnything.ItemsSource = DataBase.Base.Tickets.ToList();
             ListHistory.ItemsSource = DataBase.Base.HistoryEntries.ToList();
             dgUsers.ItemsSource = DataBase.Base.Users.ToList();
+            dgUsersRating.ItemsSource = DataBase.Base.Users.ToList(); // Страница Рейтинг пользователей
 
             tbUserName.Text = tbUserName.Text + user.LastName + " " + user.FirstName + " " + user.MiddleName;
             tbUserRole.Text = tbUserRole.Text + user.Roles.Kind;
@@ -300,7 +301,7 @@ namespace Technical_Software_Service
                 }
                 else
                 {
-                    ClassFrame.MainF.Navigate(new Page_InfoTickets());
+                    ClassFrame.MainF.Navigate(new Page_InfoTickets(user, ticket));
                 }
 
             }

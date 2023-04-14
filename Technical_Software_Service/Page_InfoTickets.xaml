@@ -7,8 +7,58 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Page_InfoTickets">
-
+    <ScrollViewer>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Name="tbHeader" Text="Подробная информация о заявке" Style="{StaticResource Header}"/>
+
+        <StackPanel Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Name="tbTitle" Text="Наименование заявки: " FontSize="16px" FontFamily="Manrope" Margin="5"/>
+                <TextBlock Grid.Column="1" Name="tbDateOpen" Text="Дата открытия заявки: " FontSize="16px" FontFamily="Manrope" Margin="5"/>
+            </Grid>
+
+            <TextBlock Name="tbRequester" FontSize="16px" FontFamily="Manrope" Margin="0 10 0 10"/>
+            <TextBlock Text="Описание: " FontSize="16px" FontFamily="Manrope" Margin="0 10 0 10"/>
+            <TextBlock Name="tbDescription" FontSize="16px" FontFamily="Manrope" Margin="5"/>
+
+                <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Name="tbCategories" Text="Категория: " FontSize="16px" FontFamily="Manrope" Margin="5"/>
+                <TextBlock Grid.Column="1" Name="tbImportance" Text="Важность: " FontSize="16px" FontFamily="Manrope" Margin="5"/>
+                <TextBlock Grid.Column="2" Name="tbStates" Text="Состояние: " FontSize="16px" FontFamily="Manrope" Margin="5"/>
+            </Grid>
+
+                <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Name="tbUsers" Text="Исполнитель: " FontSize="16px" FontFamily="Manrope" Margin="0 10 0 0"/>
+                    <TextBlock Grid.Column="1" Name="tbDateUpdate" Text="Последнее обновление: " FontSize="16px" FontFamily="Manrope" Margin="0 10 0 0"/>
+            </Grid>
+
+                <TextBlock Text="Решение: " FontSize="16px" FontFamily="Manrope" Margin="0 10 0 0"/>
+            <TextBlock Name="tbSolution" FontSize="16px" FontFamily="Manrope" Margin="5"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Name="btnBack" Content="Вернуться" Style="{StaticResource Button}" Click="btnBack_Click"/>
+            <Button Name="btnUpdate" Content="Редактировать" Style="{StaticResource Button}" Click="btnUpdate_Click" Uid="{Binding Tickets.Id}"/>
+        </StackPanel>
     </Grid>
+    </ScrollViewer>
 </Page>

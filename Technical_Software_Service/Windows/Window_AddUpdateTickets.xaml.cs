@@ -91,8 +91,19 @@ namespace Technical_Software_Service
             ticket.SolutionId = Convert.ToInt32(cbSolutions.SelectedValue);
             //ticket.TicketStateId = Convert.ToInt32(cbStates.SelectedValue);  для исполнителя
             ticket.LastUpdate = dpLastUpdate.SelectedDate.Value;
-
             DataBase.Base.Tickets.Add(ticket);
+
+            //HistoryEntries historyEntries = new HistoryEntries(); // Добавление истории заявок
+            //historyEntries.UserId = Convert.ToInt32(cbUsers.SelectedValue);
+            //historyEntries.TicketId = Convert.ToInt32(ticket.Id);
+            //historyEntries.UpdateDescription = ;
+            //DataBase.Base.Tickets.Add(historyEntries);
+
+            //Executors executors = new Executors(); // Добавление исполнителей
+            //executors.UserId = Convert.ToInt32(cbUsers.SelectedValue);
+            //executors.TicketId = ticket.Id;
+            //DataBase.Base.Tickets.Add(executors);
+
             DataBase.Base.SaveChanges();
             MessageBox.Show("Заявка успешно добавлена!");
             this.Close();

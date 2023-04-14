@@ -120,6 +120,31 @@
                 </Grid>
             </TabItem>
 
+            <TabItem Header="Рейтинг пользователей" FontSize="18px" VerticalAlignment="Center" FontFamily="Manrope">
+                <Grid>
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/Resources/Gradient.jpg"/>
+                    </Grid.Background>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="1">
+                        <DataGrid Name="dgUsersRating" IsReadOnly="True"  AutoGenerateColumns="False" CanUserAddRows="False" FontSize="14">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" Width="*"/>
+                                <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}" Width="*"/>
+                                <DataGridTextColumn Header="Отчество" Binding="{Binding MiddleName}" Width="*"/>
+                                <DataGridTextColumn Header="Очки" Binding="{Binding Score}" Width="150"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+
+                </Grid>
+            </TabItem>
+
             <TabItem Header="Личный кабинет" FontSize="18px" VerticalAlignment="Center" FontFamily="Manrope">
                 <Grid>
                     <Grid.Background>
