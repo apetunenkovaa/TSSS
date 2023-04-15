@@ -19,10 +19,6 @@
         <TabControl Grid.Row="1">
             <TabItem Header="Заявки" FontSize="18px" VerticalAlignment="Center" FontFamily="Manrope">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="373*"/>
-                        <ColumnDefinition Width="421*"/>
-                    </Grid.ColumnDefinitions>
                     <Grid.Background>
                         <ImageBrush ImageSource="\Resources\Gradient.jpg"/>
                     </Grid.Background>
@@ -31,7 +27,7 @@
                         <RowDefinition Height="5*"/>
                         <RowDefinition Height="35"/>
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="0" Grid.ColumnSpan="2">
+                    <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.5*"/>
                             <ColumnDefinition Width="1.2*"/>
@@ -67,7 +63,8 @@
                                 </Border>
                             </DataTemplate>
                         </ListView.ItemTemplate>
-                    </ListView>                    
+                    </ListView>
+                    <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Name="tbCount" FontSize="18px" FontFamily="Manrope"/>
                 </Grid>
             </TabItem>
 

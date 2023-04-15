@@ -87,6 +87,8 @@ namespace Technical_Software_Service
                     break;
             }
 
+            tbCount.Text = listFilter.Count.ToString() + " из " + DataBase.Base.Tickets.ToList().Count.ToString(); //количество записей
+
             ListAnything.ItemsSource = listFilter;
             if (listFilter.Count == 0)
             {
