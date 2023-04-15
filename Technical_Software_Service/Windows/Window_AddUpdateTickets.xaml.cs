@@ -23,29 +23,42 @@ namespace Technical_Software_Service
     {
         Users user;
         bool flag = false;
-        Tickets tickets;
+        Tickets ticket;
         public Window_AddUpdateTickets(Users user)
         {
             InitializeComponent();
             CBUpload();
             this.user = user;            
         }
-        public Window_AddUpdateTickets(Users user, Tickets tickets)
+        public Window_AddUpdateTickets(Users user, Tickets ticket) // Конструктор для редактирования
         {
             InitializeComponent();
-            CBUpload();
             this.user = user;
-            this.tickets = tickets;
+            this.ticket = ticket;
             flag = true;
-            tbTitle.Text = tickets.Title;      
-            tbRequester.Text = tickets.Requester;
-            dpOpeningDate.SelectedDate = tickets.OpeningDate;
-            tbDescription.Text = tickets.Description;
-            dpLastUpdate.SelectedDate = tickets.LastUpdate;
-            cbCategories.SelectedIndex = tickets .CategoryId - 1;
-            cbImportance.SelectedIndex = tickets.ImportanceTypeId - 1;
-            cbStates.SelectedIndex = tickets.TicketStateId - 1;  
-            cbSolutions.SelectedIndex = tickets.SolutionId - 1;
+            tbTitle.Text = ticket.Title;      
+            tbRequester.Text = ticket.Requester;
+            dpOpeningDate.SelectedDate = ticket.OpeningDate;
+            tbDescription.Text = ticket.Description;
+            dpLastUpdate.SelectedDate = ticket.LastUpdate;
+            cbStates.SelectedIndex = ticket.TicketStateId - 1;
+            cbCategories.SelectedIndex = ticket.CategoryId - 1;
+            cbImportance.SelectedIndex = ticket.ImportanceTypeId - 1;
+
+            List<Solutions> solutions = DataBase.Base.Solutions.ToList();
+            for (int i = 0; i < solutions.Count; i++)
+            {
+                cbSolutions.Items.Add(solutions[i].Title);
+            }
+            cbSolutions.SelectedIndex = (int)ticket.SolutionId - 1;
+
+            //List<Users> users = DataBase.Base.Users.ToList();
+            //for (int i = 0; i < users.Count; i++)
+            //{
+            //    cbUsers.Items.Add(users[i].NameUsers);
+            //}
+            //cbUsers.SelectedIndex = user.Id - 1;
+
             cbUsers.SelectedIndex = user.Id - 1;
             tbHeader.Text = "Редатирование заявки";
             btnAdd.Content = "Изменить";
@@ -65,7 +78,6 @@ namespace Technical_Software_Service
         /// <summary>
         /// Заполнение ComboBox
         /// </summary>
-
         public void CBUpload()
         {
             cbStates.ItemsSource = DataBase.Base.TicketStates.ToList();
@@ -83,14 +95,20 @@ namespace Technical_Software_Service
             cbImportance.DisplayMemberPath = "Kind";
             cbImportance.SelectedIndex = 0;
 
-            cbSolutions.ItemsSource = DataBase.Base.Solutions.ToList();
-            cbSolutions.SelectedValuePath = "Id";
-            cbSolutions.DisplayMemberPath = "Title";
+            List<Solutions> solutions = DataBase.Base.Solutions.ToList();
+            cbSolutions.Items.Add("не выбрано");
+            for (var i = 0; i < solutions.Count; i++)
+            {
+                cbSolutions.Items.Add(solutions[i].Title);
+            }
             cbSolutions.SelectedIndex = 0;
 
-            cbUsers.ItemsSource = DataBase.Base.Users.ToList();
-            cbUsers.SelectedValuePath = "Id";
-            cbUsers.DisplayMemberPath = "NameUsers";
+            List<Users> users = DataBase.Base.Users.ToList();
+            cbUsers.Items.Add("не выбрано");
+            for (var i = 0; i < users.Count; i++)
+            {
+                cbUsers.Items.Add(users[i].NameUsers);
+            }
             cbUsers.SelectedIndex = 0;
         }
 
@@ -101,18 +119,154 @@ namespace Technical_Software_Service
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            Tickets ticket = new Tickets();
-            ticket.Title = tbTitle.Text;
-            ticket.Description = tbDescription.Text;
-            ticket.Requester = tbRequester.Text;
-            ticket.OpeningDate = dpOpeningDate.SelectedDate.Value;
-            ticket.TicketStateId = Convert.ToInt32(cbStates.SelectedValue);
-            ticket.CategoryId = Convert.ToInt32(cbCategories.SelectedValue);
-            ticket.ImportanceTypeId = Convert.ToInt32(cbImportance.SelectedValue);
-            ticket.SolutionId = Convert.ToInt32(cbSolutions.SelectedValue);
-            //ticket.TicketStateId = Convert.ToInt32(cbStates.SelectedValue);  для исполнителя
-            ticket.LastUpdate = dpLastUpdate.SelectedDate.Value;
-            DataBase.Base.Tickets.Add(ticket);
+            if (flag == false)
+            {
+                if (tbTitle.Text.Replace(" ", "") == "")
+                {
+                    MessageBox.Show("Поле наименование должно быть заполнено!");
+                    return;
+                }
+                if (tbRequester.Text.Replace(" ", "") == "")
+                {
+                    MessageBox.Show("Поле заказчик должно быть заполнено!");
+                    return;
+                }
+                if (dpOpeningDate.Text.Replace(" ", "") == "")
+                {
+                    MessageBox.Show("Поле дата открытия должно быть заполнено!");
+                    return;
+                }
+                if (cbStates.Text == "")
+                {
+                    MessageBox.Show("Поле состояние должно быть выбрано из списка!");
+                    return;
+                }
+                if (cbCategories.Text == "")
+                {
+                    MessageBox.Show("Поле категория должно быть выбрано из списка!");
+                    return;
+                }
+                if (cbImportance.Text == "")
+                {
+                    MessageBox.Show("Поле важность должно быть выбрано из списка!");
+                    return;
+                }
+                Tickets ticket = new Tickets();
+                ticket.Title = tbTitle.Text;
+                if (tbDescription.Text == null)
+                {
+                    ticket.Description = null;
+                }
+                else
+                {
+                    ticket.Description = tbDescription.Text;
+                }
+                ticket.Requester = tbRequester.Text;
+                ticket.OpeningDate = dpOpeningDate.SelectedDate.Value;
+                ticket.TicketStateId = cbStates.SelectedIndex;
+                ticket.CategoryId = Convert.ToInt32(cbCategories.SelectedValue);
+                ticket.ImportanceTypeId = Convert.ToInt32(cbImportance.SelectedValue);
+                if (cbSolutions.SelectedIndex == 0)
+                {
+                    ticket.SolutionId = 0;
+                }
+                else
+                {
+                    ticket.SolutionId = cbSolutions.SelectedIndex;
+                }
+                if (dpLastUpdate.SelectedDate == null)
+                {
+                    dpLastUpdate.SelectedDate = null;
+                }
+                else
+                {
+                    ticket.LastUpdate = dpLastUpdate.SelectedDate.Value;
+                }
+                DataBase.Base.Tickets.Add(ticket);
+                DataBase.Base.SaveChanges();
+                MessageBox.Show("Заявка успешно добавлена!");
+                this.Close();
+            }
+            else
+            {
+                if (tbTitle.Text.Replace(" ", "") == "")
+                {
+                    MessageBox.Show("Поле наименование должно быть заполнено!");
+                    return;
+                }
+                if (tbRequester.Text.Replace(" ", "") == "")
+                {
+                    MessageBox.Show("Поле заказчик должно быть заполнено!");
+                    return;
+                }
+                if (dpOpeningDate.Text.Replace(" ", "") == "")
+                {
+                    MessageBox.Show("Поле дата открытия должно быть заполнено!");
+                    return;
+                }
+                if (cbCategories.Text == "")
+                {
+                    MessageBox.Show("Поле категория должно быть выбрано из списка!");
+                    return;
+                }
+                if (cbCategories.Text == "")
+                {
+                    MessageBox.Show("Поле категория должно быть выбрано из списка!");
+                    return;
+                }
+                if (cbImportance.Text == "")
+                {
+                    MessageBox.Show("Поле важность должно быть выбрано из списка!");
+                    return;
+                }
+                if (tbDescription.Text == null)
+                {
+                    ticket.Description = null;
+                }
+                else
+                {
+                    ticket.Description = tbDescription.Text;
+                }
+                ticket.Requester = tbRequester.Text;
+                ticket.OpeningDate = dpOpeningDate.SelectedDate.Value;
+                ticket.TicketStateId = cbStates.SelectedIndex + 1;
+                ticket.CategoryId = cbCategories.SelectedIndex + 1;
+                ticket.ImportanceTypeId = cbImportance.SelectedIndex + 1;
+                if (cbSolutions.SelectedIndex == 0)
+                {
+                    ticket.SolutionId = 0;
+                }
+                else
+                {
+                    ticket.SolutionId = cbSolutions.SelectedIndex + 1 ;
+                }
+                if (dpLastUpdate.SelectedDate == null)
+                {
+                    dpLastUpdate.SelectedDate = null;
+                }
+                else
+                {
+                    ticket.LastUpdate = dpLastUpdate.SelectedDate.Value;
+                }
+                DataBase.Base.Tickets.Add(ticket);
+                DataBase.Base.SaveChanges();
+                MessageBox.Show("Заявка успешно добавлена!");
+                this.Close();
+            }
+
+
+            //Tickets ticket = new Tickets();
+            //ticket.Title = tbTitle.Text;
+            //ticket.Description = tbDescription.Text;
+            //ticket.Requester = tbRequester.Text;
+            //ticket.OpeningDate = dpOpeningDate.SelectedDate.Value;
+            //ticket.TicketStateId = Convert.ToInt32(cbStates.SelectedValue);
+            //ticket.CategoryId = Convert.ToInt32(cbCategories.SelectedValue);
+            //ticket.ImportanceTypeId = Convert.ToInt32(cbImportance.SelectedValue);
+            //ticket.SolutionId = Convert.ToInt32(cbSolutions.SelectedValue);
+            ////ticket.TicketStateId = Convert.ToInt32(cbStates.SelectedValue);  для исполнителя
+            //ticket.LastUpdate = dpLastUpdate.SelectedDate.Value;
+            //DataBase.Base.Tickets.Add(ticket);
 
             //HistoryEntries historyEntries = new HistoryEntries(); // Добавление истории заявок
             //historyEntries.UserId = Convert.ToInt32(cbUsers.SelectedValue);

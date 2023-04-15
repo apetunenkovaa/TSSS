@@ -33,47 +33,47 @@ namespace Technical_Software_Service
         }
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            if (tbTitle.Text == "" || tbDescription.Text == "")
+            try
             {
-                MessageBox.Show("Обязательные поля не заполнены", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            else
-            {
+                if (tbTitle.Text == "" || tbDescription.Text == "")
+                {
+                    MessageBox.Show("Обязательные поля не заполнены", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
 
-                achievm = new Achievements();
-                achievm.Title = tbTitle.Text;
-                if (tbDescription.Text == "")
-                {
-                    achievm.Description = null;
+                    achievm = new Achievements();
+                    achievm.Title = tbTitle.Text;
+                    if (tbDescription.Text == "")
+                    {
+                        achievm.Description = null;
+                    }
+                    else
+                    {
+                        achievm.Description = tbDescription.Text;
+                    }
+                    if (newFilePath == null)
+                    {
+                        achievm.Image = null;
+                    }
+                    else
+                    {
+                        achievm.Image = newFilePath;
+                    }
+                    HelpdeskEntities.GetContext().Achievements.Add(achievm);
+                    HelpdeskEntities.GetContext().SaveChanges();
+                    //UserAchievements userAchievements = new UserAchievements();
+                    //userAchievements.AchievementID = achievm.Id;
+                    //userAchievements.UserId = user.Id;
+                    //DataBase.Base.UserAchievements.Add(userAchievements);
+                    MessageBox.Show("Успешное добавление!");
+                    this.Close();
                 }
-                else
-                {
-                    achievm.Description = tbDescription.Text;
-                }
-                if (newFilePath == null)
-                {
-                    achievm.Image = null;
-                }
-                else
-                {
-                    achievm.Image = newFilePath;
-                }
-                HelpdeskEntities.GetContext().Achievements.Add(achievm);
-                HelpdeskEntities.GetContext().SaveChanges();
-                //UserAchievements userAchievements = new UserAchievements();
-                //userAchievements.AchievementID = achievm.Id;
-                //userAchievements.UserId = user.Id;
-                //DataBase.Base.UserAchievements.Add(userAchievements);
-                MessageBox.Show("Успешное добавление!");
-                this.Close();
             }
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("Что-то пошло не так..", "Системное сообшение");
-            //}         
+            catch
+            {
+                MessageBox.Show("Что-то пошло не так..", "Системное сообшение");
+            }
         }
 
         private void btnAddPhoto_Click(object sender, RoutedEventArgs e)

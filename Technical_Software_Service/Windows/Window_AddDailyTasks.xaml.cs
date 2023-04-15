@@ -29,9 +29,6 @@ namespace Technical_Software_Service
             InitializeComponent();
             this.user = user;
         }
-        /// <summary>
-        /// Заполнение ComboBox с пользователями
-        /// </summary>
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {

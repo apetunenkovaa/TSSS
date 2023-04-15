@@ -21,32 +21,32 @@ namespace Technical_Software_Service
     public partial class Page_InfoTickets : Page
     {
         Users user;
-        Tickets tickets;
-        public Page_InfoTickets(Users user, Tickets tickets)
+        Tickets ticket;
+        public Page_InfoTickets(Users user, Tickets ticket)
         {
             InitializeComponent();
             this.user = user;
-            this.tickets = tickets;
+            this.ticket = ticket;
             tbTitle.Inlines.Add(new Run("Наименование заявки: ") { FontWeight = FontWeights.Bold });
-            tbTitle.Inlines.Add(new Run($" {tickets.Title}"));
+            tbTitle.Inlines.Add(new Run($" {ticket.Title}"));
             tbDateOpen.Inlines.Add(new Run("Дата открытия заявки: ") { FontWeight = FontWeights.Bold });
-            tbDateOpen.Inlines.Add(new Run($" {string.Format("{0:dd.MM.yyyy}", tickets.OpeningDate)}"));
+            tbDateOpen.Inlines.Add(new Run($" {string.Format("{0:dd.MM.yyyy}", ticket.OpeningDate)}"));
             tbRequester.Inlines.Add(new Run("Заказчик: ") { FontWeight = FontWeights.Bold });
-            tbRequester.Inlines.Add(new Run($" {tickets.Requesters}"));
-            tbDescription.Text = tickets.Description;
+            tbRequester.Inlines.Add(new Run($" {ticket.Requesters}"));
+            tbDescription.Text = ticket.Description;
             tbCategories.Inlines.Add(new Run("Категория: ") { FontWeight = FontWeights.Bold });
-            tbCategories.Inlines.Add(new Run($" {tickets.Categories.Kind}"));
+            tbCategories.Inlines.Add(new Run($" {ticket.Categories.Kind}"));
             tbImportance.Inlines.Add(new Run("Важность: ") { FontWeight = FontWeights.Bold });
-            tbImportance.Inlines.Add(new Run($" {tickets.ImportanceTypes.Kind}"));
+            tbImportance.Inlines.Add(new Run($" {ticket.ImportanceTypes.Kind}"));
             tbStates.Inlines.Add(new Run("Состояние: ") { FontWeight = FontWeights.Bold });
-            tbStates.Inlines.Add(new Run($" {tickets.TicketStates.Kind}"));
+            tbStates.Inlines.Add(new Run($" {ticket.TicketStates.Kind}"));
             tbUsers.Inlines.Add(new Run("Исполнитель: ") { FontWeight = FontWeights.Bold });
             tbUsers.Inlines.Add(new Run($" {user.NameUsers}"));
             tbDateUpdate.Inlines.Add(new Run("Последнее обновление: ") { FontWeight = FontWeights.Bold });
-            tbDateUpdate.Inlines.Add(new Run($" {user.LastName + " " + user.FirstName + " " + tickets.LastUpdate}"));
+            tbDateUpdate.Inlines.Add(new Run($" {user.LastName + " " + user.FirstName + " " + ticket.LastUpdate}"));
             tbTitleSolution.Inlines.Add(new Run("Наименование решения: ") { FontWeight = FontWeights.Bold });
-            tbTitleSolution.Inlines.Add(new Run($" {tickets.Solutions.Title}"));
-            tbSolution.Text = tickets.Solutions.Content;
+            tbTitleSolution.Inlines.Add(new Run($" {ticket.Solutions.Title}"));
+            tbSolution.Text = ticket.Solutions.Content;
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -56,7 +56,10 @@ namespace Technical_Software_Service
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            Window_AddUpdateTickets updateTickets = new Window_AddUpdateTickets(user, tickets);
+            //Button btn = (Button)sender;
+            //int index = Convert.ToInt32(btn.Uid);
+            //Tickets tickets = DataBase.Base.Tickets.FirstOrDefault(z => z.Id == index);
+            Window_AddUpdateTickets updateTickets = new Window_AddUpdateTickets(user, ticket);
             updateTickets.ShowDialog();
         }
     }

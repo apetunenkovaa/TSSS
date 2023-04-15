@@ -23,11 +23,12 @@ namespace Technical_Software_Service
 
         public static HelpdeskEntities GetContext()
         {
-             if (_context == null)
+            if (_context == null)
                 _context = new HelpdeskEntities();
-             return _context;
-        }   
-    
+            return _context;
+        }
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -44,7 +45,6 @@ namespace Technical_Software_Service
         public virtual DbSet<Positions> Positions { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Solutions> Solutions { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TicketDocuments> TicketDocuments { get; set; }
         public virtual DbSet<Tickets> Tickets { get; set; }
         public virtual DbSet<TicketStates> TicketStates { get; set; }

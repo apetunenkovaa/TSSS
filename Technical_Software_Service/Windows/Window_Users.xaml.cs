@@ -181,12 +181,12 @@ namespace Technical_Software_Service
                     }
                     if (cbPosition.Text == "")
                     {
-                        MessageBox.Show("Поле роль должно быть выбрано из списка!");
+                        MessageBox.Show("Поле должность должно быть выбрано из списка!");
                         return;
                     }
                     if (cbUserStates.Text == "")
                     {
-                        MessageBox.Show("Поле роль должно быть выбрано из списка!");
+                        MessageBox.Show("Поле состояние должно быть выбрано из списка!");
                         return;
                     }
                     if (GetProverkaLogin() == true)

@@ -30,7 +30,7 @@ namespace Technical_Software_Service
         public int TicketStateId { get; set; }
         public int CategoryId { get; set; }
         public int ImportanceTypeId { get; set; }
-        public int SolutionId { get; set; }
+        public Nullable<int> SolutionId { get; set; }
         public Nullable<System.DateTime> LastUpdate { get; set; }
     
         public virtual Categories Categories { get; set; }
