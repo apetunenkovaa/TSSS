@@ -27,15 +27,25 @@ namespace Technical_Software_Service
             InitializeComponent();
             this.user = user;
             this.tickets = tickets;
-            tbTitle.Text = "Наименование заявки: " + tickets.Title;
-            tbDateOpen.Text = "Дата открытия заявки: " + string.Format("{0:dd.MM.yyyy}", tickets.OpeningDate);
-            tbRequester.Text = "Заказчик: " + tickets.Requesters;
+            tbTitle.Inlines.Add(new Run("Наименование заявки: ") { FontWeight = FontWeights.Bold });
+            tbTitle.Inlines.Add(new Run($" {tickets.Title}"));
+            tbDateOpen.Inlines.Add(new Run("Дата открытия заявки: ") { FontWeight = FontWeights.Bold });
+            tbDateOpen.Inlines.Add(new Run($" {string.Format("{0:dd.MM.yyyy}", tickets.OpeningDate)}"));
+            tbRequester.Inlines.Add(new Run("Заказчик: ") { FontWeight = FontWeights.Bold });
+            tbRequester.Inlines.Add(new Run($" {tickets.Requesters}"));
             tbDescription.Text = tickets.Description;
-            tbCategories.Text = "Категория: " + tickets.Categories.Kind;
-            tbImportance.Text = "Важность: " + tickets.ImportanceTypes.Kind;
-            tbStates.Text = "Состояние: " + tickets.TicketStates.Kind;
-            tbUsers.Text = "Исполнитель: " + user.NameUsers;
-            tbDateUpdate.Text = "Последнее обновление: " + user.LastName + " " + user.FirstName + " " + tickets.LastUpdate;
+            tbCategories.Inlines.Add(new Run("Категория: ") { FontWeight = FontWeights.Bold });
+            tbCategories.Inlines.Add(new Run($" {tickets.Categories.Kind}"));
+            tbImportance.Inlines.Add(new Run("Важность: ") { FontWeight = FontWeights.Bold });
+            tbImportance.Inlines.Add(new Run($" {tickets.ImportanceTypes.Kind}"));
+            tbStates.Inlines.Add(new Run("Состояние: ") { FontWeight = FontWeights.Bold });
+            tbStates.Inlines.Add(new Run($" {tickets.TicketStates.Kind}"));
+            tbUsers.Inlines.Add(new Run("Исполнитель: ") { FontWeight = FontWeights.Bold });
+            tbUsers.Inlines.Add(new Run($" {user.NameUsers}"));
+            tbDateUpdate.Inlines.Add(new Run("Последнее обновление: ") { FontWeight = FontWeights.Bold });
+            tbDateUpdate.Inlines.Add(new Run($" {user.LastName + " " + user.FirstName + " " + tickets.LastUpdate}"));
+            tbTitleSolution.Inlines.Add(new Run("Наименование решения: ") { FontWeight = FontWeights.Bold });
+            tbTitleSolution.Inlines.Add(new Run($" {tickets.Solutions.Title}"));
             tbSolution.Text = tickets.Solutions.Content;
         }
 
