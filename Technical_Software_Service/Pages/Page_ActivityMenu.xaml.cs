@@ -317,7 +317,7 @@ namespace Technical_Software_Service
             }
         }
 
-        private void btnDeleteUser_Click(object sender, RoutedEventArgs e)
+        private void btnDeleteUser_Click(object sender, RoutedEventArgs e) // Удаление пользователя
         {
             //if (dgUsers.SelectedItems.Count == 0)
             //{
@@ -332,7 +332,7 @@ namespace Technical_Software_Service
             //        {
             //            if (historyEntries.)
             //            {
-            //                MessageBox.Show($"Данный пользователь не может быть удален, так как находится в числе подходящих отелей для актуальных туров");
+            //                MessageBox.Show($"Данный пользователь не может быть удален, так как используется в историях заявок");
             //            }
             //        }
             //        //удаление отеля

@@ -304,7 +304,15 @@ namespace Technical_Software_Service
                 HistoryEntries historyEntries = new HistoryEntries(); // Добавление истории заявок
                 historyEntries.UserId = cbUsers.SelectedIndex;
                 historyEntries.TicketId = Convert.ToInt32(ticket.Id);
-                historyEntries.UpdateDescription = null;
+                if(historyEntries.UpdateDescription == null)
+                {
+                    historyEntries.UpdateDescription = null;
+                }
+                else
+                {
+                    historyEntries.UpdateDescription = "";
+                }
+                //historyEntries.UpdateDescription = null;                
                 DataBase.Base.HistoryEntries.Add(historyEntries);
 
                 Executors executors = new Executors(); // Добавление исполнителей

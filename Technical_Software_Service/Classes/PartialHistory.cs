@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -48,7 +49,7 @@ namespace Technical_Software_Service
                 }
                 else
                 {
-                    return str = "Данная заявка в впроцессе выполнения";
+                    return str = "Данная заявка в процессе выполнения";
                 }
             }
         }
@@ -56,7 +57,7 @@ namespace Technical_Software_Service
         {
             get
             {
-                return "Индентификатор:" + Id;
+                return "Индентификатор: " + Id;
             }
         }
         public string UsersName
@@ -89,7 +90,14 @@ namespace Technical_Software_Service
         {
             get
             {
-                return "Описание: " + UpdateDescription;
+                if (UpdateDescription == null)
+                {
+                    return "Описания нет";
+                }
+                else
+                {
+                    return "Описание: " + UpdateDescription;
+                }                
             }
         }
 
