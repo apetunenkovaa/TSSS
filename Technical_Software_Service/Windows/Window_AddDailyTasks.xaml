@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Technical_Software_Service"
         mc:Ignorable="d"
-        Title="Window_AddDailyTasks" Height="450" Width="800">
+        Title="Добавление ежедневной задачи" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

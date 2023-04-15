@@ -26,6 +26,7 @@ namespace Technical_Software_Service
             InitializeComponent();
             this.user = user;
             lstDailyTasks.ItemsSource = DataBase.Base.DailyTasks.ToList();
+
             if (user.Roles.Kind == "Администратор")
             {
                 btnAdd.Visibility = Visibility.Visible;

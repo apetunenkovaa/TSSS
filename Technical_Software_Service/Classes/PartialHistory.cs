@@ -92,5 +92,37 @@ namespace Technical_Software_Service
                 return "Описание: " + UpdateDescription;
             }
         }
+
+        public string Score
+        {
+            get
+            {
+                ImportanceTypes importanceTypes = DataBase.Base.ImportanceTypes.FirstOrDefault(x => x.Id == TicketId);
+                TicketStates ticketStates = DataBase.Base.TicketStates.FirstOrDefault(z => z.Id == importanceTypes.Id);
+                int score = 0;
+                if (importanceTypes != null)
+                {
+                    switch (importanceTypes.Id)
+                    {
+                        case 1:
+                            score = 15;
+                            break;
+                        case 2:
+                            score = 10;
+                            break;
+                        case 3:
+                            score = 5;
+                            break;
+                        case 4:
+                            score = 1;
+                            break;
+                    }
+                }
+
+                return "Очков: " + score;
+            }
+        }
     }
+
 }
+

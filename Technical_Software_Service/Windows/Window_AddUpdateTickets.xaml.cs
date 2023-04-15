@@ -129,7 +129,5 @@ namespace Technical_Software_Service
             MessageBox.Show("Заявка успешно добавлена!");
             this.Close();
         }
-
-        
     }
 }

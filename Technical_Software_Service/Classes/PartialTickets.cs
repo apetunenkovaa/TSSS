@@ -43,5 +43,33 @@ namespace Technical_Software_Service
                 return "Важность: " + ImportanceTypes.Kind;
             }
         }
-    }
+
+        public string Score
+            {
+                get
+                {
+                    int score = 0;
+                    if (ImportanceTypes != null)
+                    {
+                        switch (ImportanceTypes.Id)
+                        {
+                            case 1:
+                                score = 15;
+                                break;
+                            case 2:
+                                score = 10;
+                                break;
+                            case 3:
+                                score = 5;
+                                break;
+                            case 4:
+                                score = 1;
+                                break;
+                        }
+                    }
+
+                    return "Очков: " + score;
+                }
+            }
+        }
 }

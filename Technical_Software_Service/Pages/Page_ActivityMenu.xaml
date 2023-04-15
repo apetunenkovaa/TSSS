@@ -61,6 +61,7 @@
                                             <TextBlock Text="{Binding Category}" FontSize="16px" FontFamily="Manrope"/>
                                             <TextBlock Text="{Binding States}" FontSize="16px" FontFamily="Manrope"/>
                                             <TextBlock Text="{Binding Importance}" FontSize="16px" FontFamily="Manrope"/>
+                                            <TextBlock Text="{Binding Score}" FontSize="16px" FontFamily="Manrope"/>
                                         </StackPanel>                                       
                                     </Grid>
                                 </Border>
@@ -108,6 +109,8 @@
                                                 <TextBlock Text="{Binding UsersName}" FontSize="16px" Padding="2px" FontFamily="Manrope"/>
                                                 <TextBlock Text="{Binding Description}" FontSize="16px" Padding="2px" FontFamily="Manrope" TextWrapping="Wrap"/>
                                                 <TextBlock Text="{Binding States}"  FontSize="16px" Padding="2px" FontFamily="Manrope"/>
+                                                <TextBlock Text="{Binding Score}"  FontSize="16px" Padding="2px" FontFamily="Manrope"/>
+
                                             </StackPanel>
                                         </StackPanel>
                                     </Grid>
