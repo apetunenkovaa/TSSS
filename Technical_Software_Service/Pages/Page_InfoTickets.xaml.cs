@@ -41,9 +41,19 @@ namespace Technical_Software_Service
             tbStates.Inlines.Add(new Run("Состояние: ") { FontWeight = FontWeights.Bold });
             tbStates.Inlines.Add(new Run($" {ticket.TicketStates.Kind}"));
             tbUsers.Inlines.Add(new Run("Исполнитель: ") { FontWeight = FontWeights.Bold });
-            tbUsers.Inlines.Add(new Run($" {user.NameUsers}"));
+            List<HistoryEntries> histories = DataBase.Base.HistoryEntries.Where(x => x.TicketId == ticket.Id).ToList();
+            HistoryEntries historyEntries = new HistoryEntries();
+            for(int i = 0; i < histories.Count; i++)
+            {
+                if (i == histories.Count - 1)
+                {
+                    historyEntries = histories[i];
+                }
+            }
+            Users users = DataBase.Base.Users.FirstOrDefault(x => x.Id == historyEntries.UserId);
+            tbUsers.Inlines.Add(new Run($" {users.NameUsers}"));
             tbDateUpdate.Inlines.Add(new Run("Последнее обновление: ") { FontWeight = FontWeights.Bold });
-            tbDateUpdate.Inlines.Add(new Run($" {user.LastName + " " + user.FirstName + " " + ticket.LastUpdate}"));
+            tbDateUpdate.Inlines.Add(new Run($" {users.LastName + " " + users.FirstName + " " + ticket.LastUpdate}"));
             tbTitleSolution.Inlines.Add(new Run("Наименование решения: ") { FontWeight = FontWeights.Bold });
             tbTitleSolution.Inlines.Add(new Run($" {ticket.Solutions.Title}"));
             tbSolution.Text = ticket.Solutions.Content;
@@ -56,11 +66,9 @@ namespace Technical_Software_Service
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            //Button btn = (Button)sender;
-            //int index = Convert.ToInt32(btn.Uid);
-            //Tickets tickets = DataBase.Base.Tickets.FirstOrDefault(z => z.Id == index);
             Window_AddUpdateTickets updateTickets = new Window_AddUpdateTickets(user, ticket);
             updateTickets.ShowDialog();
+            ClassFrame.MainF.Navigate(new Page_Anything(user));
         }
     }
 }

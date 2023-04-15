@@ -97,8 +97,10 @@ namespace Technical_Software_Service
         {
             get
             {
-                ImportanceTypes importanceTypes = DataBase.Base.ImportanceTypes.FirstOrDefault(x => x.Id == TicketId);
-                TicketStates ticketStates = DataBase.Base.TicketStates.FirstOrDefault(z => z.Id == importanceTypes.Id);
+                Tickets tickets = DataBase.Base.Tickets.FirstOrDefault(x => x.Id == TicketId);
+                ImportanceTypes importanceTypes = DataBase.Base.ImportanceTypes.FirstOrDefault(z => z.Id == tickets.ImportanceTypeId);
+                //ImportanceTypes importanceTypes = DataBase.Base.ImportanceTypes.FirstOrDefault(x => x.Id == TicketId);
+                //TicketStates ticketStates = DataBase.Base.TicketStates.FirstOrDefault(z => z.Id == importanceTypes.Id);
                 int score = 0;
                 if (importanceTypes != null)
                 {

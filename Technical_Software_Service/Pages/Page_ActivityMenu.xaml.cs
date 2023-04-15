@@ -109,20 +109,26 @@ namespace Technical_Software_Service
                 listFilterhistory = listFilterhistory.Where(x => x.Users.LastName.ToLower().Contains(tboxSearch.Text.ToLower())).ToList(); // Поиск по фамилии пользователя
             }
 
-            //// Фильтрация
-            //switch (cboxFilter.SelectedIndex)
-            //{                
-            //    case 1:
-            //        
-            //        break;
-            //    case 2:
-            //      
-            //        break;
-            //    case 3:
-            //      
-            //        break;
-            //}
+            // Фильтрация
+            if (cboxFilter.SelectedIndex > 0)
+            {
+                List<Tickets> tickets = DataBase.Base.Tickets.Where(z => z.TicketStateId == cboxFilter.SelectedIndex).ToList();
+                List<HistoryEntries> histories = new List<HistoryEntries>();
+                for(int i = 0; i < tickets.Count; i++)
+                {
+                    List<HistoryEntries> NewHistories = new List<HistoryEntries>();
+                    NewHistories = listFilterhistory.Where(x=>x.TicketId==tickets[i].Id).ToList();
+                    if (NewHistories.Count > 0)
+                    {
+                        for(int j = 0; j < NewHistories.Count; j++)
+                        {
+                            histories.Add(NewHistories[j]);
+                        }
 
+                    }
+                }
+                listFilterhistory = histories;
+            }
             ListHistory.ItemsSource = listFilterhistory;
             if (listFilterhistory.Count == 0)
             {
@@ -271,10 +277,12 @@ namespace Technical_Software_Service
             Window_AddUpdateTickets tickets = new Window_AddUpdateTickets(user, mime);
             tickets.ShowDialog();
 
-            tickets.Closing += (obj, args) =>
-            {
-                ListAnything.ItemsSource = DataBase.Base.Tickets.ToList();
-            };
+            ClassFrame.MainF.Navigate(new Page_Anything(user));
+            //tickets.Closing += (obj, args) =>
+            //{
+            //    ListAnything.ItemsSource = DataBase.Base.Tickets.ToList();
+            //};
+            
         }
 
         private void btnUpdate_Click_1(object sender, RoutedEventArgs e) // Обновление листа 

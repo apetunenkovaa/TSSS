@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,49 +29,97 @@ namespace Technical_Software_Service
         {
             InitializeComponent();
             CBUpload();
-            this.user = user;            
+            this.user = user;
         }
         public Window_AddUpdateTickets(Users user, Tickets ticket) // Конструктор для редактирования
         {
             InitializeComponent();
             this.user = user;
             this.ticket = ticket;
+            //CBUpload();
             flag = true;
-            tbTitle.Text = ticket.Title;      
+            tbTitle.Text = ticket.Title;
             tbRequester.Text = ticket.Requester;
             dpOpeningDate.SelectedDate = ticket.OpeningDate;
             tbDescription.Text = ticket.Description;
             dpLastUpdate.SelectedDate = ticket.LastUpdate;
+
+            //cbStates.SelectedIndex = ticket.TicketStateId - 1;
+            //cbCategories.SelectedIndex = ticket.CategoryId - 1;
+            //cbImportance.SelectedIndex = ticket.ImportanceTypeId - 1;
+
+            List<TicketStates> ticketStates = DataBase.Base.TicketStates.ToList();
+            for (var i = 0; i < ticketStates.Count; i++)
+            {
+                cbStates.Items.Add(ticketStates[i].Kind);
+            }
             cbStates.SelectedIndex = ticket.TicketStateId - 1;
+
+            List<Categories> category = DataBase.Base.Categories.ToList();
+            for (var i = 0; i < category.Count; i++)
+            {
+                cbCategories.Items.Add(category[i].Kind);
+            }
             cbCategories.SelectedIndex = ticket.CategoryId - 1;
+
+            List<ImportanceTypes> types = DataBase.Base.ImportanceTypes.ToList();
+            for (var i = 0; i < types.Count; i++)
+            {
+                cbImportance.Items.Add(types[i].Kind);
+            }
             cbImportance.SelectedIndex = ticket.ImportanceTypeId - 1;
 
             List<Solutions> solutions = DataBase.Base.Solutions.ToList();
+            cbSolutions.Items.Add("не выбрано");
             for (int i = 0; i < solutions.Count; i++)
             {
                 cbSolutions.Items.Add(solutions[i].Title);
             }
-            cbSolutions.SelectedIndex = (int)ticket.SolutionId - 1;
+            if (ticket.SolutionId == null)
+            {
+                cbSolutions.SelectedIndex = 0;
+            }
+            else
+            {
+                cbSolutions.SelectedIndex = (int)ticket.SolutionId;
+            }
 
-            //List<Users> users = DataBase.Base.Users.ToList();
-            //for (int i = 0; i < users.Count; i++)
-            //{
-            //    cbUsers.Items.Add(users[i].NameUsers);
-            //}
-            //cbUsers.SelectedIndex = user.Id - 1;
+            List<Users> users = DataBase.Base.Users.ToList();
+            cbUsers.Items.Add("не выбрано");
+            for (int i = 0; i < users.Count; i++)
+            {
+                cbUsers.Items.Add(users[i].NameUsers);
+            }
+            List<HistoryEntries> histories = DataBase.Base.HistoryEntries.Where(x=>x.TicketId==ticket.Id).ToList();
+            HistoryEntries historyEntries = new HistoryEntries();
+            for (int i = 0; i < histories.Count; i++)
+            {
+                if (i == histories.Count - 1)
+                {
+                    historyEntries = histories[i];
+                }
+            }
+            if (historyEntries == null)
+            {
+                cbUsers.SelectedIndex = 0;
+            }
+            else
+            {
+                cbUsers.SelectedIndex = historyEntries.UserId;
+            }            
 
-            cbUsers.SelectedIndex = user.Id - 1;
             tbHeader.Text = "Редатирование заявки";
             btnAdd.Content = "Изменить";
+            spUpdateTickets.Visibility = Visibility.Visible;
 
         }
-        public Window_AddUpdateTickets(Users user,MimeMessage message)
+        public Window_AddUpdateTickets(Users user, MimeMessage message)
         {
             InitializeComponent();
             CBUpload();
             this.user = user;
             tbTitle.Text = message.Subject;
-            tbRequester.Text = message.From.ToString().Substring(0, message.From.ToString().IndexOf('<')).Trim().Replace("\"","");
+            tbRequester.Text = message.From.ToString().Substring(0, message.From.ToString().IndexOf('<')).Trim().Replace("\"", "");
             tbDescription.Text = message.TextBody;
             dpOpeningDate.Text = message.Date.ToString();
         }
@@ -80,19 +129,28 @@ namespace Technical_Software_Service
         /// </summary>
         public void CBUpload()
         {
-            cbStates.ItemsSource = DataBase.Base.TicketStates.ToList();
-            cbStates.SelectedValuePath = "Id";
-            cbStates.DisplayMemberPath = "Kind";
+            List<TicketStates> states = DataBase.Base.TicketStates.ToList();
+            cbStates.Items.Add("не выбрано");
+            for (var i = 0; i < states.Count; i++)
+            {
+                cbStates.Items.Add(states[i].Kind);
+            }
             cbStates.SelectedIndex = 0;
 
-            cbCategories.ItemsSource = DataBase.Base.Categories.ToList();
-            cbCategories.SelectedValuePath = "Id";
-            cbCategories.DisplayMemberPath = "Kind";
+            List<Categories> category = DataBase.Base.Categories.ToList();
+            cbCategories.Items.Add("не выбрано");
+            for (var i = 0; i < category.Count; i++)
+            {
+                cbCategories.Items.Add(category[i].Kind);
+            }
             cbCategories.SelectedIndex = 0;
 
-            cbImportance.ItemsSource = DataBase.Base.ImportanceTypes.ToList();
-            cbImportance.SelectedValuePath = "Id";
-            cbImportance.DisplayMemberPath = "Kind";
+            List<ImportanceTypes> importanceTypes = DataBase.Base.ImportanceTypes.ToList();
+            cbImportance.Items.Add("не выбрано");
+            for (var i = 0; i < importanceTypes.Count; i++)
+            {
+                cbImportance.Items.Add(importanceTypes[i].Kind);
+            }
             cbImportance.SelectedIndex = 0;
 
             List<Solutions> solutions = DataBase.Base.Solutions.ToList();
@@ -164,16 +222,9 @@ namespace Technical_Software_Service
                 ticket.Requester = tbRequester.Text;
                 ticket.OpeningDate = dpOpeningDate.SelectedDate.Value;
                 ticket.TicketStateId = cbStates.SelectedIndex;
-                ticket.CategoryId = Convert.ToInt32(cbCategories.SelectedValue);
-                ticket.ImportanceTypeId = Convert.ToInt32(cbImportance.SelectedValue);
-                if (cbSolutions.SelectedIndex == 0)
-                {
-                    ticket.SolutionId = 0;
-                }
-                else
-                {
-                    ticket.SolutionId = cbSolutions.SelectedIndex;
-                }
+                ticket.CategoryId = cbCategories.SelectedIndex;
+                ticket.ImportanceTypeId = cbImportance.SelectedIndex;
+                ticket.SolutionId = null;
                 if (dpLastUpdate.SelectedDate == null)
                 {
                     dpLastUpdate.SelectedDate = null;
@@ -219,6 +270,7 @@ namespace Technical_Software_Service
                     MessageBox.Show("Поле важность должно быть выбрано из списка!");
                     return;
                 }
+                ticket.Title = tbTitle.Text;
                 if (tbDescription.Text == null)
                 {
                     ticket.Description = null;
@@ -232,13 +284,13 @@ namespace Technical_Software_Service
                 ticket.TicketStateId = cbStates.SelectedIndex + 1;
                 ticket.CategoryId = cbCategories.SelectedIndex + 1;
                 ticket.ImportanceTypeId = cbImportance.SelectedIndex + 1;
-                if (cbSolutions.SelectedIndex == 0)
+                if (cbSolutions.SelectedIndex != 0)
                 {
-                    ticket.SolutionId = 0;
+                    ticket.SolutionId = cbSolutions.SelectedIndex;
                 }
                 else
                 {
-                    ticket.SolutionId = cbSolutions.SelectedIndex + 1 ;
+                    MessageBox.Show("Заполните поле!");
                 }
                 if (dpLastUpdate.SelectedDate == null)
                 {
@@ -248,9 +300,20 @@ namespace Technical_Software_Service
                 {
                     ticket.LastUpdate = dpLastUpdate.SelectedDate.Value;
                 }
-                DataBase.Base.Tickets.Add(ticket);
+
+                HistoryEntries historyEntries = new HistoryEntries(); // Добавление истории заявок
+                historyEntries.UserId = cbUsers.SelectedIndex;
+                historyEntries.TicketId = Convert.ToInt32(ticket.Id);
+                historyEntries.UpdateDescription = null;
+                DataBase.Base.HistoryEntries.Add(historyEntries);
+
+                Executors executors = new Executors(); // Добавление исполнителей
+                executors.UserId = cbUsers.SelectedIndex;
+                executors.TicketId = ticket.Id;
+                DataBase.Base.Executors.Add(executors);
+
                 DataBase.Base.SaveChanges();
-                MessageBox.Show("Заявка успешно добавлена!");
+                MessageBox.Show("Заявка успешно изменена!");
                 this.Close();
             }
 
@@ -267,21 +330,6 @@ namespace Technical_Software_Service
             ////ticket.TicketStateId = Convert.ToInt32(cbStates.SelectedValue);  для исполнителя
             //ticket.LastUpdate = dpLastUpdate.SelectedDate.Value;
             //DataBase.Base.Tickets.Add(ticket);
-
-            //HistoryEntries historyEntries = new HistoryEntries(); // Добавление истории заявок
-            //historyEntries.UserId = Convert.ToInt32(cbUsers.SelectedValue);
-            //historyEntries.TicketId = Convert.ToInt32(ticket.Id);
-            //historyEntries.UpdateDescription = ;
-            //DataBase.Base.Tickets.Add(historyEntries);
-
-            //Executors executors = new Executors(); // Добавление исполнителей
-            //executors.UserId = Convert.ToInt32(cbUsers.SelectedValue);
-            //executors.TicketId = ticket.Id;
-            //DataBase.Base.Tickets.Add(executors);
-
-            DataBase.Base.SaveChanges();
-            MessageBox.Show("Заявка успешно добавлена!");
-            this.Close();
         }
     }
 }

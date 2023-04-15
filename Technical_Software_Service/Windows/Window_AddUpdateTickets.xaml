@@ -52,7 +52,7 @@
                 </StackPanel>
             </WrapPanel>
 
-            <StackPanel Name="spUpdateTickets">
+            <StackPanel Name="spUpdateTickets" Visibility="Collapsed">
                 <StackPanel Margin="10" Orientation="Vertical">
                     <TextBlock Text="Решение" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
                     <ComboBox Name="cbSolutions" Padding="2px" FontSize="16px" Height="30px" Width="230" IsEditable="True" IsReadOnly="True" HorizontalAlignment="Left"/>
