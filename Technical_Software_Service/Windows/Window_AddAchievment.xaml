@@ -13,7 +13,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Name="tbHeader" Text="Добавление достижений" Style="{StaticResource Header}"/>
+        <TextBlock Name="tbHeader" Text="Добавление достижения" Style="{StaticResource Header}"/>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>

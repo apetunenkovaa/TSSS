@@ -32,23 +32,40 @@ namespace Technical_Software_Service
 
         private void btnEnter_Click(object sender, RoutedEventArgs e)
         {
-            string login = tbLogin.Text;
-            string password = pbPassword.Password;
-            bool isAuth = false;
-            users = DataBase.Base.Users.ToList();
-            foreach (Users users in users)
+            if(checkData(tbLogin.Text, pbPassword.Password))
             {
-                if (users.UserName == login && users.Password == password)
+                string login = tbLogin.Text;
+                string password = pbPassword.Password;
+                bool isAuth = false;
+                users = DataBase.Base.Users.ToList();
+                foreach (Users users in users)
                 {
-                    DataBase.users = users;
-                    ClassFrame.MainF.Navigate(new Page_Anything(users)); isAuth = true;
-                    break;
+                    if (users.UserName == login && users.Password == password)
+                    {
+                        DataBase.users = users;
+                        ClassFrame.MainF.Navigate(new Page_Anything(users)); isAuth = true;
+                        break;
+                    }
                 }
-            }
-            if (!isAuth)
+                if (!isAuth)
+                {
+                    MessageBox.Show("Логин или пароль неверен");
+                }
+            }            
+        }
+
+        public static bool checkData(string a, string b)
+        {
+            if (a == "" || b == "")
             {
-                MessageBox.Show("Логин или пароль неверен");
+                MessageBox.Show("Обязательные поля не заполнены", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
             }
+            else
+            {
+                return true;
+            }
+
         }
 
         private void cbShowPassword_Click(object sender, RoutedEventArgs e) // Показ пароля

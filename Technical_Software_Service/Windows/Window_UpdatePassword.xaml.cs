@@ -78,8 +78,8 @@ namespace Technical_Software_Service
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
-        bool IsPass(string password)
-        {
+        public bool IsPass(string password)
+        {            
             Regex r = new Regex("(?=.*[A-Z])");
             Regex r1 = new Regex("[a-z].*[a-z].*[a-z]");
             Regex r2 = new Regex("\\d.*\\d");
@@ -123,7 +123,7 @@ namespace Technical_Software_Service
         /// <param name="pass"></param>
         /// <param name="newPass"></param>
         /// <returns></returns>
-        bool CoincidencePass(string pass, string newPass)
+        public static bool CoincidencePass(string pass, string newPass)
         {
             if (pass == newPass)
             {

@@ -9,6 +9,7 @@ namespace Technical_Software_Service
     internal class DataBase
     {
         public static HelpdeskEntities Base;
+        public static List<Users> results = new List<Users>();
 
         public static Users users;
     }
