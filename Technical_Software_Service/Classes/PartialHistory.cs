@@ -68,7 +68,7 @@ namespace Technical_Software_Service
                 string str = "";
                 foreach (HistoryEntries historyEntry in history)
                 {
-                    str += Users.LastName + " " + Users.FirstName + " " + Users.MiddleName;
+                    str = Users.LastName + " " + Users.FirstName + " " + Users.MiddleName;
                 }                
                 return "Пользователь: " + str;
             }
@@ -81,7 +81,7 @@ namespace Technical_Software_Service
                 string str = "";
                 foreach (HistoryEntries historyEntry in history)
                 {
-                    str += Tickets.Title;
+                    str = Tickets.Title;
                 }
                 return "Название: " + str;
             }
@@ -107,8 +107,6 @@ namespace Technical_Software_Service
             {
                 Tickets tickets = DataBase.Base.Tickets.FirstOrDefault(x => x.Id == TicketId);
                 ImportanceTypes importanceTypes = DataBase.Base.ImportanceTypes.FirstOrDefault(z => z.Id == tickets.ImportanceTypeId);
-                //ImportanceTypes importanceTypes = DataBase.Base.ImportanceTypes.FirstOrDefault(x => x.Id == TicketId);
-                //TicketStates ticketStates = DataBase.Base.TicketStates.FirstOrDefault(z => z.Id == importanceTypes.Id);
                 int score = 0;
                 if (importanceTypes != null)
                 {
@@ -128,7 +126,6 @@ namespace Technical_Software_Service
                             break;
                     }
                 }
-
                 return "Очков: " + score;
             }
         }

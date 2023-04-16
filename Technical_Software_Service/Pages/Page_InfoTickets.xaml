@@ -43,16 +43,14 @@
             </Grid>
 
                 <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Name="tbUsers" FontSize="16px" FontFamily="Manrope" Margin="0 10 0 0"/>
                     <TextBlock Grid.Column="1" Name="tbDateUpdate" FontSize="16px" FontFamily="Manrope" Margin="0 10 0 0"/>
-            </Grid>
-
-                <TextBlock Name="tbTitleSolution" FontSize="16px" FontFamily="Manrope" Margin="0 10 0 0"/>
-            <TextBlock Name="tbSolution" FontSize="16px" FontFamily="Manrope" Margin="5"/>
+                </Grid>
+                <TextBlock Name="tbSolution" FontSize="16px" FontFamily="Manrope" Margin="5"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal">
