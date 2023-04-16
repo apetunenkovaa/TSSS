@@ -53,7 +53,7 @@ namespace Technical_Software_Service
             Users users = DataBase.Base.Users.FirstOrDefault(x => x.Id == historyEntries.UserId);
             tbUsers.Inlines.Add(new Run($" {users.NameUsers}"));
             tbDateUpdate.Inlines.Add(new Run("Последнее обновление: ") { FontWeight = FontWeights.Bold });
-            tbDateUpdate.Inlines.Add(new Run($" {user.LastName + " " + user.FirstName + " " + string.Format("{0:dd.MM.yyyy}", ticket.LastUpdate)}"));
+            tbDateUpdate.Inlines.Add(new Run($" {users.LastName + " " + users.FirstName + " " + string.Format("{0:dd.MM.yyyy}", ticket.LastUpdate)}"));
             tbSolution.Inlines.Add(new Run("Решение: ") { FontWeight = FontWeights.Bold });
             tbSolution.Inlines.Add(new Run($" {ticket.Solutions.Content}"));            
         }
@@ -63,7 +63,7 @@ namespace Technical_Software_Service
             ClassFrame.MainF.Navigate(new Page_Anything(user));
         }
 
-        private void btnUpdate_Click(object sender, RoutedEventArgs e)
+        private void btnUpdate_Click(object sender, RoutedEventArgs e) // Редактирование заявки
         {
             Window_AddUpdateTickets updateTickets = new Window_AddUpdateTickets(user, ticket);
             updateTickets.ShowDialog();

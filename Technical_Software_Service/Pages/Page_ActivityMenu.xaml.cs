@@ -322,7 +322,6 @@ namespace Technical_Software_Service
         {
             //try
             //{
-            //var usersForRemoving = dgUsers.SelectedItems.Cast<Users>().ToList();
             if (dgUsers.SelectedItems.Count == 0)
             {
                 MessageBox.Show("Не выбран ни один пользователь!");
