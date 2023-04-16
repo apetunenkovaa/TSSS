@@ -43,7 +43,7 @@ namespace Technical_Software_Service
             tbUsers.Inlines.Add(new Run("Исполнитель: ") { FontWeight = FontWeights.Bold });
             List<HistoryEntries> histories = DataBase.Base.HistoryEntries.Where(x => x.TicketId == ticket.Id).ToList();
             HistoryEntries historyEntries = new HistoryEntries();
-            for(int i = 0; i < histories.Count; i++)
+            for (int i = 0; i < histories.Count; i++)
             {
                 if (i == histories.Count - 1)
                 {
@@ -51,10 +51,10 @@ namespace Technical_Software_Service
                 }
             }
             Users users = DataBase.Base.Users.FirstOrDefault(x => x.Id == historyEntries.UserId);
-            tbUsers.Inlines.Add(new Run($" {users.NameUsers}"));
+            tbUsers.Inlines.Add(new Run($" {users.NameUsers}"));        
             tbDateUpdate.Inlines.Add(new Run("Последнее обновление: ") { FontWeight = FontWeights.Bold });
-            tbDateUpdate.Inlines.Add(new Run($" {users.LastName + " " + users.FirstName + " " + string.Format("{0:dd.MM.yyyy}", ticket.LastUpdate)}"));
-            tbSolution.Inlines.Add(new Run("Решение: ") { FontWeight = FontWeights.Bold });
+            tbDateUpdate.Inlines.Add(new Run($" {users.NameUsers + " " + string.Format("{0:dd.MM.yyyy}", ticket.LastUpdate)}"));
+            tbSolution.Inlines.Add(new Run("Решение: \n") { FontWeight = FontWeights.Bold });
             if (tbSolution.Text == null)
             {
                 tbSolution.Text = null;
@@ -62,7 +62,7 @@ namespace Technical_Software_Service
             else
             {
                 tbSolution.Inlines.Add(new Run($" {ticket.Solutions.Content}"));
-            }                       
+            }
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)

@@ -65,6 +65,7 @@ namespace Technical_Software_Service
             }
             cbImportance.SelectedIndex = ticket.ImportanceTypeId - 1;
 
+
             List<Solutions> solutions = DataBase.Base.Solutions.ToList();
             cbSolutions.Items.Add("не выбрано");
             for (int i = 0; i < solutions.Count; i++)
@@ -80,13 +81,14 @@ namespace Technical_Software_Service
                 cbSolutions.SelectedIndex = (int)ticket.SolutionId;
             }
 
+
             List<Users> users = DataBase.Base.Users.ToList();
             cbUsers.Items.Add("не выбрано");
             for (int i = 0; i < users.Count; i++)
             {
                 cbUsers.Items.Add(users[i].NameUsers);
             }
-            List<HistoryEntries> histories = DataBase.Base.HistoryEntries.Where(x=>x.TicketId==ticket.Id).ToList();
+            List<HistoryEntries> histories = DataBase.Base.HistoryEntries.Where(x => x.TicketId == ticket.Id).ToList();
             HistoryEntries historyEntries = new HistoryEntries();
             for (int i = 0; i < histories.Count; i++)
             {
@@ -102,7 +104,7 @@ namespace Technical_Software_Service
             else
             {
                 cbUsers.SelectedIndex = historyEntries.UserId;
-            }            
+            }
 
             tbHeader.Text = "Редатирование заявки";
             btnAdd.Content = "Изменить";
@@ -300,15 +302,7 @@ namespace Technical_Software_Service
                 HistoryEntries historyEntries = new HistoryEntries(); // Добавление истории заявок
                 historyEntries.UserId = cbUsers.SelectedIndex;
                 historyEntries.TicketId = Convert.ToInt32(ticket.Id);
-                if(historyEntries.UpdateDescription == null)
-                {
-                    historyEntries.UpdateDescription = null;
-                }
-                else
-                {
-                    historyEntries.UpdateDescription = "";
-                }
-                //historyEntries.UpdateDescription = null;                
+                historyEntries.UpdateDescription = null;
                 DataBase.Base.HistoryEntries.Add(historyEntries);
 
                 Executors executors = new Executors(); // Добавление исполнителей
@@ -320,20 +314,6 @@ namespace Technical_Software_Service
                 MessageBox.Show("Заявка успешно изменена!");
                 this.Close();
             }
-
-
-            //Tickets ticket = new Tickets();
-            //ticket.Title = tbTitle.Text;
-            //ticket.Description = tbDescription.Text;
-            //ticket.Requester = tbRequester.Text;
-            //ticket.OpeningDate = dpOpeningDate.SelectedDate.Value;
-            //ticket.TicketStateId = Convert.ToInt32(cbStates.SelectedValue);
-            //ticket.CategoryId = Convert.ToInt32(cbCategories.SelectedValue);
-            //ticket.ImportanceTypeId = Convert.ToInt32(cbImportance.SelectedValue);
-            //ticket.SolutionId = Convert.ToInt32(cbSolutions.SelectedValue);
-            ////ticket.TicketStateId = Convert.ToInt32(cbStates.SelectedValue);  для исполнителя
-            //ticket.LastUpdate = dpLastUpdate.SelectedDate.Value;
-            //DataBase.Base.Tickets.Add(ticket);
         }
     }
 }

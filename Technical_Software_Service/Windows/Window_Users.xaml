@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Technical_Software_Service"
         mc:Ignorable="d"
-        Title="Window_Users" Height="500" Width="900">
+        Title="Добавление пользователя" Height="500" Width="900">
     <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
