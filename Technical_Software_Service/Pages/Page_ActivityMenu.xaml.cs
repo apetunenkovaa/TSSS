@@ -351,6 +351,16 @@ namespace Technical_Software_Service
             //    MessageBox.Show("При удаление товара возникла ошибка");
             //}                        
         }
+
+        private void btnUpdate_Click(object sender, RoutedEventArgs e) // Редактирование заявки
+        {
+            Button btn = (Button)sender;
+            int index = Convert.ToInt32(btn.Uid);
+            Tickets ticket = DataBase.Base.Tickets.FirstOrDefault(z => z.Id == index);
+            Window_AddUpdateTickets updateTickets = new Window_AddUpdateTickets(user, ticket);
+            updateTickets.ShowDialog();
+            ClassFrame.MainF.Navigate(new Page_Anything(user));
+        }
     }
 }
 

@@ -54,8 +54,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <Button Name="btnBack" Content="Вернуться" Style="{StaticResource Button}" Click="btnBack_Click"/>
-            <Button Name="btnUpdate" Content="Редактировать" Style="{StaticResource Button}" Click="btnUpdate_Click" Uid="{Binding Id}"/>
+            <Button Name="btnBack" Content="Вернуться" Style="{StaticResource Button}" Click="btnBack_Click"/>           
         </StackPanel>
     </Grid>
     </ScrollViewer>
