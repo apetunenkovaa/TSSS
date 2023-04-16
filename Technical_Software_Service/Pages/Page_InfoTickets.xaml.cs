@@ -51,11 +51,11 @@ namespace Technical_Software_Service
                 }
             }
             Users users = DataBase.Base.Users.FirstOrDefault(x => x.Id == historyEntries.UserId);
-            tbUsers.Inlines.Add(new Run($" {user.NameUsers}"));
+            tbUsers.Inlines.Add(new Run($" {users.NameUsers}"));
             tbDateUpdate.Inlines.Add(new Run("Последнее обновление: ") { FontWeight = FontWeights.Bold });
             tbDateUpdate.Inlines.Add(new Run($" {user.LastName + " " + user.FirstName + " " + string.Format("{0:dd.MM.yyyy}", ticket.LastUpdate)}"));
             tbSolution.Inlines.Add(new Run("Решение: ") { FontWeight = FontWeights.Bold });
-            tbSolution.Text = ticket.Solutions.Content;
+            tbSolution.Inlines.Add(new Run($" {ticket.Solutions.Content}"));            
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)

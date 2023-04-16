@@ -17,6 +17,7 @@ using MimeKit;
 using MailKit.Net.Imap;
 using MailKit.Security;
 using Technical_Software_Service;
+using System.Reflection;
 
 namespace Technical_Software_Service
 {
@@ -319,32 +320,37 @@ namespace Technical_Software_Service
 
         private void btnDeleteUser_Click(object sender, RoutedEventArgs e) // Удаление пользователя
         {
-            //if (dgUsers.SelectedItems.Count == 0)
+            //try
             //{
-            //    MessageBox.Show("Не выбран ни один пользователь!");
+            //var usersForRemoving = dgUsers.SelectedItems.Cast<Users>().ToList();
+            if (dgUsers.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Не выбран ни один пользователь!");
+            }
+            else
+            {
+                if (MessageBox.Show("Вы уверены, что хотите удалить данного пользователя?", "Системное сообщение", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    //Users users = DataBase.Base.Users.FirstOrDefault(x => x.Id == index);
+                    List<HistoryEntries> historyEntries = DataBase.Base.HistoryEntries.Where(x => x.UserId == user.Id).ToList();
+                    if (historyEntries.Count == 0) // Если пользователь остутствует в истории заявок, то пользователя можно удалить
+                    {
+                        DataBase.Base.Users.Remove(user);
+                        DataBase.Base.SaveChanges();
+                        dgUsers.ItemsSource = DataBase.Base.Users.ToList();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Данный пользователь не может быть удален, так как используется в историях заявок");
+                    }
+
+                }
+            }              
             //}
-            //else
+            //catch
             //{
-            //    foreach (Users user in dgUsers.SelectedItems)
-            //    {
-            //        List<HistoryEntries> history = DataBase.Base.HistoryEntries.Where(x => x.UserId == user.Id).ToList();
-            //        foreach (HistoryEntries historyEntries in history)
-            //        {
-            //            if (historyEntries.)
-            //            {
-            //                MessageBox.Show($"Данный пользователь не может быть удален, так как используется в историях заявок");
-            //            }
-            //        }
-            //        //удаление отеля
-            //        if (MessageBox.Show("Вы уверены, что хотите удалить данного пользователя?", "Системное сообщение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-            //        {
-            //            DataBase.Base.Users.Remove(user);
-            //            MessageBox.Show("Успешное удаление!");
-            //            DataBase.Base.SaveChanges();
-            //            dgUsers.ItemsSource = DataBase.Base.Users.ToList();
-            //        }
-            //    }
-            //}
+            //    MessageBox.Show("При удаление товара возникла ошибка");
+            //}                        
         }
     }
 }

@@ -50,7 +50,7 @@
                     <TextBlock Grid.Column="0" Name="tbUsers" FontSize="16px" FontFamily="Manrope" Margin="0 10 0 0"/>
                     <TextBlock Grid.Column="1" Name="tbDateUpdate" FontSize="16px" FontFamily="Manrope" Margin="0 10 0 0"/>
                 </Grid>
-                <TextBlock Name="tbSolution" FontSize="16px" FontFamily="Manrope" Margin="5"/>
+                <TextBlock Name="tbSolution" FontSize="16px" FontFamily="Manrope" Margin="5" TextWrapping="Wrap"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal">

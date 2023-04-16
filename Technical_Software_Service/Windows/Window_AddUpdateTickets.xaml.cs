@@ -44,10 +44,6 @@ namespace Technical_Software_Service
             tbDescription.Text = ticket.Description;
             dpLastUpdate.SelectedDate = ticket.LastUpdate;
 
-            //cbStates.SelectedIndex = ticket.TicketStateId - 1;
-            //cbCategories.SelectedIndex = ticket.CategoryId - 1;
-            //cbImportance.SelectedIndex = ticket.ImportanceTypeId - 1;
-
             List<TicketStates> ticketStates = DataBase.Base.TicketStates.ToList();
             for (var i = 0; i < ticketStates.Count; i++)
             {

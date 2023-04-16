@@ -130,8 +130,8 @@ namespace Technical_Software_Service
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 if (flag == false)
                 {
                     if (tbLastName.Text.Replace(" ", "") == "")
@@ -384,18 +384,18 @@ namespace Technical_Software_Service
                     MessageBox.Show("Успешное изменение!");
                     Close();
                 }
-            }
-            catch
-            {
-                if (flag == true)
-                {
-                    MessageBox.Show("При изменение данных возникла ошибка");
-                }
-                else
-                {
-                    MessageBox.Show("При добавление данных возникла ошибка");
-                }
-            }
+            //}
+            //catch
+            //{
+            //    if (flag == true)
+            //    {
+            //        MessageBox.Show("При изменение данных возникла ошибка");
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("При добавление данных возникла ошибка");
+            //    }
+            //}
         }
         /// <summary>
         /// Проверка на логин
