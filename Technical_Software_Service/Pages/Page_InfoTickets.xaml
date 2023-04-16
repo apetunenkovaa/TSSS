@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Technical_Software_Service"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Page_InfoTickets">
+      Title="Подробная информация о заявке">
     <ScrollViewer>
     <Grid>
         <Grid.RowDefinitions>

@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Background="White"
-      Title="Page_DailyTasks">
+      Title="Ежедневные задачи">
 
     <Grid>
         <Grid.RowDefinitions>

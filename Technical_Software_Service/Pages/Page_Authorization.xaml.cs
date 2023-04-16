@@ -24,8 +24,8 @@ namespace Technical_Software_Service
         {
             InitializeComponent();
             tbLogin.Focus();
-            tbLogin.Text = "APotapin";
-            pbPassword.Password = "admin";
+            //tbLogin.Text = "APotapin";
+            //pbPassword.Password = "admin";
         }
 
         List<Users> users = new List<Users>();
