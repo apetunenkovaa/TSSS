@@ -166,11 +166,11 @@
                             <ColumnDefinition Width="1.2*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Rectangle RadiusX="100" RadiusY="100" Height="230" Width="230">
-                                <Rectangle.Fill>
+                            <Ellipse Stroke="#BED7E8" StrokeThickness="5" Height="230" Width="230">
+                                <Ellipse.Fill>
                                     <ImageBrush x:Name="PhotoUser" Stretch="UniformToFill" ImageSource="/Resources/icon_user.png"/>
-                                </Rectangle.Fill>
-                            </Rectangle>
+                                </Ellipse.Fill>
+                            </Ellipse>
                         </StackPanel>
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
                             <WrapPanel>
