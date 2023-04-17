@@ -320,36 +320,23 @@ namespace Technical_Software_Service
 
         private void btnDeleteUser_Click(object sender, RoutedEventArgs e) // Удаление пользователя
         {
-            //try
-            //{
-            if (dgUsers.SelectedItems.Count == 0)
+            var usersForRemoving = dgUsers.SelectedItems.Cast<Users>().ToList();
+            if (MessageBox.Show($"Вы точно хотите удалить следующие {usersForRemoving.Count()} элементов?", "Внимание",
+                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                MessageBox.Show("Не выбран ни один пользователь!");
-            }
-            else
-            {
-                if (MessageBox.Show("Вы уверены, что хотите удалить данного пользователя?", "Системное сообщение", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    //Users users = DataBase.Base.Users.FirstOrDefault(x => x.Id == index);
-                    List<HistoryEntries> historyEntries = DataBase.Base.HistoryEntries.Where(x => x.UserId == user.Id).ToList();
-                    if (historyEntries.Count == 0) // Если пользователь остутствует в истории заявок, то пользователя можно удалить
-                    {
-                        DataBase.Base.Users.Remove(user);
-                        DataBase.Base.SaveChanges();
-                        dgUsers.ItemsSource = DataBase.Base.Users.ToList();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Данный пользователь не может быть удален, так как используется в историях заявок");
-                    }
+                //try
+                //{
+                        HelpdeskEntities.GetContext().Users.RemoveRange(usersForRemoving);
+                        HelpdeskEntities.GetContext().SaveChanges();
+                        MessageBox.Show("Данные удалены !");
 
-                }
-            }              
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("При удаление товара возникла ошибка");
-            //}                        
+                        dgUsers.ItemsSource = HelpdeskEntities.GetContext().Users.ToList();
+                //}
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show(ex.Message.ToString());
+                //}
+            }
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e) // Редактирование заявки

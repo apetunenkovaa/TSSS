@@ -3,6 +3,7 @@ using Technical_Software_Service;
 using System;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows;
 
 namespace UnitTest
 {
@@ -61,5 +62,18 @@ namespace UnitTest
             bool result = Window_UpdatePassword.CoincidencePass(pass, newPass);
             Assert.IsFalse(result);
         }
+
+        //[DataTestMethod]
+        //[DataRow("ABcd1234", true)]
+        //[DataRow("abcdeFGH", false)]
+        //[DataRow("1234567a", false)]
+        //public void IsPass_WithMultiplePasswords_ReturnsExpectedValue(string password, bool expectedValue)
+        //{
+        //    Window_UpdatePassword window = new Window_UpdatePassword(user);
+        //    PasswordBox passwordBox = new PasswordBox(); 
+        //    string passwordBox.Password = password;
+        //    bool actualValue = window.IsPass(passwordBox.Password);
+        //    Assert.AreEqual(expectedValue, actualValue);
+        //}
     }
 }

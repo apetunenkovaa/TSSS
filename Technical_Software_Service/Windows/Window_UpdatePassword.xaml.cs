@@ -79,29 +79,30 @@ namespace Technical_Software_Service
         /// <param name="password"></param>
         /// <returns></returns>
         public bool IsPass(string password)
-        {            
+        {          
             Regex r = new Regex("(?=.*[A-Z])");
             Regex r1 = new Regex("[a-z].*[a-z].*[a-z]");
-            Regex r2 = new Regex("\\d.*\\d");
-            if (r.IsMatch(pbPassword.Password) == true)
+            Regex r2 = new Regex("\\d");
+            if (r.IsMatch(pbNewPassword.Password) == true)
             {
-                if (r1.IsMatch(pbPassword.Password) == true)
+                if (r1.IsMatch(pbNewPassword.Password) == true)
                 {
-                    if (r2.IsMatch(pbPassword.Password) == true)
+                    if (r2.IsMatch(pbNewPassword.Password) == true)
                     {
-                            if (password.Length >= 8)
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                MessageBox.Show("Общая длина пароля не менее 8 символов!", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Error);
-                                return false;
-                            }
+                        if (password.Length >= 8)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Общая длина пароля не менее 8 символов!", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return false;
+                        }
+
                     }
                     else
                     {
-                        MessageBox.Show("Пароль должен содержать не менее 2 цифры!", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Пароль должен содержать не менее 1 цифры!", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Error);
                         return false;
                     }
                 }
@@ -116,6 +117,7 @@ namespace Technical_Software_Service
                 MessageBox.Show("Пароль должен содержать не менее 1 заглавного латинского символа!", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
+
         }
         /// <summary>
         /// Метод для проверки совпадения паролей
@@ -140,12 +142,12 @@ namespace Technical_Software_Service
         {
             string password = pbOldPassword.Password;
             Users user = DataBase.Base.Users.FirstOrDefault(x => x.UserName == tbLogin.Text && x.Password == password);
-            if (user == null)
-            {
-                MessageBox.Show("Введенный пароль неправильный", "Смена пароля", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else
-            {
+            //if (user == null)
+            //{
+            //    MessageBox.Show("Введенный пароль неправильный", "Смена пароля", MessageBoxButton.OK, MessageBoxImage.Error);
+            //}
+            //else
+            //{
                 if (IsPass(pbNewPassword.Password))
                 {
                     if (CoincidencePass(pbNewPassword.Password, pbPassword.Password))
@@ -157,7 +159,7 @@ namespace Technical_Software_Service
                         this.Close();
                     }
                 }
-            }
+            //}
         }
 
         
