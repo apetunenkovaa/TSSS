@@ -4,6 +4,7 @@ using System;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows;
+using System.Diagnostics.Eventing.Reader;
 
 namespace UnitTest
 {
@@ -72,12 +73,36 @@ namespace UnitTest
         }
 
         [TestMethod]
+        public void IsCheckEmail_WithValidEmail_ReturnsFalse() // Проверка на некорректность почты
+        {
+            string email = "petr.yandex.ru";
+            bool result = Window_Users.IsCheckEmail(email);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
         public void IsCheckEmail_TypeOfEmail_ResultCorrectly() // Проверка на тип сохранения данных
         {
-
             string email = "email@gmail.ru";
             bool actual = Window_Users.IsCheckEmail(email);
             Assert.IsInstanceOfType(actual, typeof(bool));
+        }
+
+        [TestMethod]
+        public void IsCheckEmail_TypeToStringOfEmail_ResultNoCorrectly() 
+        {
+            string email = "email@gmail.ru";
+            bool actual = Window_Users.IsCheckEmail(email);
+            Assert.IsNotInstanceOfType(actual, typeof(string));
+        }
+
+        [TestMethod]
+        public void CheckData_NotNullCheck()
+        {
+            string login = "4854789";
+            string password = "Password11";
+            bool actual = Page_Authorization.checkData(login, password);
+            Assert.IsNotNull(actual);
         }
     }
 }

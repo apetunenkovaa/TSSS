@@ -56,16 +56,12 @@ namespace Technical_Software_Service
                     }
                     else
                     {
-                        daily.Image = newFilePath;
+                        daily.Image = newFilePath.Substring(newFilePath.LastIndexOf('\\')).Replace("\\", "");
                     }
                     daily.Score = Convert.ToInt32(tbScore.Text);
                     daily.XP = Convert.ToInt32(tbXP.Text);
                     HelpdeskEntities.GetContext().DailyTasks.Add(daily);
                     HelpdeskEntities.GetContext().SaveChanges();
-                    //UserDailyTasks userDaily = new UserDailyTasks();
-                    //userDaily.DailyTasksID = daily.Id;
-                    //userDaily.UserId = user.Id;
-                    //DataBase.Base.UserDailyTasks.Add(userDaily);
                     MessageBox.Show("Успешное добавление!");
                     this.Close();
                 }

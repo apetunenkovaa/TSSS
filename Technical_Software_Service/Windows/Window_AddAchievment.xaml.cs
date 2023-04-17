@@ -58,14 +58,10 @@ namespace Technical_Software_Service
                     }
                     else
                     {
-                        achievm.Image = newFilePath;
+                        achievm.Image = newFilePath.Substring(newFilePath.LastIndexOf('\\')).Replace("\\", "");
                     }
                     HelpdeskEntities.GetContext().Achievements.Add(achievm);
                     HelpdeskEntities.GetContext().SaveChanges();
-                    //UserAchievements userAchievements = new UserAchievements();
-                    //userAchievements.AchievementID = achievm.Id;
-                    //userAchievements.UserId = user.Id;
-                    //DataBase.Base.UserAchievements.Add(userAchievements);
                     MessageBox.Show("Успешное добавление!");
                     this.Close();
                 }

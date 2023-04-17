@@ -166,7 +166,7 @@
                             <ColumnDefinition Width="1.2*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Ellipse Stroke="#BED7E8" StrokeThickness="5" Height="230" Width="230">
+                            <Ellipse Stroke="#BED7E8" StrokeThickness="5" Height="190" Width="190">
                                 <Ellipse.Fill>
                                     <ImageBrush x:Name="PhotoUser" Stretch="UniformToFill" ImageSource="/Resources/icon_user.png"/>
                                 </Ellipse.Fill>

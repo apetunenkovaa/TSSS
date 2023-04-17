@@ -33,7 +33,7 @@ namespace Technical_Software_Service
         public Window_Users()
         {
             InitializeComponent();
-            listFild();            
+            listFild();
         }
         public Window_Users(Users user)
         {
@@ -46,14 +46,14 @@ namespace Technical_Software_Service
             {
                 cbUserStates.Items.Add(userStates[i].Kind);
             }
-            cbUserStates.SelectedIndex = user.UserStateId-1;
+            cbUserStates.SelectedIndex = user.UserStateId - 1;
 
             List<Positions> position = DataBase.Base.Positions.ToList();
             for (var i = 0; i < position.Count; i++)
             {
                 cbPosition.Items.Add(position[i].Kind);
             }
-            cbPosition.SelectedIndex = user.PositionId-1;
+            cbPosition.SelectedIndex = user.PositionId - 1;
 
             tbLastName.Text = user.LastName;
             tbFirstName.Text = user.FirstName;
@@ -81,11 +81,11 @@ namespace Technical_Software_Service
         /// Заполнение ComboBox
         /// </summary>
         public void listFild()
-        {           
-           
+        {
+
             List<UserStates> userStates = DataBase.Base.UserStates.ToList();
             cbUserStates.Items.Add("не выбрано");
-            for(var i = 0; i < userStates.Count; i++)
+            for (var i = 0; i < userStates.Count; i++)
             {
                 cbUserStates.Items.Add(userStates[i].Kind);
             }
@@ -127,7 +127,11 @@ namespace Technical_Software_Service
         {
             Close();
         }
-
+        /// <summary>
+        /// Проверка на правильность ввода почты
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public static bool IsCheckEmail(string email)
         {
             Regex RegexEmail = new Regex("^\\S+@\\S+\\.\\S+$"); // Регулярное выражение для проверки электронной почты
@@ -144,279 +148,260 @@ namespace Technical_Software_Service
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            if (flag == false)
+            try
             {
-                if (tbLastName.Text.Replace(" ", "") == "")
+                if (flag == false)
                 {
-                    MessageBox.Show("Поле фамилия должно быть заполнено!");
-                    return;
-                }
-                if (tbFirstName.Text.Replace(" ", "") == "")
-                {
-                    MessageBox.Show("Поле имя должно быть заполнено!");
-                    return;
-                }
-                if (tbUserName.Text.Replace(" ", "") == "")
-                {
-                    MessageBox.Show("Поле логин должно быть заполнено!");
-                    return;
-                }
-                Regex regex = new Regex("(?=.*[A-Z])"); // Регулярное выражение для проверки наличия 1 заглавного латинского символа
-                if (regex.IsMatch(pbPassword.Password.ToString()) == false)
-                {
-                    MessageBox.Show("Пароль должен содержать не менее 1 заглавного латинского символа", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                Regex regex1 = new Regex("(?=.*[a-z].*[a-z].*[a-z])"); // Регулярное выражение для проверки наличия 3 строчных латинских символов
-                if (regex1.IsMatch(pbPassword.Password.ToString()) == false)
-                {
-                    MessageBox.Show("Пароль должен содержать не менее 3 строчных латинских символов", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                Regex regex2 = new Regex("(?=.*[0-9].*[0-9])"); // Регулярное выражение для проверки наличия 2 цифр
-                if (regex2.IsMatch(pbPassword.Password.ToString()) == false)
-                {
-                    MessageBox.Show("Пароль должен содержать не менее 2 цифр", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                Regex regexLength = new Regex(".{8,}"); // Регулярное выражение для проверки длины пароля
-                if (regex2.IsMatch(pbPassword.Password.ToString()) == false)
-                {
-                    MessageBox.Show("Общая длина пароля должна быть не менее 8 символов", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                //Regex RegexEmail = new Regex("^\\S+@\\S+\\.\\S+$"); // Регулярное выражение для проверки электронной почты
-                //if (RegexEmail.IsMatch(tbEmail.Text.ToString()) == false)
-                //{
-                //    MessageBox.Show("Введите электронную почту корректно", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                //    return;
-                //}
-                if (cbPosition.Text == "")
-                {
-                    MessageBox.Show("Поле должность должно быть выбрано из списка!");
-                    return;
-                }
-                if (cbUserStates.Text == "")
-                {
-                    MessageBox.Show("Поле состояние должно быть выбрано из списка!");
-                    return;
-                }
-                if (GetProverkaLogin() == true)
-                {
-                    MessageBox.Show("Пользователь с таким логином уже зарегистрирован!");
-                    return;
-                }
-                if (IsCheckEmail(tbEmail.Text))
-                {
-                    user = new Users();
-                    user.LastName = tbLastName.Text;
-                    user.FirstName = tbFirstName.Text;
-                    if (tbMiddleName.Text == "")
+                    if (tbLastName.Text.Replace(" ", "") == "")
                     {
-                        user.MiddleName = null;
+                        MessageBox.Show("Поле фамилия должно быть заполнено!");
+                        return;
                     }
-                    else
+                    if (tbFirstName.Text.Replace(" ", "") == "")
                     {
-                        user.MiddleName = tbMiddleName.Text;
+                        MessageBox.Show("Поле имя должно быть заполнено!");
+                        return;
                     }
-                    user.UserName = tbUserName.Text;
-                    user.Password = pbPassword.Password;
-                    user.RoleId = 2;
-                    user.PositionId = cbPosition.SelectedIndex;
-                    user.UserStateId = cbUserStates.SelectedIndex;
-                    if (cbVisibility.IsChecked == false)
+                    if (tbUserName.Text.Replace(" ", "") == "")
                     {
-                        user.Visible = false;
+                        MessageBox.Show("Поле логин должно быть заполнено!");
+                        return;
                     }
-                    else
+                    Regex regex = new Regex("(?=.*[A-Z])"); // Регулярное выражение для проверки наличия 1 заглавного латинского символа
+                    if (regex.IsMatch(pbPassword.Password.ToString()) == false)
                     {
-                        user.Visible = true;
+                        MessageBox.Show("Пароль должен содержать не менее 1 заглавного латинского символа", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
                     }
-                    if (tbPhone.Text == "")
+                    Regex regex1 = new Regex("(?=.*[a-z].*[a-z].*[a-z])"); // Регулярное выражение для проверки наличия 3 строчных латинских символов
+                    if (regex1.IsMatch(pbPassword.Password.ToString()) == false)
                     {
-                        user.PhoneNumber = null;
+                        MessageBox.Show("Пароль должен содержать не менее 3 строчных латинских символов", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
                     }
-                    else
+                    Regex regex2 = new Regex("(?=.*[0-9].*[0-9])"); // Регулярное выражение для проверки наличия 2 цифр
+                    if (regex2.IsMatch(pbPassword.Password.ToString()) == false)
                     {
-                        user.PhoneNumber = tbPhone.Text;
+                        MessageBox.Show("Пароль должен содержать не менее 2 цифр", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
                     }
-                    user.Email = tbEmail.Text;
-                    if (NewPath == null)
+                    Regex regexLength = new Regex(".{8,}"); // Регулярное выражение для проверки длины пароля
+                    if (regex2.IsMatch(pbPassword.Password.ToString()) == false)
                     {
-                        user.Photo = null;
+                        MessageBox.Show("Общая длина пароля должна быть не менее 8 символов", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
                     }
-                    else
+                    if (cbPosition.Text == "")
                     {
-                        user.Photo = NewPath.Substring(NewPath.LastIndexOf('\\')).Replace("\\", "");
+                        MessageBox.Show("Поле должность должно быть выбрано из списка!");
+                        return;
                     }
-                    if (tbScore.Text == "")
+                    if (cbUserStates.Text == "")
                     {
-                        user.Score = null;
+                        MessageBox.Show("Поле состояние должно быть выбрано из списка!");
+                        return;
                     }
-                    else
+                    if (GetProverkaLogin() == true)
                     {
-                        user.Score = Convert.ToInt32(tbScore.Text);
+                        MessageBox.Show("Пользователь с таким логином уже зарегистрирован!");
+                        return;
                     }
-                    if (tbLevel.Text == "")
+                    if (IsCheckEmail(tbEmail.Text))
                     {
-                        user.Level = null;
+                        user = new Users();
+                        user.LastName = tbLastName.Text;
+                        user.FirstName = tbFirstName.Text;
+                        if (tbMiddleName.Text == "")
+                        {
+                            user.MiddleName = null;
+                        }
+                        else
+                        {
+                            user.MiddleName = tbMiddleName.Text;
+                        }
+                        user.UserName = tbUserName.Text;
+                        user.Password = pbPassword.Password;
+                        user.RoleId = 2;
+                        user.PositionId = cbPosition.SelectedIndex;
+                        user.UserStateId = cbUserStates.SelectedIndex;
+                        if (cbVisibility.IsChecked == false)
+                        {
+                            user.Visible = false;
+                        }
+                        else
+                        {
+                            user.Visible = true;
+                        }
+                        if (tbPhone.Text == "")
+                        {
+                            user.PhoneNumber = null;
+                        }
+                        else
+                        {
+                            user.PhoneNumber = tbPhone.Text;
+                        }
+                        user.Email = tbEmail.Text;
+                        if (NewPath == null)
+                        {
+                            user.Photo = null;
+                        }
+                        else
+                        {
+                            user.Photo = NewPath.Substring(NewPath.LastIndexOf('\\')).Replace("\\", "");
+                        }
+                        if (tbScore.Text == "")
+                        {
+                            user.Score = null;
+                        }
+                        else
+                        {
+                            user.Score = Convert.ToInt32(tbScore.Text);
+                        }
+                        if (tbLevel.Text == "")
+                        {
+                            user.Level = null;
+                        }
+                        else
+                        {
+                            user.Level = Convert.ToInt32(tbLevel.Text);
+                        }
+                        if (tbXP.Text == "")
+                        {
+                            user.XP = null;
+                        }
+                        else
+                        {
+                            user.XP = Convert.ToInt32(tbXP.Text);
+                        }
+                        DataBase.Base.Users.Add(user);
+                        MessageBox.Show("Успешное добавление!");
+                        DataBase.Base.SaveChanges();
+                        Close();
                     }
-                    else
-                    {
-                        user.Level = Convert.ToInt32(tbLevel.Text);
-                    }
-                    if (tbXP.Text == "")
-                    {
-                        user.XP = null;
-                    }
-                    else
-                    {
-                        user.XP = Convert.ToInt32(tbXP.Text);
-                    }
-                    DataBase.Base.Users.Add(user);
-                    MessageBox.Show("Успешное добавление!");
-                    DataBase.Base.SaveChanges();
-                    Close();
-                }
 
+                }
+                else
+                {
+                    if (tbLastName.Text.Replace(" ", "") == "")
+                    {
+                        MessageBox.Show("Поле фамилия должно быть заполнено!");
+                        return;
+                    }
+                    if (tbFirstName.Text.Replace(" ", "") == "")
+                    {
+                        MessageBox.Show("Поле имя должно быть заполнено!");
+                        return;
+                    }
+                    if (tbUserName.Text.Replace(" ", "") == "")
+                    {
+                        MessageBox.Show("Поле логин должно быть заполнено!");
+                        return;
+                    }
+                    Regex regex = new Regex("(?=.*[A-Z])"); // Регулярное выражение для проверки наличия 1 заглавного латинского символа
+                    if (regex.IsMatch(pbPassword.Password.ToString()) == false)
+                    {
+                        MessageBox.Show("Пароль должен содержать не менее 1 заглавного латинского символа", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    Regex regex1 = new Regex("(?=.*[a-z].*[a-z].*[a-z])"); // Регулярное выражение для проверки наличия 3 строчных латинских символов
+                    if (regex1.IsMatch(pbPassword.Password.ToString()) == false)
+                    {
+                        MessageBox.Show("Пароль должен содержать не менее 3 строчных латинских символов", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    Regex regex2 = new Regex("(?=.*[0-9].*[0-9])"); // Регулярное выражение для проверки наличия 2 цифр
+                    if (regex2.IsMatch(pbPassword.Password.ToString()) == false)
+                    {
+                        MessageBox.Show("Пароль должен содержать не менее 2 цифр", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    Regex regexLength = new Regex(".{8,}"); // Регулярное выражение для проверки длины пароля
+                    if (regex2.IsMatch(pbPassword.Password.ToString()) == false)
+                    {
+                        MessageBox.Show("Общая длина пароля должна быть не менее 8 символов", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    if (cbPosition.Text == "")
+                    {
+                        MessageBox.Show("Поле роль должно быть выбрано из списка!");
+                        return;
+                    }
+                    if (cbUserStates.Text == "")
+                    {
+                        MessageBox.Show("Поле роль должно быть выбрано из списка!");
+                        return;
+                    }
+                    if (IsCheckEmail(tbEmail.Text))
+                    {
+                        user.LastName = tbLastName.Text;
+                        user.FirstName = tbFirstName.Text;
+                        if (tbMiddleName.Text == "")
+                        {
+                            user.MiddleName = null;
+                        }
+                        else
+                        {
+                            user.MiddleName = tbMiddleName.Text;
+                        }
+                        user.UserName = tbUserName.Text;
+                        user.Password = pbPassword.Password;
+                        user.PositionId = cbPosition.SelectedIndex + 1;
+                        user.UserStateId = cbUserStates.SelectedIndex + 1;
+                        if (cbVisibility.IsChecked == false)
+                        {
+                            user.Visible = false;
+                        }
+                        else
+                        {
+                            user.Visible = true;
+                        }
+                        if (tbPhone.Text == "")
+                        {
+                            user.PhoneNumber = null;
+                        }
+                        else
+                        {
+                            user.PhoneNumber = tbPhone.Text;
+                        }
+                        user.Email = tbEmail.Text;
+                        if (NewPath != null)
+                        {
+                            user.Photo = NewPath.Substring(NewPath.LastIndexOf('\\')).Replace("\\", "");
+                        }
+                        if (tbScore.Text == "")
+                        {
+                            user.Score = null;
+                        }
+                        else
+                        {
+                            user.Score = Convert.ToInt32(tbScore.Text);
+                        }
+                        if (tbLevel.Text == "")
+                        {
+                            user.Level = null;
+                        }
+                        else
+                        {
+                            user.Level = Convert.ToInt32(tbLevel.Text);
+                        }
+                        if (tbXP.Text == "")
+                        {
+                            user.XP = null;
+                        }
+                        else
+                        {
+                            user.XP = Convert.ToInt32(tbXP.Text);
+                        }
+                        DataBase.Base.SaveChanges();
+                        MessageBox.Show("Успешное изменение!");
+                        Close();
+                    }
+                }
             }
-            else
+            catch
             {
-                if (tbLastName.Text.Replace(" ", "") == "")
-                {
-                    MessageBox.Show("Поле фамилия должно быть заполнено!");
-                    return;
-                }
-                if (tbFirstName.Text.Replace(" ", "") == "")
-                {
-                    MessageBox.Show("Поле имя должно быть заполнено!");
-                    return;
-                }
-                if (tbUserName.Text.Replace(" ", "") == "")
-                {
-                    MessageBox.Show("Поле логин должно быть заполнено!");
-                    return;
-                }
-                Regex regex = new Regex("(?=.*[A-Z])"); // Регулярное выражение для проверки наличия 1 заглавного латинского символа
-                if (regex.IsMatch(pbPassword.Password.ToString()) == false)
-                {
-                    MessageBox.Show("Пароль должен содержать не менее 1 заглавного латинского символа", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                Regex regex1 = new Regex("(?=.*[a-z].*[a-z].*[a-z])"); // Регулярное выражение для проверки наличия 3 строчных латинских символов
-                if (regex1.IsMatch(pbPassword.Password.ToString()) == false)
-                {
-                    MessageBox.Show("Пароль должен содержать не менее 3 строчных латинских символов", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                Regex regex2 = new Regex("(?=.*[0-9].*[0-9])"); // Регулярное выражение для проверки наличия 2 цифр
-                if (regex2.IsMatch(pbPassword.Password.ToString()) == false)
-                {
-                    MessageBox.Show("Пароль должен содержать не менее 2 цифр", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                Regex regexLength = new Regex(".{8,}"); // Регулярное выражение для проверки длины пароля
-                if (regex2.IsMatch(pbPassword.Password.ToString()) == false)
-                {
-                    MessageBox.Show("Общая длина пароля должна быть не менее 8 символов", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                //Regex RegexEmail = new Regex("^\\S+@\\S+\\.\\S+$"); // Регулярное выражение для проверки электронной почты
-                //if (RegexEmail.IsMatch(tbEmail.Text.ToString()) == false)
-                //{
-                //    MessageBox.Show("Введите электронную почту корректно", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                //    return;
-                //}
-                if (cbPosition.Text == "")
-                {
-                    MessageBox.Show("Поле роль должно быть выбрано из списка!");
-                    return;
-                }
-                if (cbUserStates.Text == "")
-                {
-                    MessageBox.Show("Поле роль должно быть выбрано из списка!");
-                    return;
-                }
-                if (IsCheckEmail(tbEmail.Text))
-                {
-                    user.LastName = tbLastName.Text;
-                    user.FirstName = tbFirstName.Text;
-                    if (tbMiddleName.Text == "")
-                    {
-                        user.MiddleName = null;
-                    }
-                    else
-                    {
-                        user.MiddleName = tbMiddleName.Text;
-                    }
-                    user.UserName = tbUserName.Text;
-                    user.Password = pbPassword.Password;
-                    user.PositionId = cbPosition.SelectedIndex + 1;
-                    user.UserStateId = cbUserStates.SelectedIndex + 1;
-                    if (cbVisibility.IsChecked == false)
-                    {
-                        user.Visible = false;
-                    }
-                    else
-                    {
-                        user.Visible = true;
-                    }
-                    if (tbPhone.Text == "")
-                    {
-                        user.PhoneNumber = null;
-                    }
-                    else
-                    {
-                        user.PhoneNumber = tbPhone.Text;
-                    }
-                    user.Email = tbEmail.Text;
-                    if (NewPath != null)
-                    {
-                        user.Photo = NewPath.Substring(NewPath.LastIndexOf('\\')).Replace("\\", "");
-                    }
-                    if (tbScore.Text == "")
-                    {
-                        user.Score = null;
-                    }
-                    else
-                    {
-                        user.Score = Convert.ToInt32(tbScore.Text);
-                    }
-                    if (tbLevel.Text == "")
-                    {
-                        user.Level = null;
-                    }
-                    else
-                    {
-                        user.Level = Convert.ToInt32(tbLevel.Text);
-                    }
-                    if (tbXP.Text == "")
-                    {
-                        user.XP = null;
-                    }
-                    else
-                    {
-                        user.XP = Convert.ToInt32(tbXP.Text);
-                    }
-                    DataBase.Base.SaveChanges();
-                    MessageBox.Show("Успешное изменение!");
-                    Close();
-                }
+                MessageBox.Show("Что-то пошло не так", "Ошибка");
             }
-            //}
-            //catch
-            //{
-            //    if (flag == true)
-            //    {
-            //        MessageBox.Show("При изменение данных возникла ошибка");
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("При добавление данных возникла ошибка");
-            //    }
-            //}
         }
         /// <summary>
         /// Проверка на логин

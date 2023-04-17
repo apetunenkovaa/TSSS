@@ -140,28 +140,33 @@ namespace Technical_Software_Service
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            string password = pbOldPassword.Password;
-            Users user = DataBase.Base.Users.FirstOrDefault(x => x.UserName == tbLogin.Text && x.Password == password);
-            //if (user == null)
-            //{
-            //    MessageBox.Show("Введенный пароль неправильный", "Смена пароля", MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
-            //else
-            //{
-                if (IsPass(pbNewPassword.Password))
+            try
+            {
+                string password = pbOldPassword.Password;
+                Users user = DataBase.Base.Users.FirstOrDefault(x => x.UserName == tbLogin.Text && x.Password == password);
+                if (user == null)
                 {
-                    if (CoincidencePass(pbNewPassword.Password, pbPassword.Password))
+                    MessageBox.Show("Введенный пароль неправильный", "Смена пароля", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    if (IsPass(pbNewPassword.Password))
                     {
-                        user.Password = pbPassword.Password;
-                        user.UserName = tbLogin.Text;
-                        DataBase.Base.SaveChanges();
-                        MessageBox.Show("Пароль успешно изменен!");
-                        this.Close();
+                        if (CoincidencePass(pbNewPassword.Password, pbPassword.Password))
+                        {
+                            user.Password = pbPassword.Password;
+                            user.UserName = tbLogin.Text;
+                            DataBase.Base.SaveChanges();
+                            MessageBox.Show("Пароль успешно изменен!");
+                            this.Close();
+                        }
                     }
                 }
-            //}
-        }
-
-        
+            }
+            catch
+            {
+                MessageBox.Show("Что-то не так", "Ошибка");
+            }            
+        }        
     }
 }

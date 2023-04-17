@@ -36,7 +36,6 @@ namespace Technical_Software_Service
             InitializeComponent();
             this.user = user;
             this.ticket = ticket;
-            //CBUpload();
             flag = true;
             tbTitle.Text = ticket.Title;
             tbRequester.Text = ticket.Requester;
