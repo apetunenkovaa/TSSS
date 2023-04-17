@@ -234,7 +234,7 @@
                     </StackPanel>
                     <StackPanel Grid.Row="2" Orientation="Horizontal">
                         <Button Name="btnAddUser" Content="Добавить пользователя" Click="btnAddUser_Click" Width="200" Style="{StaticResource Btn}" HorizontalAlignment="Right"/>
-                        <Button Name="btnDeleteUser" Content="Удалить" Click="btnDeleteUser_Click" Width="200" Style="{StaticResource Btn}"/>
+                        <Button Name="btnDeleteUser" Visibility="Collapsed" Content="Удалить" Click="btnDeleteUser_Click" Width="200" Style="{StaticResource Btn}"/>
                     </StackPanel>                    
                 </Grid>
             </TabItem>

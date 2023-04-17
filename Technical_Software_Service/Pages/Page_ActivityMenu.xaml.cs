@@ -320,23 +320,23 @@ namespace Technical_Software_Service
 
         private void btnDeleteUser_Click(object sender, RoutedEventArgs e) // Удаление пользователя
         {
-            var usersForRemoving = dgUsers.SelectedItems.Cast<Users>().ToList();
-            if (MessageBox.Show($"Вы точно хотите удалить следующие {usersForRemoving.Count()} элементов?", "Внимание",
-                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                //try
-                //{
-                        HelpdeskEntities.GetContext().Users.RemoveRange(usersForRemoving);
-                        HelpdeskEntities.GetContext().SaveChanges();
-                        MessageBox.Show("Данные удалены !");
+            //var usersForRemoving = dgUsers.SelectedItems.Cast<Users>().ToList();
+            //if (MessageBox.Show($"Вы точно хотите удалить следующие {usersForRemoving.Count()} элементов?", "Внимание",
+            //    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            //{
+            //    //try
+            //    //{
+            //            HelpdeskEntities.GetContext().Users.RemoveRange(usersForRemoving);
+            //            HelpdeskEntities.GetContext().SaveChanges();
+            //            MessageBox.Show("Данные удалены !");
 
-                        dgUsers.ItemsSource = HelpdeskEntities.GetContext().Users.ToList();
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show(ex.Message.ToString());
-                //}
-            }
+            //            dgUsers.ItemsSource = HelpdeskEntities.GetContext().Users.ToList();
+            //    //}
+            //    //catch (Exception ex)
+            //    //{
+            //    //    MessageBox.Show(ex.Message.ToString());
+            //    //}
+            //}
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e) // Редактирование заявки

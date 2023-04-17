@@ -55,14 +55,7 @@ namespace Technical_Software_Service
             tbDateUpdate.Inlines.Add(new Run("Последнее обновление: ") { FontWeight = FontWeights.Bold });
             tbDateUpdate.Inlines.Add(new Run($" {users.NameUsers + " " + string.Format("{0:dd.MM.yyyy}", ticket.LastUpdate)}"));
             tbSolution.Inlines.Add(new Run("Решение: \n") { FontWeight = FontWeights.Bold });
-            if (tbSolution.Text == null)
-            {
-                tbSolution.Text = null;
-            }
-            else
-            {
-                tbSolution.Inlines.Add(new Run($" {ticket.Solutions.Content}"));
-            }
+            tbSolution.Inlines.Add(new Run($" {ticket.Solutions.Content}"));
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
