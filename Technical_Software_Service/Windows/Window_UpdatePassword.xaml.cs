@@ -78,16 +78,16 @@ namespace Technical_Software_Service
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool IsPass(string password)
+        public static bool IsPass(string password)
         {          
             Regex r = new Regex("(?=.*[A-Z])");
             Regex r1 = new Regex("[a-z].*[a-z].*[a-z]");
-            Regex r2 = new Regex("\\d");
-            if (r.IsMatch(pbNewPassword.Password) == true)
+            Regex r2 = new Regex("\\d.*\\d");
+            if (r.IsMatch(password) == true)
             {
-                if (r1.IsMatch(pbNewPassword.Password) == true)
+                if (r1.IsMatch(password) == true)
                 {
-                    if (r2.IsMatch(pbNewPassword.Password) == true)
+                    if (r2.IsMatch(password) == true)
                     {
                         if (password.Length >= 8)
                         {
@@ -102,7 +102,7 @@ namespace Technical_Software_Service
                     }
                     else
                     {
-                        MessageBox.Show("Пароль должен содержать не менее 1 цифры!", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Пароль должен содержать не менее 2 цифры!", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Error);
                         return false;
                     }
                 }

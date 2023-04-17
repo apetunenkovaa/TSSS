@@ -128,72 +128,88 @@ namespace Technical_Software_Service
             Close();
         }
 
+        public static bool IsCheckEmail(string email)
+        {
+            Regex RegexEmail = new Regex("^\\S+@\\S+\\.\\S+$"); // Регулярное выражение для проверки электронной почты
+            if (RegexEmail.IsMatch(email) == true)
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Введите электронную почту корректно", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+        }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             //try
             //{
-                if (flag == false)
+            if (flag == false)
+            {
+                if (tbLastName.Text.Replace(" ", "") == "")
                 {
-                    if (tbLastName.Text.Replace(" ", "") == "")
-                    {
-                        MessageBox.Show("Поле фамилия должно быть заполнено!");
-                        return;
-                    }
-                    if (tbFirstName.Text.Replace(" ", "") == "")
-                    {
-                        MessageBox.Show("Поле имя должно быть заполнено!");
-                        return;
-                    }
-                    if (tbUserName.Text.Replace(" ", "") == "")
-                    {
-                        MessageBox.Show("Поле логин должно быть заполнено!");
-                        return;
-                    }
-                    Regex regex = new Regex("(?=.*[A-Z])"); // Регулярное выражение для проверки наличия 1 заглавного латинского символа
-                    if (regex.IsMatch(pbPassword.Password.ToString()) == false)
-                    {
-                        MessageBox.Show("Пароль должен содержать не менее 1 заглавного латинского символа", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-                    Regex regex1 = new Regex("(?=.*[a-z].*[a-z].*[a-z])"); // Регулярное выражение для проверки наличия 3 строчных латинских символов
-                    if (regex1.IsMatch(pbPassword.Password.ToString()) == false)
-                    {
-                        MessageBox.Show("Пароль должен содержать не менее 3 строчных латинских символов", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-                    Regex regex2 = new Regex("(?=.*[0-9].*[0-9])"); // Регулярное выражение для проверки наличия 2 цифр
-                    if (regex2.IsMatch(pbPassword.Password.ToString()) == false)
-                    {
-                        MessageBox.Show("Пароль должен содержать не менее 2 цифр", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-                    Regex regexLength = new Regex(".{8,}"); // Регулярное выражение для проверки длины пароля
-                    if (regex2.IsMatch(pbPassword.Password.ToString()) == false)
-                    {
-                        MessageBox.Show("Общая длина пароля должна быть не менее 8 символов", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-                    Regex RegexEmail = new Regex("^\\S+@\\S+\\.\\S+$"); // Регулярное выражение для проверки электронной почты
-                    if (RegexEmail.IsMatch(tbEmail.Text.ToString()) == false)
-                    {
-                        MessageBox.Show("Введите электронную почту корректно", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-                    if (cbPosition.Text == "")
-                    {
-                        MessageBox.Show("Поле должность должно быть выбрано из списка!");
-                        return;
-                    }
-                    if (cbUserStates.Text == "")
-                    {
-                        MessageBox.Show("Поле состояние должно быть выбрано из списка!");
-                        return;
-                    }
-                    if (GetProverkaLogin() == true)
-                    {
-                        MessageBox.Show("Пользователь с таким логином уже зарегистрирован!");
-                        return;
-                    }
+                    MessageBox.Show("Поле фамилия должно быть заполнено!");
+                    return;
+                }
+                if (tbFirstName.Text.Replace(" ", "") == "")
+                {
+                    MessageBox.Show("Поле имя должно быть заполнено!");
+                    return;
+                }
+                if (tbUserName.Text.Replace(" ", "") == "")
+                {
+                    MessageBox.Show("Поле логин должно быть заполнено!");
+                    return;
+                }
+                Regex regex = new Regex("(?=.*[A-Z])"); // Регулярное выражение для проверки наличия 1 заглавного латинского символа
+                if (regex.IsMatch(pbPassword.Password.ToString()) == false)
+                {
+                    MessageBox.Show("Пароль должен содержать не менее 1 заглавного латинского символа", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                Regex regex1 = new Regex("(?=.*[a-z].*[a-z].*[a-z])"); // Регулярное выражение для проверки наличия 3 строчных латинских символов
+                if (regex1.IsMatch(pbPassword.Password.ToString()) == false)
+                {
+                    MessageBox.Show("Пароль должен содержать не менее 3 строчных латинских символов", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                Regex regex2 = new Regex("(?=.*[0-9].*[0-9])"); // Регулярное выражение для проверки наличия 2 цифр
+                if (regex2.IsMatch(pbPassword.Password.ToString()) == false)
+                {
+                    MessageBox.Show("Пароль должен содержать не менее 2 цифр", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                Regex regexLength = new Regex(".{8,}"); // Регулярное выражение для проверки длины пароля
+                if (regex2.IsMatch(pbPassword.Password.ToString()) == false)
+                {
+                    MessageBox.Show("Общая длина пароля должна быть не менее 8 символов", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                //Regex RegexEmail = new Regex("^\\S+@\\S+\\.\\S+$"); // Регулярное выражение для проверки электронной почты
+                //if (RegexEmail.IsMatch(tbEmail.Text.ToString()) == false)
+                //{
+                //    MessageBox.Show("Введите электронную почту корректно", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                //    return;
+                //}
+                if (cbPosition.Text == "")
+                {
+                    MessageBox.Show("Поле должность должно быть выбрано из списка!");
+                    return;
+                }
+                if (cbUserStates.Text == "")
+                {
+                    MessageBox.Show("Поле состояние должно быть выбрано из списка!");
+                    return;
+                }
+                if (GetProverkaLogin() == true)
+                {
+                    MessageBox.Show("Пользователь с таким логином уже зарегистрирован!");
+                    return;
+                }
+                if (IsCheckEmail(tbEmail.Text))
+                {
                     user = new Users();
                     user.LastName = tbLastName.Text;
                     user.FirstName = tbFirstName.Text;
@@ -264,63 +280,67 @@ namespace Technical_Software_Service
                     DataBase.Base.SaveChanges();
                     Close();
                 }
-                else
+
+            }
+            else
+            {
+                if (tbLastName.Text.Replace(" ", "") == "")
                 {
-                    if (tbLastName.Text.Replace(" ", "") == "")
-                    {
-                        MessageBox.Show("Поле фамилия должно быть заполнено!");
-                        return;
-                    }
-                    if (tbFirstName.Text.Replace(" ", "") == "")
-                    {
-                        MessageBox.Show("Поле имя должно быть заполнено!");
-                        return;
-                    }
-                    if (tbUserName.Text.Replace(" ", "") == "")
-                    {
-                        MessageBox.Show("Поле логин должно быть заполнено!");
-                        return;
-                    }
-                    Regex regex = new Regex("(?=.*[A-Z])"); // Регулярное выражение для проверки наличия 1 заглавного латинского символа
-                    if (regex.IsMatch(pbPassword.Password.ToString()) == false)
-                    {
-                        MessageBox.Show("Пароль должен содержать не менее 1 заглавного латинского символа", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-                    Regex regex1 = new Regex("(?=.*[a-z].*[a-z].*[a-z])"); // Регулярное выражение для проверки наличия 3 строчных латинских символов
-                    if (regex1.IsMatch(pbPassword.Password.ToString()) == false)
-                    {
-                        MessageBox.Show("Пароль должен содержать не менее 3 строчных латинских символов", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-                    Regex regex2 = new Regex("(?=.*[0-9].*[0-9])"); // Регулярное выражение для проверки наличия 2 цифр
-                    if (regex2.IsMatch(pbPassword.Password.ToString()) == false)
-                    {
-                        MessageBox.Show("Пароль должен содержать не менее 2 цифр", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-                    Regex regexLength = new Regex(".{8,}"); // Регулярное выражение для проверки длины пароля
-                    if (regex2.IsMatch(pbPassword.Password.ToString()) == false)
-                    {
-                        MessageBox.Show("Общая длина пароля должна быть не менее 8 символов", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-                    Regex RegexEmail = new Regex("^\\S+@\\S+\\.\\S+$"); // Регулярное выражение для проверки электронной почты
-                    if (RegexEmail.IsMatch(tbEmail.Text.ToString()) == false)
-                    {
-                        MessageBox.Show("Введите электронную почту корректно", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-                    if (cbPosition.Text == "")
-                    {
-                        MessageBox.Show("Поле роль должно быть выбрано из списка!");
-                        return;
-                    }
-                    if (cbUserStates.Text == "")
-                    {
-                        MessageBox.Show("Поле роль должно быть выбрано из списка!");
-                        return;
-                    }
+                    MessageBox.Show("Поле фамилия должно быть заполнено!");
+                    return;
+                }
+                if (tbFirstName.Text.Replace(" ", "") == "")
+                {
+                    MessageBox.Show("Поле имя должно быть заполнено!");
+                    return;
+                }
+                if (tbUserName.Text.Replace(" ", "") == "")
+                {
+                    MessageBox.Show("Поле логин должно быть заполнено!");
+                    return;
+                }
+                Regex regex = new Regex("(?=.*[A-Z])"); // Регулярное выражение для проверки наличия 1 заглавного латинского символа
+                if (regex.IsMatch(pbPassword.Password.ToString()) == false)
+                {
+                    MessageBox.Show("Пароль должен содержать не менее 1 заглавного латинского символа", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                Regex regex1 = new Regex("(?=.*[a-z].*[a-z].*[a-z])"); // Регулярное выражение для проверки наличия 3 строчных латинских символов
+                if (regex1.IsMatch(pbPassword.Password.ToString()) == false)
+                {
+                    MessageBox.Show("Пароль должен содержать не менее 3 строчных латинских символов", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                Regex regex2 = new Regex("(?=.*[0-9].*[0-9])"); // Регулярное выражение для проверки наличия 2 цифр
+                if (regex2.IsMatch(pbPassword.Password.ToString()) == false)
+                {
+                    MessageBox.Show("Пароль должен содержать не менее 2 цифр", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                Regex regexLength = new Regex(".{8,}"); // Регулярное выражение для проверки длины пароля
+                if (regex2.IsMatch(pbPassword.Password.ToString()) == false)
+                {
+                    MessageBox.Show("Общая длина пароля должна быть не менее 8 символов", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                //Regex RegexEmail = new Regex("^\\S+@\\S+\\.\\S+$"); // Регулярное выражение для проверки электронной почты
+                //if (RegexEmail.IsMatch(tbEmail.Text.ToString()) == false)
+                //{
+                //    MessageBox.Show("Введите электронную почту корректно", "Системное сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+                //    return;
+                //}
+                if (cbPosition.Text == "")
+                {
+                    MessageBox.Show("Поле роль должно быть выбрано из списка!");
+                    return;
+                }
+                if (cbUserStates.Text == "")
+                {
+                    MessageBox.Show("Поле роль должно быть выбрано из списка!");
+                    return;
+                }
+                if (IsCheckEmail(tbEmail.Text))
+                {
                     user.LastName = tbLastName.Text;
                     user.FirstName = tbFirstName.Text;
                     if (tbMiddleName.Text == "")
@@ -384,6 +404,7 @@ namespace Technical_Software_Service
                     MessageBox.Show("Успешное изменение!");
                     Close();
                 }
+            }
             //}
             //catch
             //{

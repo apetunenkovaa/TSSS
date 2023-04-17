@@ -30,21 +30,21 @@ namespace UnitTest
             Assert.AreEqual(except, actual);
         }
 
-        //[TestMethod]
-        //public void IsPass_WithValidPassword_ReturnsTrue() // Проверка на корректность пароля
-        //{    
-        //    string password = "Password1";
-        //    bool result = Window_UpdatePassword.IsPass(password);
-        //    Assert.IsTrue(result);
-        //}
+        [TestMethod]
+        public void IsPass_WithValidPassword_ReturnsTrue() // Проверка на корректность пароля
+        {
+            string password = "Password11";
+            bool result = Window_UpdatePassword.IsPass(password);
+            Assert.IsTrue(result);
+        }
 
-        //[TestMethod]
-        //public void IsPass_WithValidPassword_ReturnsFalse() // Проверка на корректность пароля
-        //{
-        //    string password = "Pass1";
-        //    bool result = Window_UpdatePassword.IsPass(password);
-        //    Assert.IsFalse(result);
-        //}
+        [TestMethod]
+        public void IsPass_WithValidPassword_ReturnsFalse() // Проверка некорректного пароля
+        {
+            string password = "Pass1";
+            bool result = Window_UpdatePassword.IsPass(password);
+            Assert.IsFalse(result);
+        }
 
         [TestMethod]
         public void CoincidencePass_WhenPasswordsMatch_ReturnsTrue() // Проверка на совпадение паролей
@@ -63,17 +63,21 @@ namespace UnitTest
             Assert.IsFalse(result);
         }
 
-        //[DataTestMethod]
-        //[DataRow("ABcd1234", true)]
-        //[DataRow("abcdeFGH", false)]
-        //[DataRow("1234567a", false)]
-        //public void IsPass_WithMultiplePasswords_ReturnsExpectedValue(string password, bool expectedValue)
-        //{
-        //    Window_UpdatePassword window = new Window_UpdatePassword(user);
-        //    PasswordBox passwordBox = new PasswordBox(); 
-        //    string passwordBox.Password = password;
-        //    bool actualValue = window.IsPass(passwordBox.Password);
-        //    Assert.AreEqual(expectedValue, actualValue);
-        //}
+        [TestMethod]
+        public void IsCheckEmail_WithValidEmail_ReturnsTrue() // Проверка на корректность почты
+        {
+            string email = "petr@yandex.ru";
+            bool result = Window_Users.IsCheckEmail(email);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void IsCheckEmail_TypeOfEmail_ResultCorrectly() // Проверка на тип сохранения данных
+        {
+
+            string email = "email@gmail.ru";
+            bool actual = Window_Users.IsCheckEmail(email);
+            Assert.IsInstanceOfType(actual, typeof(bool));
+        }
     }
 }
