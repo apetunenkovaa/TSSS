@@ -4,9 +4,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Technical_Software_Service"
+      
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Страница с заявками">
+      Title="Страница с заявками" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -134,10 +135,18 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="5*"/>
+                        <RowDefinition Height="3*"/>
                     </Grid.RowDefinitions>
+                    
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+                        <TextBlock Text="Сезон:" FontSize="18" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding SeasonNumber}" FontSize="18" VerticalAlignment="Center" Margin="10,0"/>
+                        <TextBlock Text="Осталось до конца сезона:" FontSize="18" VerticalAlignment="Center" Margin="10,0"/>
+                        <TextBlock Text="{Binding Countdown}" FontSize="18" VerticalAlignment="Center"/>
+                    </StackPanel>
 
                     <StackPanel Grid.Row="1">
-                        <DataGrid Name="dgUsersRating" IsReadOnly="True"  AutoGenerateColumns="False" CanUserAddRows="False" FontSize="14">
+                        <DataGrid Name="dgUsersRating" IsReadOnly="True" Visibility="Visible"  AutoGenerateColumns="False" CanUserAddRows="False" FontSize="14">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" Width="*"/>
                                 <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}" Width="*"/>
@@ -145,6 +154,11 @@
                                 <DataGridTextColumn Header="Очки" Binding="{Binding Score}" Width="150"/>
                             </DataGrid.Columns>
                         </DataGrid>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2">
+                        <TextBlock Text="Победитель:" FontSize="18" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="Winner1" Text="Победитель дня" FontSize="18" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Grid>
             </TabItem>

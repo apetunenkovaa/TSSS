@@ -19,6 +19,11 @@ using MailKit.Security;
 using Technical_Software_Service;
 using System.Reflection;
 using Technical_Software_Service.Classes;
+using System.Collections.ObjectModel;
+using System.Timers;
+using System.ComponentModel;
+using System.Threading;
+using System.IO;
 
 namespace Technical_Software_Service
 {
@@ -27,6 +32,12 @@ namespace Technical_Software_Service
     /// </summary>
     public partial class Page_Anything : Page
     {
+        private BackgroundWorker backgroundWorker;
+        private int seasonNumber = 1;
+        private DateTime seasonEndDate = DateTime.Now.AddMinutes(1); // Закончить сезон через 4 часа
+        private System.Timers.Timer countdownTimer = new System.Timers.Timer(1000);
+        //private ObservableCollection<Users> users = new ObservableCollection<Users>();
+
         Users user;
         public int ProgressValue { get; set; }
 
@@ -40,23 +51,43 @@ namespace Technical_Software_Service
             ListAnything.ItemsSource = DataBase.Base.Tickets.ToList();
             ListHistory.ItemsSource = DataBase.Base.HistoryEntries.ToList();
             dgUsers.ItemsSource = DataBase.Base.Users.ToList();
+            //dgUsersRating.ItemsSource = users; // Страница Рейтинг пользователей
             dgUsersRating.ItemsSource = DataBase.Base.Users.ToList(); // Страница Рейтинг пользователей
             DataContext = this;
+
+            // создание экземпляра BackgroundWorker
+            backgroundWorker = new BackgroundWorker();
+            backgroundWorker.DoWork += BackgroundWorker_DoWork;
+            backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
+
             // обработчик событий для обновления значения прогресса
             ProgressBar.ValueChanged += ProgressBar_ValueChanged;
             // Запуск задачи для обновления значения прогресса
             Task.Run(() => StartTask());
 
+            // Настройка таймера
+            countdownTimer.Elapsed += CountdownTimer_Elapsed;
+            countdownTimer.Start();
+
+            // Инициализация BackgroundWorker
+            backgroundWorker = new BackgroundWorker();
+            backgroundWorker.WorkerSupportsCancellation = true;
+            backgroundWorker.DoWork += BackgroundWorker_DoWork;
+            backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
+
+            // Запуск BackgroundWorker
+            backgroundWorker.RunWorkerAsync();
+
             tbUserName.Text = tbUserName.Text + user.LastName + " " + user.FirstName + " " + user.MiddleName;
             tbUserRole.Text = tbUserRole.Text + user.Roles.Kind;
             tbUserPost.Text = tbUserPost.Text + user.Positions.Kind;
             tbUserScore.Text = tbUserScore.Text + user.Score;
+
             if (user.Photo != null)
             {
                 string path = Environment.CurrentDirectory.Replace("bin\\Debug", "Image/");
                 BitmapImage img = new BitmapImage(new Uri(path+user.Photo, UriKind.RelativeOrAbsolute));
                 PhotoUser.ImageSource = img;
-
             }
             // Отображение только для администратора
             if (user.Roles.Kind == "Администратор")
@@ -66,6 +97,69 @@ namespace Technical_Software_Service
             }
             cbFilter.SelectedIndex = 0; // Фильтр для заявок
             cboxFilter.SelectedIndex = 0; // Фильтр для истории заявок
+        }
+
+        private async void CountdownTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            TimeSpan remainingTime = seasonEndDate - DateTime.Now;
+            if (remainingTime.Ticks < 0) // Сезон закончился, начинаем новый
+            {
+                seasonNumber++;
+                SaveResults(); // Сохраняем результаты
+                seasonEndDate = DateTime.Now.AddMinutes(1);
+                foreach (Users user in DataBase.Base.Users.ToList())
+                {
+                    user.Score = 0;
+                }
+                remainingTime = seasonEndDate - DateTime.Now;
+            }
+            await Dispatcher.InvokeAsync(() =>
+            {
+                // Обновляем данные на экране
+                DataContext = new
+                {
+                    SeasonNumber = seasonNumber,
+                    Countdown = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                remainingTime.Hours, remainingTime.Minutes, remainingTime.Seconds)
+                };
+                SetWinners(seasonNumber);
+            });
+        }
+
+        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            // Запуск таймера в бесконечном цикле
+            while (!backgroundWorker.CancellationPending)
+            {
+                Thread.Sleep(1000); // Ожидание 1 секунду
+                CountdownTimer_Elapsed(null, null); // Вызов обработчика событий таймера
+            }
+        }
+
+        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // Остановка таймера при завершении работы BackgroundWorker
+            countdownTimer.Stop();
+        }
+
+        private void SaveResults()
+        {
+            string resultsFilePath = "results.txt";
+            using (StreamWriter writer = new StreamWriter(resultsFilePath, true))
+            {
+                // Сохраняем данные о сезоне
+                writer.WriteLine($"Результат {seasonNumber} сезона ({DateTime.Now}):");
+                writer.WriteLine("-------------------------------");
+                foreach (Users user in DataBase.Base.Users.ToList())
+                {
+                    // Сохраняем данные об игроке
+                    writer.WriteLine($"Фамилия: {user.LastName}");
+                    writer.WriteLine($"Имя: {user.FirstName}");
+                    writer.WriteLine($"Отчество: {user.MiddleName}");
+                    writer.WriteLine($"Очки: {user.Score}");
+                    writer.WriteLine();
+                }
+            }
         }
 
         /// <summary>
@@ -136,7 +230,6 @@ namespace Technical_Software_Service
                         {
                             histories.Add(NewHistories[j]);
                         }
-
                     }
                 }
                 listFilterhistory = histories;
@@ -234,7 +327,6 @@ namespace Technical_Software_Service
                     _users.ShowDialog();
                     dgUsers.ItemsSource = DataBase.Base.Users.ToList();
                 }
-
             }
             catch
             {
@@ -379,6 +471,45 @@ namespace Technical_Software_Service
             // Сохранение значение опыта пользователя в базе данных или где-то еще
             HelpdeskEntities.GetContext().SaveChanges();
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (!backgroundWorker.IsBusy)
+            {
+                // Запуск BackgroundWorker
+                backgroundWorker.RunWorkerAsync();
+                countdownTimer.Start();
+            }
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            // Остановка BackgroundWorker
+            backgroundWorker.CancelAsync();
+        }
+
+        private void SetWinners(int currentSeason)
+        {
+            var usersWithMaxScore = dgUsersRating.Items.Cast<Users>()
+                .OrderByDescending(u => u.Score)
+                .ToList();
+
+            string winnerInfo = "";
+
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (currentSeason == 1)
+                {
+                    if (usersWithMaxScore.Count >= 1)
+                    {
+                        int winnerScore = usersWithMaxScore[0].Score.Value;
+                        string winnerName = $"{usersWithMaxScore[0].LastName} {usersWithMaxScore[0].FirstName} {usersWithMaxScore[0].MiddleName}";
+                        winnerInfo += $"Победитель первого сезона: {winnerName} ({winnerScore} очков)\n";
+                        Winner1.Text = winnerInfo;
+                    }
+                }
+            });
+        }
     }
 }
-
