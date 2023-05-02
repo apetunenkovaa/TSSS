@@ -39,8 +39,8 @@
                         <TextBlock Grid.Column="2" Text="Фильтр" FontSize="18px" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Manrope"/>
                         <ComboBox Name="cbFilter" SelectionChanged="cbFilter_SelectionChanged" FontSize="16px" Grid.Column="3" Height="35" Width="250">
                             <ComboBoxItem Content="Все"/>
-                            <ComboBoxItem Content="Срочно"/>
                             <ComboBoxItem Content="Очень срочно"/>
+                            <ComboBoxItem Content="Срочно"/>
                             <ComboBoxItem Content="Средний"/>
                             <ComboBoxItem Content="Низкий"/>
                         </ComboBox>
@@ -146,7 +146,6 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
-
                 </Grid>
             </TabItem>
 
@@ -175,7 +174,7 @@
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
                             <WrapPanel>
                                 <TextBlock Text="LVL: " Name="tbLVL" Margin="10 5 0 0" Padding="2px" FontSize="18px"/>
-                                <ProgressBar x:Name="ProgressBar" Value="0" Minimum="0" Maximum="100" Width="200" Height="20" Margin="5" Style="{StaticResource ProgressBarStyle}"/>
+                                <ProgressBar x:Name="ProgressBar" Value="0" Minimum="0" Maximum="100" Width="200" Height="20" Margin="5" Style="{StaticResource ProgressBarStyle}"  ValueChanged="ProgressBar_ValueChanged"/>
                             </WrapPanel>
                             <TextBlock Name="tbUserName" Text="ФИО: " Margin="5 5 0 0" Padding="2px" FontSize="18px"/>
                             <TextBlock Name="tbUserRole" Text="Роль: " Margin="5 5 0 0" Padding="2px" FontSize="18px"/>

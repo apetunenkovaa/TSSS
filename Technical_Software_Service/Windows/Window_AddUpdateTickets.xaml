@@ -40,7 +40,7 @@
             <WrapPanel>
                 <StackPanel Margin="10" Orientation="Vertical">
                     <TextBlock Text="Состояние" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
-                    <ComboBox Name="cbStates" Padding="2px" FontSize="16px" Height="30px" Width="200" IsEditable="True" IsReadOnly="True"/>
+                    <ComboBox Name="cbStates" Padding="2px" FontSize="16px" Height="30px" Width="200" IsEditable="True" IsReadOnly="True" RenderTransformOrigin="3.362,3.077"/>
                 </StackPanel>
                 <StackPanel Margin="10" Orientation="Vertical">
                     <TextBlock Text="Категория" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>

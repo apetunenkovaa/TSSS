@@ -304,11 +304,58 @@ namespace Technical_Software_Service
                 historyEntries.UpdateDescription = null;
                 DataBase.Base.HistoryEntries.Add(historyEntries);
 
+
+                //Начисление очков пользователю и уведомление
+                // Получаем список состояний заявок из базы данных
+                List<TicketStates> ticketStates = DataBase.Base.TicketStates.ToList();
+
+                // Проверяем, что в ComboBox был выбран элемент
+                if (cbStates.SelectedIndex >= 0)
+                {
+                    // Получаем выбранный элемент ComboBox
+                    var selectedTicket = ticketStates[cbStates.SelectedIndex];
+
+                    // Проверяем, что выбранный элемент ComboBox имеет Id = 2
+                    if (selectedTicket.Id == 2)
+                    {
+                        // Отображаем MessageBox для подтверждения закрытия заявки
+                        if (MessageBox.Show("Вы уверены, что хотите закрыть эту заявку?", "Закрытие заявки", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            // Начисляем очки пользователю за закрытие заявки
+                            int score = 0;
+                            if (ticket.ImportanceTypeId != null)
+                            {
+                                switch (ticket.ImportanceTypeId)
+                                {
+                                    case 1:
+                                        score = 15;
+                                        break;
+                                    case 2:
+                                        score = 10;
+                                        break;
+                                    case 3:
+                                        score = 5;
+                                        break;
+                                    case 4:
+                                        score = 1;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            user.Score += score;
+                            MessageBox.Show($"Вам начислено {score} очков за закрытие заявки");
+
+                            // Сохраняем изменения в базе данных
+                            DataBase.Base.SaveChanges();
+                        }
+                    }
+                }
+
                 Executors executors = new Executors(); // Добавление исполнителей
                 executors.UserId = cbUsers.SelectedIndex;
                 executors.TicketId = ticket.Id;
                 DataBase.Base.Executors.Add(executors);
-
                 DataBase.Base.SaveChanges();
                 MessageBox.Show("Заявка успешно изменена!");
                 this.Close();

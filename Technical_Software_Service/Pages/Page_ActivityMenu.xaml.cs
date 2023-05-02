@@ -18,6 +18,7 @@ using MailKit.Net.Imap;
 using MailKit.Security;
 using Technical_Software_Service;
 using System.Reflection;
+using Technical_Software_Service.Classes;
 
 namespace Technical_Software_Service
 {
@@ -27,16 +28,24 @@ namespace Technical_Software_Service
     public partial class Page_Anything : Page
     {
         Users user;
+        public int ProgressValue { get; set; }
+
         public Page_Anything(Users user)
         {
             InitializeComponent();
             this.user = user;
             UpdateList();
             Filter();
+
             ListAnything.ItemsSource = DataBase.Base.Tickets.ToList();
             ListHistory.ItemsSource = DataBase.Base.HistoryEntries.ToList();
             dgUsers.ItemsSource = DataBase.Base.Users.ToList();
             dgUsersRating.ItemsSource = DataBase.Base.Users.ToList(); // Страница Рейтинг пользователей
+            DataContext = this;
+            // обработчик событий для обновления значения прогресса
+            ProgressBar.ValueChanged += ProgressBar_ValueChanged;
+            // Запуск задачи для обновления значения прогресса
+            Task.Run(() => StartTask());
 
             tbUserName.Text = tbUserName.Text + user.LastName + " " + user.FirstName + " " + user.MiddleName;
             tbUserRole.Text = tbUserRole.Text + user.Roles.Kind;
@@ -75,10 +84,10 @@ namespace Technical_Software_Service
             switch (cbFilter.SelectedIndex)
             {
                 case 1:
-                    listFilter = listFilter.Where(z=>z.ImportanceTypeId == 1).ToList();
+                    listFilter = listFilter.Where(z=>z.ImportanceTypeId == 2).ToList();
                     break;
                 case 2:
-                    listFilter = listFilter.Where(z => z.ImportanceTypeId == 2).ToList();
+                    listFilter = listFilter.Where(z => z.ImportanceTypeId == 1).ToList();
                     break;
                 case 3:
                     listFilter = listFilter.Where(z => z.ImportanceTypeId == 3).ToList();
@@ -347,6 +356,28 @@ namespace Technical_Software_Service
             Window_AddUpdateTickets updateTickets = new Window_AddUpdateTickets(user, ticket);
             updateTickets.ShowDialog();
             ClassFrame.MainF.Navigate(new Page_Anything(user));
+        }
+
+        private async void StartTask()
+        {
+            for (int i = 0; i <= 100; i++)
+            {
+                ProgressValue = i;
+                await Task.Delay(50);
+            }
+        }
+
+        private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            // Обновление значение опыта пользователя на основе текущего значения прогресса
+            int experienceEarned = (int)(ProgressBar.Value - e.OldValue);
+            user.XP += experienceEarned;
+
+            // Обновление текст в TextBlock с текущим значением прогресса и опытом пользователя
+            tbLVL.Text = $"LVL: {ProgressBar.Value.ToString()} Exp: {user.XP.ToString()}";
+
+            // Сохранение значение опыта пользователя в базе данных или где-то еще
+            HelpdeskEntities.GetContext().SaveChanges();
         }
     }
 }
