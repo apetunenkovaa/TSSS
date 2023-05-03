@@ -33,10 +33,9 @@ namespace Technical_Software_Service
     public partial class Page_Anything : Page
     {
         private BackgroundWorker backgroundWorker;
-        private int seasonNumber = 1;
         private DateTime seasonEndDate = DateTime.Now.AddMinutes(1); // Закончить сезон через 4 часа
         private System.Timers.Timer countdownTimer = new System.Timers.Timer(1000);
-        //private ObservableCollection<Users> users = new ObservableCollection<Users>();
+        private ObservableCollection<Users> users = new ObservableCollection<Users>();
 
         Users user;
         public int ProgressValue { get; set; }
@@ -104,25 +103,39 @@ namespace Technical_Software_Service
             TimeSpan remainingTime = seasonEndDate - DateTime.Now;
             if (remainingTime.Ticks < 0) // Сезон закончился, начинаем новый
             {
-                seasonNumber++;
                 SaveResults(); // Сохраняем результаты
                 seasonEndDate = DateTime.Now.AddMinutes(1);
-                foreach (Users user in DataBase.Base.Users.ToList())
+                foreach (Users user in DataBase.Base.Users)
                 {
                     user.Score = 0;
+                    Dispatcher.Invoke(() =>
+                    {
+                        tbUserScore.Text = "0";
+                    });
                 }
                 remainingTime = seasonEndDate - DateTime.Now;
+
+                // Очищаем источник данных DataGrid и обновляем его
+                Dispatcher.Invoke(() =>
+                {
+                    // Очищаем источник данных
+                    dgUsersRating.ItemsSource = null;
+                    dgUsersRating.Items.Clear();
+
+                    // Обновляем источник данных
+                    var newData = new ObservableCollection<Users>(DataBase.Base.Users);
+                    dgUsersRating.ItemsSource = newData;
+                });
             }
             await Dispatcher.InvokeAsync(() =>
             {
                 // Обновляем данные на экране
                 DataContext = new
                 {
-                    SeasonNumber = seasonNumber,
                     Countdown = string.Format("{0:D2}:{1:D2}:{2:D2}",
                 remainingTime.Hours, remainingTime.Minutes, remainingTime.Seconds)
                 };
-                SetWinners(seasonNumber);
+                SetWinners();
             });
         }
 
@@ -145,22 +158,30 @@ namespace Technical_Software_Service
         private void SaveResults()
         {
             string resultsFilePath = "results.txt";
-            using (StreamWriter writer = new StreamWriter(resultsFilePath, true))
+            try
             {
-                // Сохраняем данные о сезоне
-                writer.WriteLine($"Результат {seasonNumber} сезона ({DateTime.Now}):");
-                writer.WriteLine("-------------------------------");
-                foreach (Users user in DataBase.Base.Users.ToList())
+                using (StreamWriter writer = new StreamWriter(resultsFilePath, true))
                 {
-                    // Сохраняем данные об игроке
-                    writer.WriteLine($"Фамилия: {user.LastName}");
-                    writer.WriteLine($"Имя: {user.FirstName}");
-                    writer.WriteLine($"Отчество: {user.MiddleName}");
-                    writer.WriteLine($"Очки: {user.Score}");
-                    writer.WriteLine();
+                    // Сохраняем данные о сезоне
+                    writer.WriteLine($"Результат сезона: ({DateTime.Now}):");
+                    writer.WriteLine("-------------------------------");
+                    foreach (Users user in DataBase.Base.Users.ToList())
+                    {
+                        // Сохраняем данные об игроке
+                        writer.WriteLine($"Фамилия: {user.LastName}");
+                        writer.WriteLine($"Имя: {user.FirstName}");
+                        writer.WriteLine($"Отчество: {user.MiddleName}");
+                        writer.WriteLine($"Очки: {user.Score}");
+                        writer.WriteLine();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                // Handle the exception here
+            }
         }
+
 
         /// <summary>
         ///  Поиск и фильтрация страницы Заявки
@@ -488,7 +509,7 @@ namespace Technical_Software_Service
             backgroundWorker.CancelAsync();
         }
 
-        private void SetWinners(int currentSeason)
+        private void SetWinners()
         {
             var usersWithMaxScore = dgUsersRating.Items.Cast<Users>()
                 .OrderByDescending(u => u.Score)
@@ -499,8 +520,6 @@ namespace Technical_Software_Service
 
             Application.Current.Dispatcher.Invoke(() =>
             {
-                if (currentSeason == 1)
-                {
                     if (usersWithMaxScore.Count >= 1)
                     {
                         int winnerScore = usersWithMaxScore[0].Score.Value;
@@ -508,7 +527,6 @@ namespace Technical_Software_Service
                         winnerInfo += $"Победитель первого сезона: {winnerName} ({winnerScore} очков)\n";
                         Winner1.Text = winnerInfo;
                     }
-                }
             });
         }
     }
