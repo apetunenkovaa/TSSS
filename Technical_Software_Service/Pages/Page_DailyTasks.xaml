@@ -34,10 +34,19 @@
                                     <TextBlock Text="{Binding xp}" Height="20" FontFamily="Manrope" FontSize="15" Margin="0,10,0,0"/>
                                     <TextBlock Text="{Binding score}" Height="20" FontFamily="Manrope" FontSize="15" Margin="0,10,0,0"/>
                                     <!--<TextBlock Text="{Binding Progress}" FontFamily="Manrope" FontSize="15" Margin="0,10,0,0"/>-->
-                                    <Button Style="{StaticResource Button}" Content="Завершить" Margin="0,10,0,10" HorizontalAlignment="Left"/>
+                                    <Button x:Name="bFinishTask" Style="{StaticResource Button}" Content="Завершить" Margin="0,10,0,10" HorizontalAlignment="Left" Click="bFinishTask_Click" />
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsCompleted}" Value="True">
+                                        <Setter Property="Background" Value="#C1B4DF"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -46,6 +55,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="3">
             <Button Name="btnBack" Content="Назад" Click="btnBack_Click" Style="{StaticResource Button}" HorizontalAlignment="Left"/>
             <Button Name="btnAdd" Content="Добавить" Click="btnAdd_Click" Style="{StaticResource Button}" HorizontalAlignment="Center" Visibility="Collapsed"/>
+            <Button Name="btnDelete" Content="Удалить" Click="btnDelete_Click" Style="{StaticResource Button}" HorizontalAlignment="Center" Visibility="Collapsed"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -22,5 +22,14 @@ namespace Technical_Software_Service
                 return "Очки: " + Score;
             }
         }
+
+        public string totalCount
+        {
+            get
+            {
+                return "Необходимое кол-во: " + TotalCount;
+            }
+        }
+
     }
 }

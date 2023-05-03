@@ -34,7 +34,7 @@ namespace Technical_Software_Service
         {
             try
             {
-                if (tbTitle.Text == "" || tbDescription.Text == "" || tbScore.Text == "" || tbXP.Text == "")
+                if (tbTitle.Text == "" || tbDescription.Text == "" || tbScore.Text == "" || tbXP.Text == "" || tbTotalCount.Text == "")
                 {
                     MessageBox.Show("Обязательные поля не заполнены", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
@@ -60,6 +60,7 @@ namespace Technical_Software_Service
                     }
                     daily.Score = Convert.ToInt32(tbScore.Text);
                     daily.XP = Convert.ToInt32(tbXP.Text);
+                    daily.TotalCount = Convert.ToInt32(tbTotalCount.Text);
                     HelpdeskEntities.GetContext().DailyTasks.Add(daily);
                     HelpdeskEntities.GetContext().SaveChanges();
                     MessageBox.Show("Успешное добавление!");

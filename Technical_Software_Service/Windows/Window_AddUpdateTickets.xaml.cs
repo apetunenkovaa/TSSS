@@ -328,10 +328,10 @@ namespace Technical_Software_Service
                                 switch (ticket.ImportanceTypeId)
                                 {
                                     case 1:
-                                        score = 15;
+                                        score = 10;
                                         break;
                                     case 2:
-                                        score = 10;
+                                        score = 15;
                                         break;
                                     case 3:
                                         score = 5;

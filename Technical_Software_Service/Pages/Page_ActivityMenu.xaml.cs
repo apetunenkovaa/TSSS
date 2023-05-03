@@ -33,7 +33,7 @@ namespace Technical_Software_Service
     public partial class Page_Anything : Page
     {
         private BackgroundWorker backgroundWorker;
-        private DateTime seasonEndDate = DateTime.Now.AddMinutes(1); // Закончить сезон через 4 часа
+        private DateTime seasonEndDate = DateTime.Now.AddHours(8); // Закончить сезон через 4 часа
         private System.Timers.Timer countdownTimer = new System.Timers.Timer(1000);
         private ObservableCollection<Users> users = new ObservableCollection<Users>();
 
@@ -94,6 +94,12 @@ namespace Technical_Software_Service
                 tcUsers.Visibility = Visibility.Visible;
                 titNotifications.Visibility = Visibility.Visible;
             }
+            if (user.Roles.Kind == "Администратор")
+            {
+                btnDeleteUser.Visibility = Visibility.Visible;
+            }
+
+
             cbFilter.SelectedIndex = 0; // Фильтр для заявок
             cboxFilter.SelectedIndex = 0; // Фильтр для истории заявок
         }
@@ -104,7 +110,7 @@ namespace Technical_Software_Service
             if (remainingTime.Ticks < 0) // Сезон закончился, начинаем новый
             {
                 SaveResults(); // Сохраняем результаты
-                seasonEndDate = DateTime.Now.AddMinutes(1);
+                seasonEndDate = DateTime.Now.AddHours(8);
                 foreach (Users user in DataBase.Base.Users)
                 {
                     user.Score = 0;
@@ -442,23 +448,22 @@ namespace Technical_Software_Service
 
         private void btnDeleteUser_Click(object sender, RoutedEventArgs e) // Удаление пользователя
         {
-            //var usersForRemoving = dgUsers.SelectedItems.Cast<Users>().ToList();
-            //if (MessageBox.Show($"Вы точно хотите удалить следующие {usersForRemoving.Count()} элементов?", "Внимание",
-            //    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            //{
-            //    //try
-            //    //{
-            //            HelpdeskEntities.GetContext().Users.RemoveRange(usersForRemoving);
-            //            HelpdeskEntities.GetContext().SaveChanges();
-            //            MessageBox.Show("Данные удалены !");
+            // Получаем выбранный элемент
+            var selectedItem = dgUsers.SelectedItem as Users;
+            if (selectedItem != null)
+            {
+                // Спрашиваем у пользователя подтверждение удаления
+                var result = MessageBox.Show($"Вы уверены, что хотите удалить пользователя {selectedItem.LastName} {selectedItem.FirstName} {selectedItem.MiddleName}?", "Удаление пользователя", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    // Удаляем элемент из источника данных
+                    DataBase.Base.Users.Remove(selectedItem);
+                    DataBase.Base.SaveChanges();
 
-            //            dgUsers.ItemsSource = HelpdeskEntities.GetContext().Users.ToList();
-            //    //}
-            //    //catch (Exception ex)
-            //    //{
-            //    //    MessageBox.Show(ex.Message.ToString());
-            //    //}
-            //}
+                    // Обновляем содержимое DataGrid
+                    dgUsers.ItemsSource = DataBase.Base.Users.ToList();
+                }
+            }
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e) // Редактирование заявки

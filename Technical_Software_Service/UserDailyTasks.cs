@@ -17,7 +17,10 @@ namespace Technical_Software_Service
         public int Id { get; set; }
         public int DailyTasksID { get; set; }
         public int UserId { get; set; }
-    
+        public bool IsCompleted { get; set; }
+        public DateTime CompletionDate { get; set; }
+
+
         public virtual DailyTasks DailyTasks { get; set; }
         public virtual Users Users { get; set; }
     }

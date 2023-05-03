@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Technical_Software_Service"
         mc:Ignorable="d"
-        Title="Добавление ежедневной задачи" Height="450" Width="800">
+        Title="Добавление ежедневной задачи" Height="500" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -39,6 +39,11 @@
                 <StackPanel Margin="10" Orientation="Vertical">
                     <TextBlock Text="Описание" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
                     <TextBox Name="tbDescription" Padding="2px" FontSize="16px" Height="70" Width="400" FontFamily="Manrope" HorizontalAlignment="Left" TextWrapping="Wrap"/>
+                </StackPanel>
+
+                <StackPanel Margin="10" Orientation="Vertical">
+                    <TextBlock Text="Необходимое кол-во" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
+                    <TextBox Name="tbTotalCount" Padding="2px" FontSize="16px" Height="30" Width="50" FontFamily="Manrope" HorizontalAlignment="Left" TextWrapping="Wrap"/>
                 </StackPanel>
 
                 <WrapPanel Margin="10">
