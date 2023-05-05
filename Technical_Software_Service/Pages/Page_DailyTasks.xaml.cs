@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,38 +51,48 @@ namespace Technical_Software_Service
 
         private void bFinishTask_Click(object sender, RoutedEventArgs e)
         {
-            // Получаем объект задания, соответствующий нажатой кнопке "Завершить"
-            var task = (sender as FrameworkElement)?.DataContext as DailyTasks;
+            // Получаем выбранную задачу
+            var selectedTask = (sender as Button).DataContext as DailyTasks;
 
-            if (task != null)
+            var RewardscoreTask = selectedTask.Score; // Получаем score для выполненной задачи из базы данных
+
+            var RewardscoreXP = selectedTask.XP; // Получаем XP для выполненной задачи из базы данных
+
+            // Получаем текущего пользователя из поля user
+            var currentUser = user;
+
+            // Получаем запись пользователя для выбранной задачи
+            var userDailyTask = DataBase.Base.UserDailyTasks.FirstOrDefault(t => t.UserId == currentUser.Id && t.DailyTasksID == selectedTask.Id);
+
+            if (userDailyTask != null)
             {
-                // Проверяем, было ли задание уже выполнено пользователем
-                var userTask = user.UserDailyTasks.FirstOrDefault(x => x.DailyTasksID == task.Id);
-                if (userTask != null && userTask.IsCompleted)
-                {
-                    MessageBox.Show("Это задание уже выполнено!");
-                }
-                else
-                {
-                    // Помечаем задание как завершенное
-                    task.IsCompleted = true;
+                // Обновляем поле IsCompleted
+                userDailyTask.IsCompleted = true;
 
-                    // Находим связанный с пользователем объект UserDailyTasks и обновляем его
-                    if (userTask != null)
-                    {
-                        userTask.IsCompleted = true;
-                        userTask.CompletionDate = DateTime.Now;
+                // Обновляем поле CompletionDate
+                userDailyTask.CompletionDate = DateTime.Now;
 
-                        // Начисляем пользователю XP и score за выполненную задачу
-                        user.XP += task.XP;
-                        user.Score += task.Score;
+                // Увеличиваем счетчик выполненных задач
+                userDailyTask.CompletedCount++;
 
-                        DataBase.Base.SaveChanges();
-                    }
+                // Начисляем XP и Score пользователю
+                currentUser.XP += RewardscoreXP;
+                currentUser.Score += RewardscoreTask;
 
-                    // Обновляем список заданий
-                    lstDailyTasks.ItemsSource = DataBase.Base.DailyTasks.ToList();
-                }
+                // Обновляем запись в базе данных
+                DataBase.Base.Entry(userDailyTask).State = EntityState.Modified;
+                DataBase.Base.Entry(currentUser).State = EntityState.Modified;
+                DataBase.Base.SaveChanges();
+
+                // Обновляем количество выполненных задач в соответствующей задаче
+                selectedTask.CompletedCount++;
+
+                // Обновляем запись в базе данных
+                DataBase.Base.Entry(selectedTask).State = EntityState.Modified;
+                DataBase.Base.SaveChanges();
+
+                // Обновляем отображение данных в окне
+                lstDailyTasks.ItemsSource = DataBase.Base.DailyTasks.ToList();
             }
         }
 

@@ -251,7 +251,7 @@ namespace Technical_Software_Service
                         }
                         if (tbScore.Text == "")
                         {
-                            user.Score = null;
+                            user.Score = 0;
                         }
                         else
                         {
@@ -259,7 +259,7 @@ namespace Technical_Software_Service
                         }
                         if (tbLevel.Text == "")
                         {
-                            user.Level = null;
+                            user.Level = 1;
                         }
                         else
                         {
@@ -267,7 +267,7 @@ namespace Technical_Software_Service
                         }
                         if (tbXP.Text == "")
                         {
-                            user.XP = null;
+                            user.XP = 0;
                         }
                         else
                         {
@@ -278,7 +278,6 @@ namespace Technical_Software_Service
                         DataBase.Base.SaveChanges();
                         Close();
                     }
-
                 }
                 else
                 {
@@ -370,7 +369,7 @@ namespace Technical_Software_Service
                         }
                         if (tbScore.Text == "")
                         {
-                            user.Score = null;
+                            user.Score = Convert.ToInt32(tbScore.Text);
                         }
                         else
                         {
@@ -378,7 +377,7 @@ namespace Technical_Software_Service
                         }
                         if (tbLevel.Text == "")
                         {
-                            user.Level = null;
+                            user.Level = Convert.ToInt32(tbLevel.Text);
                         }
                         else
                         {
@@ -386,7 +385,7 @@ namespace Technical_Software_Service
                         }
                         if (tbXP.Text == "")
                         {
-                            user.XP = null;
+                            user.XP = Convert.ToInt32(tbXP.Text);
                         }
                         else
                         {

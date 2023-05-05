@@ -17,6 +17,9 @@ namespace Technical_Software_Service
         public int Id { get; set; }
         public int DailyTasksID { get; set; }
         public int UserId { get; set; }
+
+        public int CompletedCount { get; set; }
+        public int TotalCount { get; set; }
         public bool IsCompleted { get; set; }
         public DateTime CompletionDate { get; set; }
 

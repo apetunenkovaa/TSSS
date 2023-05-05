@@ -346,6 +346,9 @@ namespace Technical_Software_Service
                             user.Score += score;
                             MessageBox.Show($"Вам начислено {score} очков за закрытие заявки");
 
+                            //Увеличение счетчик CompletedCount для отслеживания числа закрытых заявок.
+                            user.CompletedCount++;
+
                             // Сохраняем изменения в базе данных
                             DataBase.Base.SaveChanges();
                         }

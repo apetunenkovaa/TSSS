@@ -24,6 +24,7 @@ using System.Timers;
 using System.ComponentModel;
 using System.Threading;
 using System.IO;
+using System.Globalization;
 
 namespace Technical_Software_Service
 {
@@ -33,12 +34,17 @@ namespace Technical_Software_Service
     public partial class Page_Anything : Page
     {
         private BackgroundWorker backgroundWorker;
-        private DateTime seasonEndDate = DateTime.Now.AddHours(8); // Закончить сезон через 4 часа
+        private DateTime seasonEndDate = DateTime.Now.AddHours(8); // Закончить сезон через 8 часов
         private System.Timers.Timer countdownTimer = new System.Timers.Timer(1000);
         private ObservableCollection<Users> users = new ObservableCollection<Users>();
+        private const int MAX_LEVEL = 100;//Максимальный уровень
+
 
         Users user;
         public int ProgressValue { get; set; }
+        public int CurrentExperience { get; set; }
+        public int ExperienceNeeded { get; set; }
+
 
         public Page_Anything(Users user)
         {
@@ -46,6 +52,16 @@ namespace Technical_Software_Service
             this.user = user;
             UpdateList();
             Filter();
+
+            // установка свойств прогресс-бара
+            CurrentExperience = user.XP - CalculateNextLevelMinXP(user.Level);
+            ExperienceNeeded = CalculateNextLevelMaxXP(user.Level) - CalculateNextLevelMinXP(user.Level);
+
+            // установка DataContext для привязки данных
+            DataContext = this;
+
+            // установка текста для tbLVL
+            tbLVL.Text = $"Уровень: {user.Level} Опыт: {user.XP}/{CalculateNextLevelMaxXP(user.Level)}";
 
             ListAnything.ItemsSource = DataBase.Base.Tickets.ToList();
             ListHistory.ItemsSource = DataBase.Base.HistoryEntries.ToList();
@@ -58,11 +74,6 @@ namespace Technical_Software_Service
             backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += BackgroundWorker_DoWork;
             backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
-
-            // обработчик событий для обновления значения прогресса
-            ProgressBar.ValueChanged += ProgressBar_ValueChanged;
-            // Запуск задачи для обновления значения прогресса
-            Task.Run(() => StartTask());
 
             // Настройка таймера
             countdownTimer.Elapsed += CountdownTimer_Elapsed;
@@ -88,6 +99,7 @@ namespace Technical_Software_Service
                 BitmapImage img = new BitmapImage(new Uri(path+user.Photo, UriKind.RelativeOrAbsolute));
                 PhotoUser.ImageSource = img;
             }
+
             // Отображение только для администратора
             if (user.Roles.Kind == "Администратор")
             {
@@ -187,7 +199,6 @@ namespace Technical_Software_Service
                 // Handle the exception here
             }
         }
-
 
         /// <summary>
         ///  Поиск и фильтрация страницы Заявки
@@ -480,22 +491,85 @@ namespace Technical_Software_Service
         {
             for (int i = 0; i <= 100; i++)
             {
-                ProgressValue = i;
+                ProgressValue = (int)Math.Round((double)i * CurrentExperience / ExperienceNeeded);
                 await Task.Delay(50);
             }
         }
 
+        // Определение начальных значений опыта и сколько нужно для следующего уровня
+        int initialXP = 0; // начальный опыт
+        int nextLevelXP = 100; // опыт, необходимый для достижения следующего уровня
+
+        // Метод вычисляет минимальный опыт, необходимый для достижения следующего уровня
+        private int CalculateNextLevelMinXP(int currentLevel)
+        {
+            // Логика вычисления опыта может быть разной в зависимости от вашей игры. 
+            // Например, можно использовать формулу nextLevelMinXP = currentLevel * 100, 
+            // чтобы каждый следующий уровень требовал больше опыта для достижения.
+            int nextLevelMinXP = currentLevel * nextLevelXP;
+            return nextLevelMinXP;
+        }
+
+        // Метод вычисляет максимальный опыт, необходимый для достижения следующего уровня
+        private int CalculateNextLevelMaxXP(int currentLevel)
+        {
+            // Логика вычисления опыта может быть разной в зависимости от вашей игры. 
+            // Например, можно использовать формулу nextLevelMaxXP = currentLevel * 150, 
+            // чтобы каждый следующий уровень требовал больше опыта для достижения.
+            int nextLevelMaxXP = currentLevel * nextLevelXP + nextLevelXP;
+            return nextLevelMaxXP;
+        }
+
         private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            // Обновление значение опыта пользователя на основе текущего значения прогресса
-            int experienceEarned = (int)(ProgressBar.Value - e.OldValue);
-            user.XP += experienceEarned;
+            // Получаем значения минимального и максимального опыта для следующего уровня
+            int nextLevelMinXP = CalculateNextLevelMinXP(user.Level);
+            int nextLevelMaxXP = CalculateNextLevelMaxXP(user.Level);
 
-            // Обновление текст в TextBlock с текущим значением прогресса и опытом пользователя
-            tbLVL.Text = $"LVL: {ProgressBar.Value.ToString()} Exp: {user.XP.ToString()}";
+            // Вычисляем текущий прогресс пользователя в процентах
+            double progress = ((double)user.XP - nextLevelMinXP) / (nextLevelMaxXP - nextLevelMinXP) * 100.0;
 
-            // Сохранение значение опыта пользователя в базе данных или где-то еще
-            HelpdeskEntities.GetContext().SaveChanges();
+                // Проверяем, достиг ли пользователь максимального уровня
+                if (user.XP >= nextLevelMaxXP && user.Level < MAX_LEVEL)
+                {
+
+                    // Увеличиваем уровень пользователя и обновляем его опыт
+                    user.Level++;
+                    user.XP = user.XP - nextLevelMaxXP;
+                    // Обновляем значения минимального и максимального опыта для следующего уровня
+                    nextLevelMinXP = CalculateNextLevelMinXP(user.Level);
+                    nextLevelMaxXP = CalculateNextLevelMaxXP(user.Level);
+
+                    // Обновляем текст в TextBlock с текущим значением прогресса и опытом пользователя
+                    tbLVL.Text = $"Уровень: {user.Level} Опыт: {user.XP}/{nextLevelMaxXP}";
+
+                    // Показываем пользователю сообщение о достижении нового уровня
+                    MessageBox.Show($"Вы достигли уровня {user.Level - 1}!");
+
+                    // Сохраняем значение опыта пользователя в базе данных или где-то еще
+                    HelpdeskEntities.GetContext().SaveChanges();
+                }
+                else
+                {
+
+                    // Обновляем текст в TextBlock с текущим значением прогресса и опытом пользователя
+                    tbLVL.Text = $"Уровень: {user.Level} Опыт: {user.XP}/{nextLevelMaxXP}";
+
+                    // Показываем пользователю сообщение о достижении максимального уровня
+                    MessageBox.Show($"Поздравляем! Вы достигли максимального уровня в {MAX_LEVEL}!");
+
+                    // Обновляем опыт пользователя
+                    user.XP = 0;
+
+                    // Обновляем опыт пользователя
+                    user.Level = 1;
+
+                    // Обновляем значения минимального и максимального опыта для следующего уровня
+                    nextLevelMinXP = CalculateNextLevelMinXP(user.Level);
+                    nextLevelMaxXP = CalculateNextLevelMaxXP(user.Level);
+                }
+                // Обновляем текст в TextBlock с текущим значением прогресса и опытом пользователя
+                tbLVL.Text = $"Уровень: {user.Level} Опыт: {user.XP}/{nextLevelMaxXP}";
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -527,7 +601,7 @@ namespace Technical_Software_Service
             {
                     if (usersWithMaxScore.Count >= 1)
                     {
-                        int winnerScore = usersWithMaxScore[0].Score.Value;
+                        int winnerScore = usersWithMaxScore[0].Score;
                         string winnerName = $"{usersWithMaxScore[0].LastName} {usersWithMaxScore[0].FirstName} {usersWithMaxScore[0].MiddleName}";
                         winnerInfo += $"Победитель первого сезона: {winnerName} ({winnerScore} очков)\n";
                         Winner1.Text = winnerInfo;

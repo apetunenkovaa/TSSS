@@ -3,8 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Technical_Software_Service"
-      
+      xmlns:local="clr-namespace:Technical_Software_Service"      
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Страница с заявками" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
@@ -149,6 +148,7 @@
                                 <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" Width="*"/>
                                 <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}" Width="*"/>
                                 <DataGridTextColumn Header="Отчество" Binding="{Binding MiddleName}" Width="*"/>
+                                <DataGridTextColumn Header="Уровень" Binding="{Binding Level}" Width="*"/>
                                 <DataGridTextColumn Header="Очки" Binding="{Binding Score}" Width="150"/>
                             </DataGrid.Columns>
                         </DataGrid>
@@ -184,10 +184,7 @@
                             </Ellipse>
                         </StackPanel>
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                            <WrapPanel>
-                                <TextBlock Text="LVL: " Name="tbLVL" Margin="10 5 0 0" Padding="2px" FontSize="18px"/>
-                                <ProgressBar x:Name="ProgressBar" Value="0" Minimum="0" Maximum="100" Width="200" Height="20" Margin="5" Style="{StaticResource ProgressBarStyle}"  ValueChanged="ProgressBar_ValueChanged"/>
-                            </WrapPanel>
+                            <TextBlock  Text="Уровень: " Name="tbLVL" Margin="5 5 0 0" Padding="2px" FontSize="18px"/>
                             <TextBlock Name="tbUserName" Text="ФИО: " Margin="5 5 0 0" Padding="2px" FontSize="18px"/>
                             <TextBlock Name="tbUserRole" Text="Роль: " Margin="5 5 0 0" Padding="2px" FontSize="18px"/>
                             <TextBlock Name="tbUserPost" Text="Должность: " Margin="5 5 0 0" Padding="2px" FontSize="18px"/>
@@ -238,6 +235,7 @@
                                 <DataGridTextColumn Header="Отчество" Binding="{Binding MiddleName}" Width="*"/>
                                 <DataGridTextColumn Header="Телефон" Binding="{Binding PhoneNumber}" Width="*"/>
                                 <DataGridTextColumn Header="Почта" Binding="{Binding Email}" Width="*"/>
+                                <DataGridTextColumn Header="Уровень" Binding="{Binding Level}" Width="*"/>
                                 <DataGridTextColumn Header="Логин" Width="*" Binding="{Binding UserName}"/>
                                 <DataGridTextColumn Header="Роль" Width="*" Binding="{Binding Roles.Kind}"/>
                             </DataGrid.Columns>

@@ -36,10 +36,11 @@ namespace Technical_Software_Service
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string Photo { get; set; }
-        public Nullable<int> Score { get; set; }
-        public Nullable<int> Level { get; set; }
-        public Nullable<int> XP { get; set; }
-    
+        public int Score { get; set; }
+        public int Level { get; set; } = 1;
+        public int XP { get; set; } = 0;
+        public int CompletedCount { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Executors> Executors { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
