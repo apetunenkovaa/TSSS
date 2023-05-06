@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Technical_Software_Service.Classes;
 
 namespace Technical_Software_Service
 {
@@ -51,49 +52,28 @@ namespace Technical_Software_Service
 
         private void bFinishTask_Click(object sender, RoutedEventArgs e)
         {
-            // Получаем выбранную задачу
-            var selectedTask = (sender as Button).DataContext as DailyTasks;
+            List<DailyTasks> dailyTasks = DataBase.Base.DailyTasks.ToList();
 
-            var RewardscoreTask = selectedTask.Score; // Получаем score для выполненной задачи из базы данных
-
-            var RewardscoreXP = selectedTask.XP; // Получаем XP для выполненной задачи из базы данных
-
-            // Получаем текущего пользователя из поля user
-            var currentUser = user;
-
-            // Получаем запись пользователя для выбранной задачи
-            var userDailyTask = DataBase.Base.UserDailyTasks.FirstOrDefault(t => t.UserId == currentUser.Id && t.DailyTasksID == selectedTask.Id);
-
-            if (userDailyTask != null)
+            foreach (var dailyTask in dailyTasks)
             {
-                // Обновляем поле IsCompleted
-                userDailyTask.IsCompleted = true;
-
-                // Обновляем поле CompletionDate
-                userDailyTask.CompletionDate = DateTime.Now;
-
-                // Увеличиваем счетчик выполненных задач
-                userDailyTask.CompletedCount++;
-
-                // Начисляем XP и Score пользователю
-                currentUser.XP += RewardscoreXP;
-                currentUser.Score += RewardscoreTask;
-
-                // Обновляем запись в базе данных
-                DataBase.Base.Entry(userDailyTask).State = EntityState.Modified;
-                DataBase.Base.Entry(currentUser).State = EntityState.Modified;
-                DataBase.Base.SaveChanges();
-
-                // Обновляем количество выполненных задач в соответствующей задаче
-                selectedTask.CompletedCount++;
-
-                // Обновляем запись в базе данных
-                DataBase.Base.Entry(selectedTask).State = EntityState.Modified;
-                DataBase.Base.SaveChanges();
-
-                // Обновляем отображение данных в окне
-                lstDailyTasks.ItemsSource = DataBase.Base.DailyTasks.ToList();
+                var userDailyTask = user.UserDailyTasks.FirstOrDefault(udt => udt.DailyTasksID == dailyTask.Id);
+                if (userDailyTask == null && user.CompletedCountTickets >= dailyTask.TotalCount)
+                {
+                    user.Score += dailyTask.Score;
+                    user.XP += dailyTask.XP;
+                    user.UserDailyTasks.Add(new UserDailyTasks { DailyTasksID = dailyTask.Id, IsCompleted = true });
+                    MessageBox.Show($"Вы получили {dailyTask.Score} очков и {dailyTask.XP} опыта за выполнение ежедневного задания \"{dailyTask.Title}\"");
+                }
+                else if (userDailyTask != null)
+                {
+                    MessageBox.Show($"Вы уже выполнили задание \"{dailyTask.Title}\".");
+                }
+                else
+                {
+                    MessageBox.Show($"Вы еще не выполнили достаточное количество билетов для выполнения задания \"{dailyTask.Title}\".");
+                }
             }
+            DataBase.Base.SaveChanges();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -113,6 +93,23 @@ namespace Technical_Software_Service
                     // Обновляем содержимое ListView
                     lstDailyTasks.ItemsSource = DataBase.Base.DailyTasks.ToList();
                 }
+            }
+        }
+
+        private void lstDailyTasks_Loaded(object sender, RoutedEventArgs e)
+        {
+            var lv = (ListView)sender;
+            var progressDailyTasks = (TextBlock)lv.FindName("progressDailyTasks");
+            if (progressDailyTasks != null)
+            {
+                progressDailyTasks.DataContextChanged += (s, ev) =>
+                {
+                    if (ev.NewValue is DailyTasks dailyTask)
+                    {
+                        int completedCount = user.UserDailyTasks.Count(udt => udt.DailyTasksID == dailyTask.Id && udt.IsCompleted);
+                        progressDailyTasks.Text = $"Выполнено: {completedCount} / Всего: {dailyTask.TotalCount}";
+                    }
+                };
             }
         }
     }

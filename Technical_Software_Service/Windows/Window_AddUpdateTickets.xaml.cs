@@ -22,6 +22,7 @@ namespace Technical_Software_Service
     /// </summary>
     public partial class Window_AddUpdateTickets : Window
     {
+        
         Users user;
         bool flag = false;
         Tickets ticket;
@@ -347,7 +348,7 @@ namespace Technical_Software_Service
                             MessageBox.Show($"Вам начислено {score} очков за закрытие заявки");
 
                             //Увеличение счетчик CompletedCount для отслеживания числа закрытых заявок.
-                            user.CompletedCount++;
+                            user.CompletedCountTickets++;
 
                             // Сохраняем изменения в базе данных
                             DataBase.Base.SaveChanges();

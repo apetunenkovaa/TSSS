@@ -28,33 +28,7 @@ namespace Technical_Software_Service
         public int Score { get; set; }
 
 
-        public bool IsCompleted { get; set; }
-        public int CompletedCount { get; set; }
         public int TotalCount { get; set; }
-
-
-        public int CompletionProgress
-        {
-            get { return this.CompletedCount; }
-        }
-
-        public void CompleteTask()
-        {
-            this.IsCompleted = true;
-            foreach (var userTask in this.UserDailyTasks)
-            {
-                if (!userTask.IsCompleted)
-                {
-                    userTask.IsCompleted = true;
-                    this.CompletedCount++;
-                }
-            }
-        }
-
-        public void CompleteSubtask()
-        {
-            this.CompletedCount++;
-        }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserDailyTasks> UserDailyTasks { get; set; }

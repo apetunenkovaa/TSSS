@@ -53,10 +53,6 @@ namespace Technical_Software_Service
             UpdateList();
             Filter();
 
-            // установка свойств прогресс-бара
-            CurrentExperience = user.XP - CalculateNextLevelMinXP(user.Level);
-            ExperienceNeeded = CalculateNextLevelMaxXP(user.Level) - CalculateNextLevelMinXP(user.Level);
-
             // установка DataContext для привязки данных
             DataContext = this;
 
@@ -485,15 +481,6 @@ namespace Technical_Software_Service
             Window_AddUpdateTickets updateTickets = new Window_AddUpdateTickets(user, ticket);
             updateTickets.ShowDialog();
             ClassFrame.MainF.Navigate(new Page_Anything(user));
-        }
-
-        private async void StartTask()
-        {
-            for (int i = 0; i <= 100; i++)
-            {
-                ProgressValue = (int)Math.Round((double)i * CurrentExperience / ExperienceNeeded);
-                await Task.Delay(50);
-            }
         }
 
         // Определение начальных значений опыта и сколько нужно для следующего уровня

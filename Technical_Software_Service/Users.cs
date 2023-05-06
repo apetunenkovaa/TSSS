@@ -39,7 +39,7 @@ namespace Technical_Software_Service
         public int Score { get; set; }
         public int Level { get; set; } = 1;
         public int XP { get; set; } = 0;
-        public int CompletedCount { get; set; }
+        public int CompletedCountTickets { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Executors> Executors { get; set; }
