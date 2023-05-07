@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,7 @@ namespace Technical_Software_Service
         public Window_AddUpdateTickets(Users user)
         {
             InitializeComponent();
+            user.CompletedCountTickets = 0;
             CBUpload();
             this.user = user;
         }
@@ -349,6 +351,7 @@ namespace Technical_Software_Service
 
                             //Увеличение счетчик CompletedCount для отслеживания числа закрытых заявок.
                             user.CompletedCountTickets++;
+                            Debug.WriteLine(user.CompletedCountTickets);
 
                             // Сохраняем изменения в базе данных
                             DataBase.Base.SaveChanges();

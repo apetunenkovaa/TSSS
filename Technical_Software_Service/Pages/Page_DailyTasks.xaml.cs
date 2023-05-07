@@ -37,6 +37,10 @@ namespace Technical_Software_Service
             {
                 btnDelete.Visibility = Visibility.Visible;
             }
+            if (user.Roles.Kind == "Администратор")
+            {
+                btnGiveRandomTasksUsers.Visibility = Visibility.Visible;
+            }
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -48,32 +52,42 @@ namespace Technical_Software_Service
         {
             Window_AddDailyTasks dailyTasks = new Window_AddDailyTasks(user);
             dailyTasks.ShowDialog();
+
+            // Обновляем содержимое ListView в основном окне
+            lstDailyTasks.ItemsSource = HelpdeskEntities.GetContext().DailyTasks.ToList();
         }
 
         private void bFinishTask_Click(object sender, RoutedEventArgs e)
         {
-            List<DailyTasks> dailyTasks = DataBase.Base.DailyTasks.ToList();
-
-            foreach (var dailyTask in dailyTasks)
+            if (user.CompletedCountTickets == 0)
             {
-                var userDailyTask = user.UserDailyTasks.FirstOrDefault(udt => udt.DailyTasksID == dailyTask.Id);
-                if (userDailyTask == null && user.CompletedCountTickets >= dailyTask.TotalCount)
+                MessageBox.Show("У вас пока нет выполненных заявок, выполните хотя бы одну, чтобы получить доступ к ежедневным заданиям.");
+                return;
+            }
+
+            // Получаем идентификатор задачи из параметра команды
+            int taskId = (int)((Button)sender).CommandParameter;
+
+            // Ищем задачу по идентификатору в коллекции
+            DailyTasks task = DataBase.Base.DailyTasks.FirstOrDefault(t => t.Id == taskId);
+
+            if (task != null)
+            {
+                var userDailyTask = user.UserDailyTasks.FirstOrDefault(udt => udt.DailyTasksID == task.Id);
+                if (user.CompletedCountTickets >= task.TotalCount && userDailyTask == null)
                 {
-                    user.Score += dailyTask.Score;
-                    user.XP += dailyTask.XP;
-                    user.UserDailyTasks.Add(new UserDailyTasks { DailyTasksID = dailyTask.Id, IsCompleted = true });
-                    MessageBox.Show($"Вы получили {dailyTask.Score} очков и {dailyTask.XP} опыта за выполнение ежедневного задания \"{dailyTask.Title}\"");
+                    user.Score += task.Score;
+                    user.XP += task.XP;
+                    user.UserDailyTasks.Add(new UserDailyTasks { DailyTasksID = task.Id, IsCompleted = true });
+                    MessageBox.Show($"Вы получили {task.Score} очков и {task.XP} опыта за выполнение ежедневного задания \"{task.Title}\"");
+
+                    DataBase.Base.SaveChanges();
                 }
                 else if (userDailyTask != null)
                 {
-                    MessageBox.Show($"Вы уже выполнили задание \"{dailyTask.Title}\".");
-                }
-                else
-                {
-                    MessageBox.Show($"Вы еще не выполнили достаточное количество билетов для выполнения задания \"{dailyTask.Title}\".");
+                    MessageBox.Show($"Вы уже выполнили задание \"{task.Title}\".");
                 }
             }
-            DataBase.Base.SaveChanges();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -86,12 +100,26 @@ namespace Technical_Software_Service
                 var result = MessageBox.Show($"Вы уверены, что хотите удалить задание '{selectedItem.Title}'?", "Удаление задания", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    // Удаляем элемент из источника данных
-                    DataBase.Base.DailyTasks.Remove(selectedItem);
-                    DataBase.Base.SaveChanges();
+                    // Удаляем связанные записи из таблицы UserDailyTasks
+                    var tasksToDelete = DataBase.Base.UserDailyTasks.Where(x => x.DailyTasksID == selectedItem.Id);
+                    DataBase.Base.UserDailyTasks.RemoveRange(tasksToDelete);
 
-                    // Обновляем содержимое ListView
-                    lstDailyTasks.ItemsSource = DataBase.Base.DailyTasks.ToList();
+                    // Удаляем элемент из таблицы DailyTasks
+                    DataBase.Base.DailyTasks.Remove(selectedItem);
+
+                    try
+                    {
+                        // Сохраняем изменения в базе данных
+                        DataBase.Base.SaveChanges();
+
+                        // Обновляем содержимое ListView
+                        lstDailyTasks.ItemsSource = DataBase.Base.DailyTasks.ToList();
+                    }
+                    catch (Exception ex)
+                    {
+                        // Обрабатываем возможные ошибки при сохранении изменений
+                        MessageBox.Show($"Ошибка при удалении задания: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
         }
@@ -111,6 +139,11 @@ namespace Technical_Software_Service
                     }
                 };
             }
+        }
+
+        private void btnGiveRandomTasksUsers_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

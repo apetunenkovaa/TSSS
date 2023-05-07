@@ -41,10 +41,6 @@ namespace Technical_Software_Service
 
 
         Users user;
-        public int ProgressValue { get; set; }
-        public int CurrentExperience { get; set; }
-        public int ExperienceNeeded { get; set; }
-
 
         public Page_Anything(Users user)
         {
