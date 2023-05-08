@@ -27,19 +27,16 @@ namespace Technical_Software_Service
         {
             InitializeComponent();
             this.user = user;
-            lstDailyTasks.ItemsSource = DataBase.Base.DailyTasks.ToList();
-
             if (user.Roles.Kind == "Администратор")
             {
+                lstDailyTasks.ItemsSource = DataBase.Base.DailyTasks.ToList();
                 btnAdd.Visibility = Visibility.Visible;
-            }
-            if (user.Roles.Kind == "Администратор")
-            {
                 btnDelete.Visibility = Visibility.Visible;
-            }
-            if (user.Roles.Kind == "Администратор")
-            {
                 btnGiveRandomTasksUsers.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                lstDailyTasks.ItemsSource = user.UserDailyTasks.Select(udt => udt.DailyTasks).ToList();
             }
         }
 
@@ -86,6 +83,10 @@ namespace Technical_Software_Service
                 else if (userDailyTask != null)
                 {
                     MessageBox.Show($"Вы уже выполнили задание \"{task.Title}\".");
+                }
+                else
+                {
+                    MessageBox.Show($"У вас недостаточно выполненных заявок для выполнения задания \"{task.Title}\".");
                 }
             }
         }
@@ -143,7 +144,43 @@ namespace Technical_Software_Service
 
         private void btnGiveRandomTasksUsers_Click(object sender, RoutedEventArgs e)
         {
+            // Получаем всех пользователей из базы данных
+            var users = DataBase.Base.Users.ToList();
 
+            // Получаем все доступные ежедневные задания из базы данных
+            var dailyTasks = DataBase.Base.DailyTasks.ToList();
+
+            // Проходим по каждому пользователю
+            foreach (var user in users)
+            {
+                // Получаем уже назначенные пользователю ежедневные задания
+                var assignedTasks = user.UserDailyTasks.Where(udt => udt.IsCompleted == false).Select(udt => udt.DailyTasksID).ToList();
+
+                // Получаем список доступных ежедневных заданий, которые еще не были назначены пользователю
+                var availableTasks = dailyTasks.Where(dt => !assignedTasks.Contains(dt.Id)).ToList();
+
+                // Если доступных заданий не хватает, то сообщаем об этом пользователю
+                if (availableTasks.Count < 3)
+                {
+                    MessageBox.Show($"Для пользователя {user.UserName} недостаточно доступных заданий.");
+                }
+                else
+                {
+                    // Выбираем случайные 3 задания из списка доступных заданий
+                    var randomTasks = availableTasks.OrderBy(x => Guid.NewGuid()).Take(3).ToList();
+
+                    // Назначаем выбранные задания пользователю
+                    foreach (var task in randomTasks)
+                    {
+                        user.UserDailyTasks.Add(new UserDailyTasks { DailyTasksID = task.Id, IsCompleted = false });
+                    }
+
+                    // Сохраняем изменения в базе данных
+                    DataBase.Base.SaveChanges();
+                }
+            }
+
+            MessageBox.Show("Ежедневные задания успешно назначены пользователям.");
         }
     }
 }

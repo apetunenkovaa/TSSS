@@ -30,7 +30,6 @@ namespace Technical_Software_Service
         public Window_AddUpdateTickets(Users user)
         {
             InitializeComponent();
-            user.CompletedCountTickets = 0;
             CBUpload();
             this.user = user;
         }
