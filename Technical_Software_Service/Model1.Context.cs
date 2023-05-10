@@ -16,18 +16,17 @@ namespace Technical_Software_Service
     public partial class HelpdeskEntities : DbContext
     {
         private static HelpdeskEntities _context;
+
         public HelpdeskEntities()
             : base("name=HelpdeskEntities")
         {
         }
-
         public static HelpdeskEntities GetContext()
         {
             if (_context == null)
                 _context = new HelpdeskEntities();
             return _context;
         }
-
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -52,5 +51,7 @@ namespace Technical_Software_Service
         public virtual DbSet<UserDailyTasks> UserDailyTasks { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<UserStates> UserStates { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<TaskType> TaskType { get; set; }
     }
 }

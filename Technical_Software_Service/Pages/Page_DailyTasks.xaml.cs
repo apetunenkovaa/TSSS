@@ -27,16 +27,22 @@ namespace Technical_Software_Service
         {
             InitializeComponent();
             this.user = user;
+            tbCompleteTicketProgress.Text = $"Закрыто заявок: {user.CompletedCountTicketsClosed}\nСоздано заявок: {user.CreateCountTickets}";
+
+            lstDailyTasks.ItemsSource = DataBase.Base.DailyTasks.ToList();
+
+            //Фильтр заданий
+            cbFilter.Items.Add("Все задания");
+            cbFilter.Items.Add("Активные задания");
+            cbFilter.Items.Add("Выполненные задания");
+            cbFilter.SelectedIndex = 0; // Выбираем первый элемент по умолчанию
+            cbFilter.SelectionChanged += cbFilter_SelectionChanged;
+
+            //Отображение кнопок
             if (user.Roles.Kind == "Администратор")
             {
-                lstDailyTasks.ItemsSource = DataBase.Base.DailyTasks.ToList();
                 btnAdd.Visibility = Visibility.Visible;
                 btnDelete.Visibility = Visibility.Visible;
-                btnGiveRandomTasksUsers.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                lstDailyTasks.ItemsSource = user.UserDailyTasks.Select(udt => udt.DailyTasks).ToList();
             }
         }
 
@@ -56,7 +62,7 @@ namespace Technical_Software_Service
 
         private void bFinishTask_Click(object sender, RoutedEventArgs e)
         {
-            if (user.CompletedCountTickets == 0)
+            if (user.CompletedCountTicketsClosed == 0 && user.CreateCountTickets == 0)
             {
                 MessageBox.Show("У вас пока нет выполненных заявок, выполните хотя бы одну, чтобы получить доступ к ежедневным заданиям.");
                 return;
@@ -70,23 +76,37 @@ namespace Technical_Software_Service
 
             if (task != null)
             {
-                var userDailyTask = user.UserDailyTasks.FirstOrDefault(udt => udt.DailyTasksID == task.Id);
-                if (user.CompletedCountTickets >= task.TotalCount && userDailyTask == null)
-                {
-                    user.Score += task.Score;
-                    user.XP += task.XP;
-                    user.UserDailyTasks.Add(new UserDailyTasks { DailyTasksID = task.Id, IsCompleted = true });
-                    MessageBox.Show($"Вы получили {task.Score} очков и {task.XP} опыта за выполнение ежедневного задания \"{task.Title}\"");
-
-                    DataBase.Base.SaveChanges();
-                }
-                else if (userDailyTask != null)
+                var userDailyTask = DataBase.Base.UserDailyTasks.FirstOrDefault(udt => udt.DailyTasksID == task.Id && udt.UserId == user.Id);
+                if (userDailyTask != null)
                 {
                     MessageBox.Show($"Вы уже выполнили задание \"{task.Title}\".");
                 }
                 else
                 {
-                    MessageBox.Show($"У вас недостаточно выполненных заявок для выполнения задания \"{task.Title}\".");
+                    if (task.TaskTypeId == 1 && user.CompletedCountTicketsClosed >= task.TotalCount)
+                    {
+                        user.Score += task.Score;
+                        user.XP += task.XP;
+                        user.UserDailyTasks.Add(new UserDailyTasks { DailyTasksID = task.Id, IsCompleted = true });
+                        MessageBox.Show($"Вы получили {task.Score} очков и {task.XP} опыта за выполнение ежедневного задания \"{task.Title}\"");
+                        DataBase.Base.SaveChanges();
+                    }
+                    else if (task.TaskTypeId == 2 && user.CreateCountTickets >= task.TotalCount)
+                    {
+                        user.Score += task.Score;
+                        user.XP += task.XP;
+                        user.UserDailyTasks.Add(new UserDailyTasks { DailyTasksID = task.Id, IsCompleted = true });
+                        MessageBox.Show($"Вы получили {task.Score} очков и {task.XP} опыта за выполнение ежедневного задания \"{task.Title}\"");
+                        DataBase.Base.SaveChanges();
+                    }
+                    else
+                    {
+                        string message = task.TaskTypeId == 1
+                            ? "У вас недостаточно выполненных заявок закрытия для выполнения задания"
+                            : "У вас недостаточно созданных заявок для выполнения задания";
+
+                        MessageBox.Show($"{message} \"{task.Title}\".");
+                    }
                 }
             }
         }
@@ -125,62 +145,25 @@ namespace Technical_Software_Service
             }
         }
 
-        private void lstDailyTasks_Loaded(object sender, RoutedEventArgs e)
+        private void cbFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var lv = (ListView)sender;
-            var progressDailyTasks = (TextBlock)lv.FindName("progressDailyTasks");
-            if (progressDailyTasks != null)
+            if (cbFilter.SelectedItem != null)
             {
-                progressDailyTasks.DataContextChanged += (s, ev) =>
+                if (cbFilter.SelectedItem.ToString() == "Все задания")
                 {
-                    if (ev.NewValue is DailyTasks dailyTask)
-                    {
-                        int completedCount = user.UserDailyTasks.Count(udt => udt.DailyTasksID == dailyTask.Id && udt.IsCompleted);
-                        progressDailyTasks.Text = $"Выполнено: {completedCount} / Всего: {dailyTask.TotalCount}";
-                    }
-                };
-            }
-        }
-
-        private void btnGiveRandomTasksUsers_Click(object sender, RoutedEventArgs e)
-        {
-            // Получаем всех пользователей из базы данных
-            var users = DataBase.Base.Users.ToList();
-
-            // Получаем все доступные ежедневные задания из базы данных
-            var dailyTasks = DataBase.Base.DailyTasks.ToList();
-
-            // Проходим по каждому пользователю
-            foreach (var user in users)
-            {
-                // Получаем уже назначенные пользователю ежедневные задания
-                var assignedTasks = user.UserDailyTasks.Where(udt => udt.IsCompleted == false).Select(udt => udt.DailyTasksID).ToList();
-
-                // Получаем список доступных ежедневных заданий, которые еще не были назначены пользователю
-                var availableTasks = dailyTasks.Where(dt => !assignedTasks.Contains(dt.Id)).ToList();
-
-                // Если доступных заданий не хватает, то сообщаем об этом пользователю
-                if (availableTasks.Count < 3)
-                {
-                    MessageBox.Show($"Для пользователя {user.UserName} недостаточно доступных заданий.");
+                    lstDailyTasks.ItemsSource = DataBase.Base.DailyTasks.ToList();
                 }
-                else
+                else if (cbFilter.SelectedItem.ToString() == "Активные задания")
                 {
-                    // Выбираем случайные 3 задания из списка доступных заданий
-                    var randomTasks = availableTasks.OrderBy(x => Guid.NewGuid()).Take(3).ToList();
-
-                    // Назначаем выбранные задания пользователю
-                    foreach (var task in randomTasks)
-                    {
-                        user.UserDailyTasks.Add(new UserDailyTasks { DailyTasksID = task.Id, IsCompleted = false });
-                    }
-
-                    // Сохраняем изменения в базе данных
-                    DataBase.Base.SaveChanges();
+                    var tasks = DataBase.Base.DailyTasks.Where(t => !t.UserDailyTasks.Any(udt => udt.UserId == user.Id && udt.IsCompleted));
+                    lstDailyTasks.ItemsSource = tasks.ToList();
+                }
+                else if (cbFilter.SelectedItem.ToString() == "Выполненные задания")
+                {
+                    var tasks = DataBase.Base.DailyTasks.Where(t => t.UserDailyTasks.Any(udt => udt.UserId == user.Id && udt.IsCompleted));
+                    lstDailyTasks.ItemsSource = tasks.ToList();
                 }
             }
-
-            MessageBox.Show("Ежедневные задания успешно назначены пользователям.");
         }
     }
 }

@@ -205,7 +205,7 @@
 
                     <WrapPanel Grid.Row="1" HorizontalAlignment="Right" Margin="10">
                         <Button Name="btnUpdateAccount" Content="Изменить пароль" Uid="{Binding Id}" Width="150" Style="{StaticResource Button}" Click="btnUpdateAccount_Click"/>
-                        <Button Name="btnDailytasks" Content="Ежедневные задания" Width="200" Style="{StaticResource Button}" Click="btnDailytasks_Click"/>
+                        <Button Name="btnDailytasks" Content="Задания" Style="{StaticResource Button}" Click="btnDailytasks_Click"/>
                         <Button Name="btnAchievement" Content="Достижения" Style="{StaticResource Button}" Click="btnAchievement_Click"/>
                     </WrapPanel>
                 </Grid>

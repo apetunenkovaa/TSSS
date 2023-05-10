@@ -31,6 +31,8 @@
           <Property Name="Image" Type="nvarchar(max)" />
           <Property Name="XP" Type="int" Nullable="false" />
           <Property Name="Score" Type="int" Nullable="false" />
+          <Property Name="TotalCount" Type="int" Nullable="false" />
+          <Property Name="TaskTypeId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Documents">
           <Key>
@@ -94,6 +96,23 @@
           <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TaskType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskType" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="TicketDocuments">
           <Key>
             <PropertyRef Name="Id" />
@@ -139,6 +158,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DailyTasksID" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="IsCompleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -157,9 +177,11 @@
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
           <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Photo" Type="nvarchar(max)" />
-          <Property Name="Score" Type="int" />
-          <Property Name="Level" Type="int" />
-          <Property Name="XP" Type="int" />
+          <Property Name="Score" Type="int" Nullable="false" />
+          <Property Name="Level" Type="int" Nullable="false" />
+          <Property Name="XP" Type="int" Nullable="false" />
+          <Property Name="CompletedCountTicketsClosed" Type="int" Nullable="false" />
+          <Property Name="CreateCountTickets" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UserStates">
           <Key>
@@ -168,6 +190,18 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Kind" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
+        <Association Name="FK_DailyTasks_TaskType">
+          <End Role="TaskType" Type="Self.TaskType" Multiplicity="1" />
+          <End Role="DailyTasks" Type="Self.DailyTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyTasks">
+              <PropertyRef Name="TaskTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Executors_Tickets">
           <End Role="Tickets" Type="Self.Tickets" Multiplicity="1" />
           <End Role="Executors" Type="Self.Executors" Multiplicity="*" />
@@ -384,6 +418,8 @@
           <EntitySet Name="Positions" EntityType="Self.Positions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Solutions" EntityType="Self.Solutions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaskType" EntityType="Self.TaskType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketDocuments" EntityType="Self.TicketDocuments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tickets" EntityType="Self.Tickets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TicketStates" EntityType="Self.TicketStates" Schema="dbo" store:Type="Tables" />
@@ -391,6 +427,10 @@
           <EntitySet Name="UserDailyTasks" EntityType="Self.UserDailyTasks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserStates" EntityType="Self.UserStates" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DailyTasks_TaskType" Association="Self.FK_DailyTasks_TaskType">
+            <End Role="TaskType" EntitySet="TaskType" />
+            <End Role="DailyTasks" EntitySet="DailyTasks" />
+          </AssociationSet>
           <AssociationSet Name="FK_Executors_Tickets" Association="Self.FK_Executors_Tickets">
             <End Role="Tickets" EntitySet="Tickets" />
             <End Role="Executors" EntitySet="Executors" />
@@ -551,6 +591,12 @@
             <End Role="UserStates" EntitySet="UserStates" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="HelpdeskModel.sysdiagrams" />
+          <EntitySet Name="TaskType" EntityType="HelpdeskModel.TaskType" />
+          <AssociationSet Name="FK_DailyTasks_TaskType" Association="HelpdeskModel.FK_DailyTasks_TaskType">
+            <End Role="TaskType" EntitySet="TaskType" />
+            <End Role="DailyTasks" EntitySet="DailyTasks" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Achievements">
           <Key>
@@ -581,6 +627,9 @@
           <Property Name="XP" Type="Int32" Nullable="false" />
           <Property Name="Score" Type="Int32" Nullable="false" />
           <NavigationProperty Name="UserDailyTasks" Relationship="HelpdeskModel.FK_UserDailyTasks_DailyTasks" FromRole="DailyTasks" ToRole="UserDailyTasks" />
+          <Property Name="TotalCount" Type="Int32" Nullable="false" />
+          <Property Name="TaskTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TaskType" Relationship="HelpdeskModel.FK_DailyTasks_TaskType" FromRole="DailyTasks" ToRole="TaskType" />
         </EntityType>
         <EntityType Name="Documents">
           <Key>
@@ -712,6 +761,7 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="DailyTasks" Relationship="HelpdeskModel.FK_UserDailyTasks_DailyTasks" FromRole="UserDailyTasks" ToRole="DailyTasks" />
           <NavigationProperty Name="Users" Relationship="HelpdeskModel.FK_UserDailyTasks_Users" FromRole="UserDailyTasks" ToRole="Users" />
+          <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -730,9 +780,9 @@
           <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Score" Type="Int32" />
-          <Property Name="Level" Type="Int32" />
-          <Property Name="XP" Type="Int32" />
+          <Property Name="Score" Type="Int32" Nullable="false" />
+          <Property Name="Level" Type="Int32" Nullable="false" />
+          <Property Name="XP" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Executors" Relationship="HelpdeskModel.FK_Executors_Users" FromRole="Users" ToRole="Executors" />
           <NavigationProperty Name="HistoryEntries" Relationship="HelpdeskModel.FK_HistoryEntries_Users" FromRole="Users" ToRole="HistoryEntries" />
           <NavigationProperty Name="Positions" Relationship="HelpdeskModel.FK_Users_Positions" FromRole="Users" ToRole="Positions" />
@@ -740,6 +790,8 @@
           <NavigationProperty Name="UserAchievements" Relationship="HelpdeskModel.FK_UserAchievements_Users" FromRole="Users" ToRole="UserAchievements" />
           <NavigationProperty Name="UserDailyTasks" Relationship="HelpdeskModel.FK_UserDailyTasks_Users" FromRole="Users" ToRole="UserDailyTasks" />
           <NavigationProperty Name="UserStates" Relationship="HelpdeskModel.FK_Users_UserStates" FromRole="Users" ToRole="UserStates" />
+          <Property Name="CompletedCountTicketsClosed" Type="Int32" Nullable="false" />
+          <Property Name="CreateCountTickets" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="UserStates">
           <Key>
@@ -953,6 +1005,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TaskType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskType1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DailyTasks" Relationship="HelpdeskModel.FK_DailyTasks_TaskType" FromRole="TaskType" ToRole="DailyTasks" />
+        </EntityType>
+        <Association Name="FK_DailyTasks_TaskType">
+          <End Type="HelpdeskModel.TaskType" Role="TaskType" Multiplicity="1" />
+          <End Type="HelpdeskModel.DailyTasks" Role="DailyTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DailyTasks">
+              <PropertyRef Name="TaskTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -980,6 +1062,8 @@
           <EntitySetMapping Name="DailyTasks">
             <EntityTypeMapping TypeName="HelpdeskModel.DailyTasks">
               <MappingFragment StoreEntitySet="DailyTasks">
+                <ScalarProperty Name="TaskTypeId" ColumnName="TaskTypeId" />
+                <ScalarProperty Name="TotalCount" ColumnName="TotalCount" />
                 <ScalarProperty Name="Score" ColumnName="Score" />
                 <ScalarProperty Name="XP" ColumnName="XP" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
@@ -1104,6 +1188,7 @@
           <EntitySetMapping Name="UserDailyTasks">
             <EntityTypeMapping TypeName="HelpdeskModel.UserDailyTasks">
               <MappingFragment StoreEntitySet="UserDailyTasks">
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="DailyTasksID" ColumnName="DailyTasksID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1113,6 +1198,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="HelpdeskModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="CreateCountTickets" ColumnName="CreateCountTickets" />
+                <ScalarProperty Name="CompletedCountTicketsClosed" ColumnName="CompletedCountTicketsClosed" />
                 <ScalarProperty Name="XP" ColumnName="XP" />
                 <ScalarProperty Name="Level" ColumnName="Level" />
                 <ScalarProperty Name="Score" ColumnName="Score" />
@@ -1136,6 +1223,25 @@
             <EntityTypeMapping TypeName="HelpdeskModel.UserStates">
               <MappingFragment StoreEntitySet="UserStates">
                 <ScalarProperty Name="Kind" ColumnName="Kind" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="HelpdeskModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaskType">
+            <EntityTypeMapping TypeName="HelpdeskModel.TaskType">
+              <MappingFragment StoreEntitySet="TaskType">
+                <ScalarProperty Name="TaskType1" ColumnName="TaskType" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

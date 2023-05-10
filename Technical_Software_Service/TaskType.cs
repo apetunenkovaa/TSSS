@@ -12,25 +12,18 @@ namespace Technical_Software_Service
     using System;
     using System.Collections.Generic;
     
-    public partial class DailyTasks
+    public partial class TaskType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DailyTasks()
+        public TaskType()
         {
-            this.UserDailyTasks = new HashSet<UserDailyTasks>();
+            this.DailyTasks = new HashSet<DailyTasks>();
         }
     
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Image { get; set; }
-        public int XP { get; set; }
-        public int Score { get; set; }
-        public int TotalCount { get; set; }
-        public int TaskTypeId { get; set; }
+        public string TaskType1 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserDailyTasks> UserDailyTasks { get; set; }
-        public virtual TaskType TaskType { get; set; }
+        public virtual ICollection<DailyTasks> DailyTasks { get; set; }
     }
 }

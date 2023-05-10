@@ -23,15 +23,12 @@ namespace Technical_Software_Service
             }
         }
 
-        public string CompletionStatus
+        public string totalCount
         {
             get
             {
-                int completedCount = UserDailyTasks.Where(udt => udt.UserId == Id && udt.IsCompleted).Count();
-                return "Завершенные задачи: " + completedCount + " из " + TotalCount;
+                return "Всего: " + TotalCount;
             }
         }
-
-
     }
 }

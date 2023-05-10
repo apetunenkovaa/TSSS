@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Technical_Software_Service"
         mc:Ignorable="d"
-        Title="Добавление ежедневной задачи" Height="500" Width="800">
+        Title="Добавление задания" Height="600" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="6*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
-        <TextBlock Name="tbHeader" Text="Добавление ежедневной задачи" Style="{StaticResource Header}"/>
+        <TextBlock Name="tbHeader" Text="Добавление задания" Style="{StaticResource Header}"/>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -34,6 +34,11 @@
                 <StackPanel Margin="10" Orientation="Vertical">
                     <TextBlock Text="Название" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
                     <TextBox Name="tbTitle" Padding="2px" FontSize="16px" Height="30px" Width="200" FontFamily="Manrope" HorizontalAlignment="Left"/>
+                </StackPanel>
+
+                <StackPanel Margin="10" Orientation="Vertical">
+                    <TextBlock Text="Тип задания" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
+                    <ComboBox Name="cbTypeTask" Padding="2px" FontSize="16px" Height="30px" Width="200" FontFamily="Manrope" HorizontalAlignment="Left" IsEditable="True" IsReadOnly="True"/>
                 </StackPanel>
 
                 <StackPanel Margin="10" Orientation="Vertical">

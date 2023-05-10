@@ -37,10 +37,11 @@ namespace Technical_Software_Service
         public string Email { get; set; }
         public string Photo { get; set; }
         public int Score { get; set; }
-        public int Level { get; set; } = 1;
-        public int XP { get; set; } = 0;
-        public int CompletedCountTickets { get; set; } 
-
+        public int Level { get; set; }
+        public int XP { get; set; }
+        public int CompletedCountTicketsClosed { get; set; }
+        public int CreateCountTickets { get; set; }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Executors> Executors { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

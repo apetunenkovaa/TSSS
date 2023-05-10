@@ -483,16 +483,6 @@ namespace Technical_Software_Service
         int initialXP = 0; // начальный опыт
         int nextLevelXP = 100; // опыт, необходимый для достижения следующего уровня
 
-        // Метод вычисляет минимальный опыт, необходимый для достижения следующего уровня
-        private int CalculateNextLevelMinXP(int currentLevel)
-        {
-            // Логика вычисления опыта может быть разной в зависимости от вашей игры. 
-            // Например, можно использовать формулу nextLevelMinXP = currentLevel * 100, 
-            // чтобы каждый следующий уровень требовал больше опыта для достижения.
-            int nextLevelMinXP = currentLevel * nextLevelXP;
-            return nextLevelMinXP;
-        }
-
         // Метод вычисляет максимальный опыт, необходимый для достижения следующего уровня
         private int CalculateNextLevelMaxXP(int currentLevel)
         {
@@ -503,57 +493,6 @@ namespace Technical_Software_Service
             return nextLevelMaxXP;
         }
 
-        private void ProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            // Получаем значения минимального и максимального опыта для следующего уровня
-            int nextLevelMinXP = CalculateNextLevelMinXP(user.Level);
-            int nextLevelMaxXP = CalculateNextLevelMaxXP(user.Level);
-
-            // Вычисляем текущий прогресс пользователя в процентах
-            double progress = ((double)user.XP - nextLevelMinXP) / (nextLevelMaxXP - nextLevelMinXP) * 100.0;
-
-                // Проверяем, достиг ли пользователь максимального уровня
-                if (user.XP >= nextLevelMaxXP && user.Level < MAX_LEVEL)
-                {
-
-                    // Увеличиваем уровень пользователя и обновляем его опыт
-                    user.Level++;
-                    user.XP = user.XP - nextLevelMaxXP;
-                    // Обновляем значения минимального и максимального опыта для следующего уровня
-                    nextLevelMinXP = CalculateNextLevelMinXP(user.Level);
-                    nextLevelMaxXP = CalculateNextLevelMaxXP(user.Level);
-
-                    // Обновляем текст в TextBlock с текущим значением прогресса и опытом пользователя
-                    tbLVL.Text = $"Уровень: {user.Level} Опыт: {user.XP}/{nextLevelMaxXP}";
-
-                    // Показываем пользователю сообщение о достижении нового уровня
-                    MessageBox.Show($"Вы достигли уровня {user.Level - 1}!");
-
-                    // Сохраняем значение опыта пользователя в базе данных или где-то еще
-                    HelpdeskEntities.GetContext().SaveChanges();
-                }
-                else
-                {
-
-                    // Обновляем текст в TextBlock с текущим значением прогресса и опытом пользователя
-                    tbLVL.Text = $"Уровень: {user.Level} Опыт: {user.XP}/{nextLevelMaxXP}";
-
-                    // Показываем пользователю сообщение о достижении максимального уровня
-                    MessageBox.Show($"Поздравляем! Вы достигли максимального уровня в {MAX_LEVEL}!");
-
-                    // Обновляем опыт пользователя
-                    user.XP = 0;
-
-                    // Обновляем опыт пользователя
-                    user.Level = 1;
-
-                    // Обновляем значения минимального и максимального опыта для следующего уровня
-                    nextLevelMinXP = CalculateNextLevelMinXP(user.Level);
-                    nextLevelMaxXP = CalculateNextLevelMaxXP(user.Level);
-                }
-                // Обновляем текст в TextBlock с текущим значением прогресса и опытом пользователя
-                tbLVL.Text = $"Уровень: {user.Level} Опыт: {user.XP}/{nextLevelMaxXP}";
-        }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {

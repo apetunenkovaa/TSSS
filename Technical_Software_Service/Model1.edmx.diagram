@@ -40,6 +40,9 @@
         <AssociationConnector Association="HelpdeskModel.FK_UserAchievements_Users" />
         <AssociationConnector Association="HelpdeskModel.FK_UserDailyTasks_Users" />
         <AssociationConnector Association="HelpdeskModel.FK_Users_UserStates" />
+        <EntityTypeShape EntityType="HelpdeskModel.sysdiagrams" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="HelpdeskModel.TaskType" Width="1.5" PointX="0.75" PointY="1.125" />
+        <AssociationConnector Association="HelpdeskModel.FK_DailyTasks_TaskType" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,14 +12,12 @@ namespace Technical_Software_Service
     using System;
     using System.Collections.Generic;
     
-    public partial class UserDailyTasks
+    public partial class sysdiagrams
     {
-        public int Id { get; set; }
-        public int DailyTasksID { get; set; }
-        public int UserId { get; set; }
-        public bool IsCompleted { get; set; }
-    
-        public virtual DailyTasks DailyTasks { get; set; }
-        public virtual Users Users { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

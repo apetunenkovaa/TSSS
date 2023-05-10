@@ -232,6 +232,47 @@ namespace Technical_Software_Service
                 {
                     ticket.LastUpdate = dpLastUpdate.SelectedDate.Value;
                 }
+
+                //Начисление очков пользователю и уведомление
+                // Получаем список состояний заявок из базы данных
+                List<TicketStates> ticketStates = DataBase.Base.TicketStates.ToList();
+
+                        // Отображаем MessageBox для подтверждения закрытия заявки
+                        if (MessageBox.Show("Вы уверены, что хотите добавить эту заявку?", "Добавление заявки", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            // Начисляем очки пользователю за закрытие заявки
+                            int score = 0;
+                            if (ticket.ImportanceTypeId != null)
+                            {
+                                switch (ticket.ImportanceTypeId)
+                                {
+                                    case 1:
+                                        score = 10;
+                                        break;
+                                    case 2:
+                                        score = 15;
+                                        break;
+                                    case 3:
+                                        score = 5;
+                                        break;
+                                    case 4:
+                                        score = 1;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            user.Score += score;
+                            MessageBox.Show($"Вам начислено {score} очков за добавление заявки");
+
+                            //Увеличение счетчик CompletedCount для отслеживания числа закрытых заявок.
+                            user.CreateCountTickets++;
+                            Debug.WriteLine(user.CreateCountTickets);
+
+                            // Сохраняем изменения в базе данных
+                            DataBase.Base.SaveChanges();
+                        }
+
                 DataBase.Base.Tickets.Add(ticket);
                 DataBase.Base.SaveChanges();
                 MessageBox.Show("Заявка успешно добавлена!");
@@ -349,8 +390,8 @@ namespace Technical_Software_Service
                             MessageBox.Show($"Вам начислено {score} очков за закрытие заявки");
 
                             //Увеличение счетчик CompletedCount для отслеживания числа закрытых заявок.
-                            user.CompletedCountTickets++;
-                            Debug.WriteLine(user.CompletedCountTickets);
+                            user.CompletedCountTicketsClosed++;
+                            Debug.WriteLine(user.CompletedCountTicketsClosed);
 
                             // Сохраняем изменения в базе данных
                             DataBase.Base.SaveChanges();

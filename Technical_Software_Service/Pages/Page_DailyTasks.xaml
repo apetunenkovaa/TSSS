@@ -5,17 +5,26 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Technical_Software_Service"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="500" d:DesignWidth="800"
       Background="White"
-      Title="Ежедневные задачи">
+      Title="Задания">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="4.8*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <TextBlock Style="{StaticResource Header}" Text="Ежедневные задания" Grid.Row="0"/>
+
+        <StackPanel Grid.Row="0">
+            <TextBlock Style="{StaticResource Header}" Text="Задания"/>
+            <TextBlock x:Name="tbCompleteTicketProgress" Text="" FontFamily="Manrope"  FontSize="15" HorizontalAlignment="Stretch" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Text="Фильтр заданий: " FontSize="16px" FontFamily="Manrope"/>
+                <ComboBox x:Name="cbFilter" Width="200" SelectionChanged="cbFilter_SelectionChanged"/>
+            </StackPanel>
+        </StackPanel>
+
 
         <ListView x:Name="lstDailyTasks" Grid.Row="1" ItemsSource="{Binding DataBase.Base.DailyTasks}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
             <ListView.ItemTemplate>
@@ -32,28 +41,18 @@
                                     <TextBlock HorizontalAlignment="Left" Text="{Binding Title}" FontFamily="Manrope" FontWeight="Bold" FontSize="20" Margin="0,10,0,0"/>
                                     <TextBlock Text="{Binding Description}" Height="20" FontFamily="Manrope" FontSize="15" Margin="0,10,0,0"/>
                                     <TextBlock Text="{Binding xp}" Height="20" FontFamily="Manrope" FontSize="15" Margin="0,10,0,0"/>
-                                    <TextBlock x:Name="tbStatusTask" Text="{Binding CompletionStatus}" Height="20" FontFamily="Manrope" FontSize="15" Margin="0,10,0,0"/>
+                                    <TextBlock x:Name="tbTotal" Text="{Binding totalCount}" Height="20" FontFamily="Manrope" FontSize="15" Margin="0,10,0,0"/>
                                     <Button x:Name="bFinishTask" Style="{StaticResource Button}" Content="Завершить" Margin="0,10,0,10" HorizontalAlignment="Left" Click="bFinishTask_Click" CommandParameter="{Binding Id}" />
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
-                        <Border.Style>
-                            <Style TargetType="Border">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsCompleted}" Value="True">
-                                        <Setter Property="Background" Value="#C1B4DF"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Border.Style>
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="3">
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
             <Button Name="btnBack" Content="Назад" Click="btnBack_Click" Style="{StaticResource Button}" HorizontalAlignment="Left"/>
-            <Button Name="btnGiveRandomTasksUsers" Content="Распределить задания" Click="btnGiveRandomTasksUsers_Click" Style="{StaticResource Button}" Width="200" HorizontalAlignment="Left" Visibility="Collapsed"/>
             <Button Name="btnAdd" Content="Добавить" Click="btnAdd_Click" Style="{StaticResource Button}" HorizontalAlignment="Center" Visibility="Collapsed"/>
             <Button Name="btnDelete" Content="Удалить" Click="btnDelete_Click" Style="{StaticResource Button}" HorizontalAlignment="Center" Visibility="Collapsed"/>
         </StackPanel>
