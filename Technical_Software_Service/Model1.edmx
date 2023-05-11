@@ -150,6 +150,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AchievementID" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="IsCompleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="UserDailyTasks">
           <Key>
@@ -751,6 +752,7 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Achievements" Relationship="HelpdeskModel.FK_UserAchievements_Achievements" FromRole="UserAchievements" ToRole="Achievements" />
           <NavigationProperty Name="Users" Relationship="HelpdeskModel.FK_UserAchievements_Users" FromRole="UserAchievements" ToRole="Users" />
+          <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="UserDailyTasks">
           <Key>
@@ -1179,6 +1181,7 @@
           <EntitySetMapping Name="UserAchievements">
             <EntityTypeMapping TypeName="HelpdeskModel.UserAchievements">
               <MappingFragment StoreEntitySet="UserAchievements">
+                <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="AchievementID" ColumnName="AchievementID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

@@ -515,7 +515,7 @@ namespace Technical_Software_Service
                         string winnerName = $"{usersWithMaxScore[0].LastName} {usersWithMaxScore[0].FirstName} {usersWithMaxScore[0].MiddleName}";
                         winnerInfo += $"Победитель первого сезона: {winnerName} ({winnerScore} очков)\n";
                         Winner1.Text = winnerInfo;
-                    }
+                }
             });
         }
     }

@@ -16,7 +16,6 @@ namespace Technical_Software_Service
     public partial class HelpdeskEntities : DbContext
     {
         private static HelpdeskEntities _context;
-
         public HelpdeskEntities()
             : base("name=HelpdeskEntities")
         {

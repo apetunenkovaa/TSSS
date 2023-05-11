@@ -17,6 +17,7 @@ namespace Technical_Software_Service
         public int Id { get; set; }
         public int AchievementID { get; set; }
         public int UserId { get; set; }
+        public bool IsCompleted { get; set; }
     
         public virtual Achievements Achievements { get; set; }
         public virtual Users Users { get; set; }
