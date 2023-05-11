@@ -37,8 +37,6 @@ namespace Technical_Software_Service
         private DateTime seasonEndDate = DateTime.Now.AddHours(8); // Закончить сезон через 8 часов
         private System.Timers.Timer countdownTimer = new System.Timers.Timer(1000);
         private ObservableCollection<Users> users = new ObservableCollection<Users>();
-        private const int MAX_LEVEL = 100;//Максимальный уровень
-
 
         Users user;
 
@@ -49,11 +47,16 @@ namespace Technical_Software_Service
             UpdateList();
             Filter();
 
+            //Уровень и опыт пользователя
+            LevelManager levelManager = new LevelManager(user);
+            var levelInfo = levelManager.CheckLevelUp();
+            int currentLevel = levelInfo.level;
+            int currentXP = levelInfo.currentXP;
+            int nextLevel = levelInfo.nextLevel;
+            tbLVL.Text = $"Уровень: {currentLevel} Опыт: {currentXP}/{nextLevel}";
+
             // установка DataContext для привязки данных
             DataContext = this;
-
-            // установка текста для tbLVL
-            tbLVL.Text = $"Уровень: {user.Level} Опыт: {user.XP}/{CalculateNextLevelMaxXP(user.Level)}";
 
             ListAnything.ItemsSource = DataBase.Base.Tickets.ToList();
             ListHistory.ItemsSource = DataBase.Base.HistoryEntries.ToList();
@@ -478,21 +481,6 @@ namespace Technical_Software_Service
             updateTickets.ShowDialog();
             ClassFrame.MainF.Navigate(new Page_Anything(user));
         }
-
-        // Определение начальных значений опыта и сколько нужно для следующего уровня
-        int initialXP = 0; // начальный опыт
-        int nextLevelXP = 100; // опыт, необходимый для достижения следующего уровня
-
-        // Метод вычисляет максимальный опыт, необходимый для достижения следующего уровня
-        private int CalculateNextLevelMaxXP(int currentLevel)
-        {
-            // Логика вычисления опыта может быть разной в зависимости от вашей игры. 
-            // Например, можно использовать формулу nextLevelMaxXP = currentLevel * 150, 
-            // чтобы каждый следующий уровень требовал больше опыта для достижения.
-            int nextLevelMaxXP = currentLevel * nextLevelXP + nextLevelXP;
-            return nextLevelMaxXP;
-        }
-
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {

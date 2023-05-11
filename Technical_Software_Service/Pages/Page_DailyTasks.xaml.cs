@@ -64,7 +64,7 @@ namespace Technical_Software_Service
         {
             if (user.CompletedCountTicketsClosed == 0 && user.CreateCountTickets == 0)
             {
-                MessageBox.Show("У вас пока нет выполненных заявок, выполните хотя бы одну, чтобы получить доступ к ежедневным заданиям.");
+                MessageBox.Show("У вас пока нет выполненных заявок, выполните хотя бы одну, чтобы получить доступ к заданиям.");
                 return;
             }
 
@@ -88,7 +88,7 @@ namespace Technical_Software_Service
                         user.Score += task.Score;
                         user.XP += task.XP;
                         user.UserDailyTasks.Add(new UserDailyTasks { DailyTasksID = task.Id, IsCompleted = true });
-                        MessageBox.Show($"Вы получили {task.Score} очков и {task.XP} опыта за выполнение ежедневного задания \"{task.Title}\"");
+                        MessageBox.Show($"Вы получили {task.Score} очков и {task.XP} опыта за выполнение задания \"{task.Title}\"");
                         DataBase.Base.SaveChanges();
                     }
                     else if (task.TaskTypeId == 2 && user.CreateCountTickets >= task.TotalCount)
@@ -96,7 +96,7 @@ namespace Technical_Software_Service
                         user.Score += task.Score;
                         user.XP += task.XP;
                         user.UserDailyTasks.Add(new UserDailyTasks { DailyTasksID = task.Id, IsCompleted = true });
-                        MessageBox.Show($"Вы получили {task.Score} очков и {task.XP} опыта за выполнение ежедневного задания \"{task.Title}\"");
+                        MessageBox.Show($"Вы получили {task.Score} очков и {task.XP} опыта за выполнение задания \"{task.Title}\"");
                         DataBase.Base.SaveChanges();
                     }
                     else
