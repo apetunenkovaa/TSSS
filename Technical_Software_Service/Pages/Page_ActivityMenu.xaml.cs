@@ -109,7 +109,20 @@ namespace Technical_Software_Service
 
             cbFilter.SelectedIndex = 0; // Фильтр для заявок
             cboxFilter.SelectedIndex = 0; // Фильтр для истории заявок
+
+            var userAchievements = user.UserAchievements.Where(x => x.IsCompleted).ToList();
+            foreach (var achievement in userAchievements)
+            {
+                // Добавить изображение достижения на страницу
+                var achievementImage = new Image();
+                achievementImage.Source = achievement.Achievements.ImageSource;
+                // Добавить изображение в соответствующий контейнер на странице
+                // Например, можно добавить изображение в StackPanel:
+                stackPanelAchievements.Children.Add(achievementImage);
+            }
         }
+
+
 
         private async void CountdownTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
@@ -519,14 +532,60 @@ namespace Technical_Software_Service
             });
         }
 
+       
+        private int currentAchievementIndex = 0;
+
         private void PrevButton_Click(object sender, RoutedEventArgs e)
         {
+            if (currentAchievementIndex > 0)
+            {
+                currentAchievementIndex--;
+            }
+            else
+            {
+                currentAchievementIndex = stackPanelAchievements.Children.Count - 1;
+            }
 
+            // Показать текущий элемент и скрыть остальные
+            for (int i = 0; i < stackPanelAchievements.Children.Count; i++)
+            {
+                var child = stackPanelAchievements.Children[i];
+                if (i == currentAchievementIndex)
+                {
+                    child.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    child.Visibility = Visibility.Collapsed;
+                }
+            }
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
+            if (currentAchievementIndex < stackPanelAchievements.Children.Count - 1)
+            {
+                currentAchievementIndex++;
+            }
+            else
+            {
+                currentAchievementIndex = 0;
+            }
 
+            // Показать текущий элемент и скрыть остальные
+            for (int i = 0; i < stackPanelAchievements.Children.Count; i++)
+            {
+                var child = stackPanelAchievements.Children[i];
+                if (i == currentAchievementIndex)
+                {
+                    child.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    child.Visibility = Visibility.Collapsed;
+                }
+            }
         }
+
     }
 }
