@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -94,6 +95,11 @@ namespace Technical_Software_Service
                     {
                         DailyTasks newDailyTasks = new DailyTasks();
                         newDailyTasks.Title = tbTitle.Text;
+                        newDailyTasks.Score = Convert.ToInt32(tbScore.Text);
+                        newDailyTasks.XP = Convert.ToInt32(tbXP.Text);
+                        newDailyTasks.TotalCount = Convert.ToInt32(tbTotalCount.Text);
+                        newDailyTasks.TaskTypeId = cbTypeTask.SelectedIndex + 1;
+
                         if (tbDescription.Text == "")
                         {
                             newDailyTasks.Description = null;
@@ -117,12 +123,17 @@ namespace Technical_Software_Service
                     }
                 }
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
-                MessageBox.Show("Что-то пошло не так.." + ex.Message);
+                var errorMsg = "Ошибка при обновлении записей: " + ex.Message;
+                if (ex.InnerException != null)
+                {
+                    errorMsg += "\n\n" + ex.InnerException.Message;
+                }
+                MessageBox.Show(errorMsg, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        
+
         private void btnAddPhoto_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog OFD = new OpenFileDialog();

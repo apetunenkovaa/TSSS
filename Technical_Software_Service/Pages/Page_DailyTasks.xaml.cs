@@ -120,14 +120,14 @@ namespace Technical_Software_Service
             if (selectedItem != null)
             {
                 // Запрашиваем подтверждение удаления
-                var result = MessageBox.Show($"Вы уверены, что хотите удалить задание '{selectedItem.Title}'?", "Удаление задания", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var result = MessageBox.Show($"Вы уверены, что хотите удалить достижение '{selectedItem.Title}'?", "Удаление достижения", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    // Удаляем связанные записи из таблицы UserDailyTasks
+                    // Удаляем связанные записи из таблицы UserAchievements
                     var tasksToDelete = DataBase.Base.UserDailyTasks.Where(x => x.DailyTasksID == selectedItem.Id);
                     DataBase.Base.UserDailyTasks.RemoveRange(tasksToDelete);
 
-                    // Удаляем элемент из таблицы DailyTasks
+                    // Удаляем элемент из таблицы Achievements
                     DataBase.Base.DailyTasks.Remove(selectedItem);
 
                     try
@@ -137,14 +137,11 @@ namespace Technical_Software_Service
 
                         // Обновляем содержимое ListView
                         lstDailyTasks.ItemsSource = DataBase.Base.DailyTasks.ToList();
-
-                        // Уведомляем пользователя об успешном удалении записи
-                        MessageBox.Show($"Задание '{selectedItem.Title}' успешно удалено!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     catch (Exception ex)
                     {
                         // Обрабатываем возможные ошибки при сохранении изменений
-                        MessageBox.Show($"Ошибка при удалении задания: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show($"Ошибка при удалении достижения: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
