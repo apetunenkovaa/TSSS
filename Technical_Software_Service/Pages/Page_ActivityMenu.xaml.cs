@@ -11,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using MailKit;
 using MimeKit;
 using MailKit.Net.Imap;
@@ -34,7 +33,7 @@ namespace Technical_Software_Service
     public partial class Page_Anything : Page
     {
         private BackgroundWorker backgroundWorker;
-        private DateTime seasonEndDate = DateTime.Now.AddHours(8); // Закончить сезон через 8 часов
+        private DateTime seasonEndDate = DateTime.Now.AddMinutes(1); // Закончить сезон через 8 часов
         private System.Timers.Timer countdownTimer = new System.Timers.Timer(1000);
         private ObservableCollection<Users> users = new ObservableCollection<Users>();
 
@@ -130,7 +129,7 @@ namespace Technical_Software_Service
             if (remainingTime.Ticks < 0) // Сезон закончился, начинаем новый
             {
                 SaveResults(); // Сохраняем результаты
-                seasonEndDate = DateTime.Now.AddHours(8);
+                seasonEndDate = DateTime.Now.AddMinutes(1);
                 foreach (Users user in DataBase.Base.Users)
                 {
                     user.Score = 0;
@@ -139,6 +138,7 @@ namespace Technical_Software_Service
                         tbUserScore.Text = "0";
                     });
                 }
+                DataBase.Base.SaveChanges();
                 remainingTime = seasonEndDate - DateTime.Now;
 
                 // Очищаем источник данных DataGrid и обновляем его
@@ -183,7 +183,10 @@ namespace Technical_Software_Service
 
         private void SaveResults()
         {
-            string resultsFilePath = "results.txt";
+            string folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Отчёты");
+            Directory.CreateDirectory(folderPath);
+
+            string resultsFilePath = Path.Combine(folderPath, "Результаты рейтинга пользователей.txt");
             try
             {
                 using (StreamWriter writer = new StreamWriter(resultsFilePath, true))
