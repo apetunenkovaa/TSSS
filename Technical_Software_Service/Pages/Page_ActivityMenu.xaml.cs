@@ -621,50 +621,5 @@ namespace Technical_Software_Service
                 // Handle the exception here
             }
         }
-
-        // Определяем коллекцию для хранения элементов ListHistory
-        private ObservableCollection<HistoryEntries> historyEntries = new ObservableCollection<HistoryEntries>();
-
-        // Добавление нового элемента в ListHistory и сохраненную коллекцию
-        private void AddHistoryEntry(HistoryEntries entry)
-        {
-            // Проверяем, есть ли элемент уже в сохраненной коллекции
-            if (!historyEntries.Any(x => x.Id == entry.Id))
-            {
-                // Добавляем элемент в ListHistory и сохраненную коллекцию
-                ListHistory.Items.Add(entry);
-                historyEntries.Add(entry);
-            }
-        }
-
-        // Очищаем ListHistory и сохраненную коллекцию
-        private void ClearHistory_Click(object sender, RoutedEventArgs e)
-        {
-            ListHistory.Items.Clear();
-            historyEntries.Clear();
-        }
-
-        // Обновляем ListHistory и отображаем только новые элементы
-        private void RefreshHistory()
-        {
-            // Получаем новые элементы из базы данных
-            List<HistoryEntries> newEntries = DataBase.Base.HistoryEntries
-                .Where(x => !historyEntries.Any(y => y.Id == x.Id))
-                .ToList();
-
-            // Добавляем новые элементы в ListHistory и сохраненную коллекцию
-            foreach (HistoryEntries entry in newEntries)
-            {
-                AddHistoryEntry(entry);
-            }
-        }
-
-        // Вызываем RefreshHistory каждый раз, когда добавляется новый элемент
-        private void OnNewHistoryEntryAdded(object sender, EventArgs e)
-        {
-            RefreshHistory();
-        }
-
-
     }
 }

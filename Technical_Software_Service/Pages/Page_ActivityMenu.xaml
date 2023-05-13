@@ -125,7 +125,6 @@
 
                     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left">
                         <Button Content="Сохранить историю" Click="SaveHistory_Click" Width="155" Style="{StaticResource Button}"/>
-                        <Button Content="Очистить историю" Click="ClearHistory_Click" Width="155" Style="{StaticResource Button}"/>
                     </StackPanel>
 
                 </Grid>
