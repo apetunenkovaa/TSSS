@@ -34,7 +34,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Ellipse Width="100" Height="100" Margin="10" Stroke="#F5C0A3" StrokeThickness="3">
                                     <Ellipse.Fill>
-                                        <ImageBrush ImageSource="/Resources/Achievement.png"/>
+                                        <ImageBrush x:Name="photoDailyTasks" ImageSource="{Binding ImageSource}"/>
                                     </Ellipse.Fill>
                                 </Ellipse>
                                 <StackPanel Margin="5,0,0,0">
@@ -54,6 +54,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="2">
             <Button Name="btnBack" Content="Назад" Click="btnBack_Click" Style="{StaticResource Button}" HorizontalAlignment="Left"/>
             <Button Name="btnAdd" Content="Добавить" Click="btnAdd_Click" Style="{StaticResource Button}" HorizontalAlignment="Center" Visibility="Collapsed"/>
+            <Button Name="btnEdit" Content="Редактировать" Click="btnEdit_Click" Style="{StaticResource Button}" HorizontalAlignment="Center" Visibility="Collapsed"/>
             <Button Name="btnDelete" Content="Удалить" Click="btnDelete_Click" Style="{StaticResource Button}" HorizontalAlignment="Center" Visibility="Collapsed"/>
         </StackPanel>
     </Grid>

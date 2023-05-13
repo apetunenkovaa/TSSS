@@ -11,7 +11,10 @@ namespace Technical_Software_Service
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Windows.Media.Imaging;
+    using System.IO;
+    using System.Windows.Media;
+
     public partial class DailyTasks
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -28,7 +31,26 @@ namespace Technical_Software_Service
         public int Score { get; set; }
         public int TotalCount { get; set; }
         public int TaskTypeId { get; set; }
-    
+
+        public BitmapImage ImageSource
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(Image))
+                {
+                    string imagePath = Path.Combine(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName, "Image", Image);
+
+                    if (File.Exists(imagePath))
+                    {
+                        return new BitmapImage(new Uri(imagePath));
+                    }
+                }
+
+                // Возвращаем изображение по умолчанию
+                return new BitmapImage(new Uri("pack://application:,,,/Resources/Achievement.png"));
+            }
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserDailyTasks> UserDailyTasks { get; set; }
         public virtual TaskType TaskType { get; set; }

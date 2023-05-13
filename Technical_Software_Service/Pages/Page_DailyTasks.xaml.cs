@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,7 @@ namespace Technical_Software_Service
             {
                 btnAdd.Visibility = Visibility.Visible;
                 btnDelete.Visibility = Visibility.Visible;
+                btnEdit.Visibility = Visibility.Visible;
             }
         }
 
@@ -135,6 +137,9 @@ namespace Technical_Software_Service
 
                         // Обновляем содержимое ListView
                         lstDailyTasks.ItemsSource = DataBase.Base.DailyTasks.ToList();
+
+                        // Уведомляем пользователя об успешном удалении записи
+                        MessageBox.Show($"Задание '{selectedItem.Title}' успешно удалено!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     catch (Exception ex)
                     {
@@ -162,6 +167,46 @@ namespace Technical_Software_Service
                 {
                     var tasks = DataBase.Base.DailyTasks.Where(t => t.UserDailyTasks.Any(udt => udt.UserId == user.Id && udt.IsCompleted));
                     lstDailyTasks.ItemsSource = tasks.ToList();
+                }
+            }
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            // Получаем выбранный элемент
+            var selectedItem = lstDailyTasks.SelectedItem as DailyTasks;
+            if (selectedItem != null)
+            {
+                // Создаем окно редактирования и передаем в него объект Achievements для редактирования
+                Window_AddDailyTasks editWindow = new Window_AddDailyTasks(user, selectedItem);
+
+                // Заполняем поля в окне редактирования текущими значениями достижения
+                editWindow.tbTitle.Text = selectedItem.Title;
+                editWindow.tbDescription.Text = selectedItem.Description;
+                if (selectedItem.Image != null)
+                {
+                    string imagePath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\Image\\" + selectedItem.Image;
+                    if (File.Exists(imagePath))
+                    {
+                        BitmapImage img = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
+                        editWindow.imgDailyTasks.ImageSource = img;
+                    }
+                }
+
+                // Открываем окно редактирования
+                if (editWindow.ShowDialog() == true)
+                {
+                    // Обновляем объект Achievements в базе данных
+                    selectedItem.Title = editWindow.tbTitle.Text;
+                    selectedItem.Description = editWindow.tbDescription.Text;
+                    if (editWindow.newFilePath != null)
+                    {
+                        selectedItem.Image = editWindow.newFilePath.Substring(editWindow.newFilePath.LastIndexOf('\\')).Replace("\\", "");
+                    }
+                    DataBase.Base.SaveChanges();
+
+                    // Выводим сообщение об успешном изменении
+                    MessageBox.Show("Достижение успешно изменено!");
                 }
             }
         }

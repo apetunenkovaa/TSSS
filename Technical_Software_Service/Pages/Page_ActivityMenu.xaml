@@ -190,16 +190,21 @@
                             <TextBlock Name="tbUserPost" Text="Должность: " Margin="5 5 0 0" Padding="2px" FontSize="18px"/>
                             <TextBlock Name="tbUserScore" Text="Очки: " Margin="5 5 0 0" Padding="2px" FontSize="18px"/>
                         </StackPanel>
+                        
                         <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center">
-                            <TextBlock Text="Значки:" Padding="2px" FontSize="18px" TextAlignment="Center"/>
+                            <TextBlock Text="Значк" Padding="2px" FontSize="18px" TextAlignment="Center"/>
                             <Border Style="{StaticResource ResourceKey=PersonalAccount}">
                                 <Border.Effect>
                                     <DropShadowEffect BlurRadius="25" Color="LightGray" ShadowDepth="0"/>
                                 </Border.Effect>
                                 <StackPanel>
-
+                                    
                                 </StackPanel>
                             </Border>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="←" Click="PrevButton_Click" Style="{StaticResource Button}" Width="50" Height="25" Margin="10"/>
+                                <Button Content="→" Click="NextButton_Click" Style="{StaticResource Button}" Width="50" Height="25" Margin="10"/>
+                            </StackPanel>
                         </StackPanel>
                     </Grid>
 

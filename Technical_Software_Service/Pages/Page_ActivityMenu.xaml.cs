@@ -518,5 +518,15 @@ namespace Technical_Software_Service
                 }
             });
         }
+
+        private void PrevButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NextButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

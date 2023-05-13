@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Technical_Software_Service"
         mc:Ignorable="d"
-        Title="Добавление задания" Height="600" Width="800">
+        Title="Добавление/Редактирование Задания" Height="600" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="6*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <TextBlock Name="tbHeader" Text="Добавление задания" Style="{StaticResource Header}"/>
+
+        <TextBlock Name="tbHeader" Text="Добавление/Редактирование Задания" Style="{StaticResource Header}"/>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -24,7 +24,7 @@
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
                 <Rectangle RadiusX="100" RadiusY="100" Height="200" Width="200">
                     <Rectangle.Fill>
-                        <ImageBrush x:Name="imgAchievment" Stretch="UniformToFill" ImageSource="/Resources/Achievement.png"/>
+                        <ImageBrush x:Name="imgDailyTasks" Stretch="UniformToFill" ImageSource="/Resources/Achievement.png"/>
                     </Rectangle.Fill>
                 </Rectangle>
                 <Button Name="btnAddPhoto" Content="Добавить фото" Style="{StaticResource Button}" Click="btnAddPhoto_Click"/>

@@ -23,14 +23,32 @@ namespace Technical_Software_Service
     public partial class Window_AddAchievment : Window
     {
         Users user;
-        Achievements achievm;
+        private Achievements achievement;
         bool flag;
-        string newFilePath = null; // Путь к картинке
-        public Window_AddAchievment(Users user)
+        public string newFilePath = null; // Путь к картинке
+        public Window_AddAchievment(Users user, Achievements achievement = null)
         {
             InitializeComponent();
             this.user = user;
+            this.achievement = achievement;
+
+            // Заполняем поля в окне редактирования текущими значениями достижения (если оно не null)
+            if (achievement != null)
+            {
+                tbTitle.Text = achievement.Title;
+                tbDescription.Text = achievement.Description;
+                if (achievement.Image != null)
+                {
+                    string imagePath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\Image\\" + achievement.Image;
+                    if (File.Exists(imagePath))
+                    {
+                        BitmapImage img = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
+                        imgAchievment.ImageSource = img;
+                    }
+                }
+            }
         }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -41,29 +59,42 @@ namespace Technical_Software_Service
                 }
                 else
                 {
-
-                    achievm = new Achievements();
-                    achievm.Title = tbTitle.Text;
-                    if (tbDescription.Text == "")
+                    if (achievement != null) // если редактирование существующего достижения
                     {
-                        achievm.Description = null;
+                        achievement.Title = tbTitle.Text;
+                        achievement.Description = tbDescription.Text;
+                        if (newFilePath != null)
+                        {
+                            achievement.Image = newFilePath.Substring(newFilePath.LastIndexOf('\\')).Replace("\\", "");
+                        }
+                        DataBase.Base.SaveChanges();
+                        MessageBox.Show("Успешное изменение!");
                     }
-                    else
+                    else // если добавление нового достижения
                     {
-                        achievm.Description = tbDescription.Text;
+                        Achievements newAchievement = new Achievements();
+                        newAchievement.Title = tbTitle.Text;
+                        if (tbDescription.Text == "")
+                        {
+                            newAchievement.Description = null;
+                        }
+                        else
+                        {
+                            newAchievement.Description = tbDescription.Text;
+                        }
+                        if (newFilePath == null)
+                        {
+                            newAchievement.Image = null;
+                        }
+                        else
+                        {
+                            newAchievement.Image = newFilePath.Substring(newFilePath.LastIndexOf('\\')).Replace("\\", "");
+                        }
+                        HelpdeskEntities.GetContext().Achievements.Add(newAchievement);
+                        HelpdeskEntities.GetContext().SaveChanges();
+                        MessageBox.Show("Успешное добавление!");
+                        this.Close();
                     }
-                    if (newFilePath == null)
-                    {
-                        achievm.Image = null;
-                    }
-                    else
-                    {
-                        achievm.Image = newFilePath.Substring(newFilePath.LastIndexOf('\\')).Replace("\\", "");
-                    }
-                    HelpdeskEntities.GetContext().Achievements.Add(achievm);
-                    HelpdeskEntities.GetContext().SaveChanges();
-                    MessageBox.Show("Успешное добавление!");
-                    this.Close();
                 }
             }
             catch
@@ -77,6 +108,14 @@ namespace Technical_Software_Service
             OpenFileDialog OFD = new OpenFileDialog();
             OFD.ShowDialog();
             string path = OFD.FileName;
+
+            if (string.IsNullOrEmpty(path))
+            {
+                MessageBox.Show("Вы не выбрали фото");
+                return;
+            }
+
+
             if (path != null)
             {
                 newFilePath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\Image\\" + System.IO.Path.GetFileName(path); // Путь куда копировать файл

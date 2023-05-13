@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,10 +23,12 @@ namespace Technical_Software_Service
     public partial class Page_Achievment : Page
     {
         Users user;
-        public Page_Achievment(Users user)
+
+        public Page_Achievment(Users user )
         {
             InitializeComponent();
             this.user = user;
+
             tbCompleteTicketProgress.Text = $"Закрыто заявок: {user.CompletedCountTicketsClosed}\nСоздано заявок: {user.CreateCountTickets}";
 
             lstAchievment.ItemsSource = DataBase.Base.Achievements.ToList();
@@ -41,6 +44,7 @@ namespace Technical_Software_Service
             {
                 btnAdd.Visibility = Visibility.Visible;
                 btnDelete.Visibility = Visibility.Visible;
+                btnEdit.Visibility = Visibility.Visible;
             }
         }
 
@@ -113,6 +117,46 @@ namespace Technical_Software_Service
             AchievementsManager.CheckClosedTicketsAchievements(user);
             AchievementsManager.CheckCreatedTicketsAchievements(user);
             AchievementsManager.CheckLevelAchievements(user);
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            // Получаем выбранный элемент
+            var selectedItem = lstAchievment.SelectedItem as Achievements;
+            if (selectedItem != null)
+            {
+                // Создаем окно редактирования и передаем в него объект Achievements для редактирования
+                Window_AddAchievment editWindow = new Window_AddAchievment(user, selectedItem);
+
+                // Заполняем поля в окне редактирования текущими значениями достижения
+                editWindow.tbTitle.Text = selectedItem.Title;
+                editWindow.tbDescription.Text = selectedItem.Description;
+                if (selectedItem.Image != null)
+                {
+                    string imagePath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\Image\\" + selectedItem.Image;
+                    if (File.Exists(imagePath))
+                    {
+                        BitmapImage img = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
+                        editWindow.imgAchievment.ImageSource = img;
+                    }
+                }
+
+                // Открываем окно редактирования
+                if (editWindow.ShowDialog() == true)
+                {
+                    // Обновляем объект Achievements в базе данных
+                    selectedItem.Title = editWindow.tbTitle.Text;
+                    selectedItem.Description = editWindow.tbDescription.Text;
+                    if (editWindow.newFilePath != null)
+                    {
+                        selectedItem.Image = editWindow.newFilePath.Substring(editWindow.newFilePath.LastIndexOf('\\')).Replace("\\", "");
+                    }
+                    DataBase.Base.SaveChanges();
+
+                    // Выводим сообщение об успешном изменении
+                    MessageBox.Show("Достижение успешно изменено!");
+                }
+            }
         }
     }
 }

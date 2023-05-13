@@ -23,11 +23,12 @@ namespace Technical_Software_Service
     {
         Users user;
         DailyTasks daily;
-        string newFilePath = null; // Путь к картинке
-        public Window_AddDailyTasks(Users user)
+        public string newFilePath = null; // Путь к картинке
+        public Window_AddDailyTasks(Users user, DailyTasks dailyTasks = null)
         {
             InitializeComponent();
             this.user = user;
+            this.daily = dailyTasks;
 
             List<TaskType> types = DataBase.Base.TaskType.ToList();
             foreach (var type in types)
@@ -35,6 +36,26 @@ namespace Technical_Software_Service
                 cbTypeTask.Items.Add(type.TaskType1);
             }
             cbTypeTask.SelectedIndex = 0;
+
+            // Заполняем поля в окне редактирования текущими значениями достижения (если оно не null)
+            if (dailyTasks != null)
+            {
+                tbTitle.Text = dailyTasks.Title;
+                tbDescription.Text = dailyTasks.Description;
+                tbXP.Text = Convert.ToString(dailyTasks.XP);
+                tbScore.Text = Convert.ToString(dailyTasks.Score);
+               tbTotalCount.Text = Convert.ToString(dailyTasks.TotalCount);
+
+                if (dailyTasks.Image != null)
+                {
+                    string imagePath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\Image\\" + dailyTasks.Image;
+                    if (File.Exists(imagePath))
+                    {
+                        BitmapImage img = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
+                        imgDailyTasks.ImageSource = img;
+                    }
+                }
+            }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -51,40 +72,57 @@ namespace Technical_Software_Service
                 }
                 else
                 {
-                    daily = new DailyTasks();
-                    daily.Title = tbTitle.Text;
-                    if (tbDescription.Text == "")
+                    if (daily != null) // если редактирование существующего достижения
                     {
-                        daily.Description = null;
-                    }
-                    else
-                    {
+                        daily.Title = tbTitle.Text;
                         daily.Description = tbDescription.Text;
+                        daily.XP = Convert.ToInt32(tbXP.Text);
+                        daily.Score = Convert.ToInt32(tbScore.Text);
+                        daily.TotalCount = Convert.ToInt32(tbTotalCount.Text);
+                        string taskTypeName = (string)cbTypeTask.SelectedItem;
+                        TaskType taskType = DataBase.Base.TaskType.FirstOrDefault(tt => tt.TaskType1 == taskTypeName);
+                        daily.TaskTypeId = taskType.Id;
+
+                        if (newFilePath != null)
+                        {
+                            daily.Image = newFilePath.Substring(newFilePath.LastIndexOf('\\')).Replace("\\", "");
+                        }
+                        DataBase.Base.SaveChanges();
+                        MessageBox.Show("Успешное изменение!");
                     }
-                    if (newFilePath == null)
+                    else // если добавление нового достижения
                     {
-                        daily.Image = null;
+                        DailyTasks newDailyTasks = new DailyTasks();
+                        newDailyTasks.Title = tbTitle.Text;
+                        if (tbDescription.Text == "")
+                        {
+                            newDailyTasks.Description = null;
+                        }
+                        else
+                        {
+                            newDailyTasks.Description = tbDescription.Text;
+                        }
+                        if (newFilePath == null)
+                        {
+                            newDailyTasks.Image = null;
+                        }
+                        else
+                        {
+                            newDailyTasks.Image = newFilePath.Substring(newFilePath.LastIndexOf('\\')).Replace("\\", "");
+                        }
+                        HelpdeskEntities.GetContext().DailyTasks.Add(newDailyTasks);
+                        HelpdeskEntities.GetContext().SaveChanges();
+                        MessageBox.Show("Успешное добавление!");
+                        this.Close();
                     }
-                    else
-                    {
-                        daily.Image = newFilePath.Substring(newFilePath.LastIndexOf('\\')).Replace("\\", "");
-                    }
-                    daily.Score = Convert.ToInt32(tbScore.Text);
-                    daily.XP = Convert.ToInt32(tbXP.Text);
-                    daily.TotalCount = Convert.ToInt32(tbTotalCount.Text);
-                    daily.TaskTypeId = cbTypeTask.SelectedIndex + 1;
-                    HelpdeskEntities.GetContext().DailyTasks.Add(daily);
-                    HelpdeskEntities.GetContext().SaveChanges();
-                    MessageBox.Show("Успешное добавление!");
-                    this.Close();
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Что-то пошло не так..", "Системное сообшение");
+                MessageBox.Show("Что-то пошло не так.." + ex.Message);
             }
         }
-
+        
         private void btnAddPhoto_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog OFD = new OpenFileDialog();
@@ -102,7 +140,7 @@ namespace Technical_Software_Service
                     MessageBox.Show("Такая картинка уже есть! Добавлено старое фото");
                 }
                 BitmapImage img = new BitmapImage(new Uri(newFilePath, UriKind.RelativeOrAbsolute));
-                imgAchievment.ImageSource = img;
+                imgDailyTasks.ImageSource = img;
             }
         }
     }
