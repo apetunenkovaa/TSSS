@@ -83,6 +83,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="5*"/>
+                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
@@ -114,7 +115,6 @@
                                                 <TextBlock Text="{Binding Description}" FontSize="16px" Padding="2px" FontFamily="Manrope" TextWrapping="Wrap"/>
                                                 <TextBlock Text="{Binding States}"  FontSize="16px" Padding="2px" FontFamily="Manrope"/>
                                                 <TextBlock Text="{Binding Score}"  FontSize="16px" Padding="2px" FontFamily="Manrope"/>
-
                                             </StackPanel>
                                         </StackPanel>
                                     </Grid>
@@ -122,6 +122,12 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left">
+                        <Button Content="Сохранить историю" Click="SaveHistory_Click" Width="155" Style="{StaticResource Button}"/>
+                        <Button Content="Очистить историю" Click="ClearHistory_Click" Width="155" Style="{StaticResource Button}"/>
+                    </StackPanel>
+
                 </Grid>
             </TabItem>
 
@@ -249,8 +255,8 @@
                         </DataGrid>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Orientation="Horizontal">
-                        <Button Name="btnAddUser" Content="Добавить пользователя" Click="btnAddUser_Click" Width="200" Style="{StaticResource Btn}" HorizontalAlignment="Right"/>
-                        <Button Name="btnDeleteUser" Visibility="Collapsed" Content="Удалить" Click="btnDeleteUser_Click" Width="200" Style="{StaticResource Btn}"/>
+                        <Button Name="btnAddUser" Content="Добавить пользователя" Click="btnAddUser_Click" Width="200" Style="{StaticResource Button}" HorizontalAlignment="Right"/>
+                        <Button Name="btnDeleteUser" Visibility="Collapsed" Content="Удалить пользователя" Click="btnDeleteUser_Click" Width="200" Style="{StaticResource Button}"/>
                     </StackPanel>                    
                 </Grid>
             </TabItem>

@@ -33,7 +33,7 @@ namespace Technical_Software_Service
     public partial class Page_Anything : Page
     {
         private BackgroundWorker backgroundWorker;
-        private DateTime seasonEndDate = DateTime.Now.AddMinutes(1); // Закончить сезон через 8 часов
+        private DateTime seasonEndDate = DateTime.Now.AddHours(8); // Закончить сезон через 8 часов
         private System.Timers.Timer countdownTimer = new System.Timers.Timer(1000);
         private ObservableCollection<Users> users = new ObservableCollection<Users>();
 
@@ -99,10 +99,8 @@ namespace Technical_Software_Service
             {
                 tcUsers.Visibility = Visibility.Visible;
                 titNotifications.Visibility = Visibility.Visible;
-            }
-            if (user.Roles.Kind == "Администратор")
-            {
                 btnDeleteUser.Visibility = Visibility.Visible;
+
             }
 
 
@@ -129,7 +127,7 @@ namespace Technical_Software_Service
             if (remainingTime.Ticks < 0) // Сезон закончился, начинаем новый
             {
                 SaveResults(); // Сохраняем результаты
-                seasonEndDate = DateTime.Now.AddMinutes(1);
+                seasonEndDate = DateTime.Now.AddHours(8);
                 foreach (Users user in DataBase.Base.Users)
                 {
                     user.Score = 0;
@@ -202,6 +200,7 @@ namespace Technical_Software_Service
                         writer.WriteLine($"Отчество: {user.MiddleName}");
                         writer.WriteLine($"Очки: {user.Score}");
                         writer.WriteLine();
+                        writer.WriteLine("-------------------------------");
                     }
                 }
             }
@@ -589,6 +588,83 @@ namespace Technical_Software_Service
                 }
             }
         }
+
+        private void SaveHistory_Click(object sender, RoutedEventArgs e)
+        {
+            string folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Отчёты");
+            Directory.CreateDirectory(folderPath);
+
+            string resultsFilePath = Path.Combine(folderPath, "История заявок.txt");
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(resultsFilePath, true))
+                {
+                    writer.WriteLine($"Сохраненная История Заявок : ({DateTime.Now}):");
+                    writer.WriteLine("-------------------------------");
+                    foreach (HistoryEntries historyEntry in DataBase.Base.HistoryEntries.ToList())
+                    {
+                        // Сохраняем данные об истории заявки
+                        writer.WriteLine($"Идентификатор: {historyEntry.Indetificatory}");
+                        writer.WriteLine($"Пользователь: {historyEntry.UsersName}");
+                        writer.WriteLine($"Заголовок заявки: {historyEntry.TicketTitle}");
+                        writer.WriteLine($"Описание: {historyEntry.Description}");
+                        writer.WriteLine($"Статус: {historyEntry.States}");
+                        writer.WriteLine($"Очки: {historyEntry.Score}");
+                        writer.WriteLine("-------------------------------");
+                    }
+                    writer.WriteLine("");
+                }
+                MessageBox.Show("Успешное сохранение !");
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception here
+            }
+        }
+
+        // Определяем коллекцию для хранения элементов ListHistory
+        private ObservableCollection<HistoryEntries> historyEntries = new ObservableCollection<HistoryEntries>();
+
+        // Добавление нового элемента в ListHistory и сохраненную коллекцию
+        private void AddHistoryEntry(HistoryEntries entry)
+        {
+            // Проверяем, есть ли элемент уже в сохраненной коллекции
+            if (!historyEntries.Any(x => x.Id == entry.Id))
+            {
+                // Добавляем элемент в ListHistory и сохраненную коллекцию
+                ListHistory.Items.Add(entry);
+                historyEntries.Add(entry);
+            }
+        }
+
+        // Очищаем ListHistory и сохраненную коллекцию
+        private void ClearHistory_Click(object sender, RoutedEventArgs e)
+        {
+            ListHistory.Items.Clear();
+            historyEntries.Clear();
+        }
+
+        // Обновляем ListHistory и отображаем только новые элементы
+        private void RefreshHistory()
+        {
+            // Получаем новые элементы из базы данных
+            List<HistoryEntries> newEntries = DataBase.Base.HistoryEntries
+                .Where(x => !historyEntries.Any(y => y.Id == x.Id))
+                .ToList();
+
+            // Добавляем новые элементы в ListHistory и сохраненную коллекцию
+            foreach (HistoryEntries entry in newEntries)
+            {
+                AddHistoryEntry(entry);
+            }
+        }
+
+        // Вызываем RefreshHistory каждый раз, когда добавляется новый элемент
+        private void OnNewHistoryEntryAdded(object sender, EventArgs e)
+        {
+            RefreshHistory();
+        }
+
 
     }
 }
