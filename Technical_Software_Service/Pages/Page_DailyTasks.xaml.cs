@@ -120,7 +120,7 @@ namespace Technical_Software_Service
             if (selectedItem != null)
             {
                 // Запрашиваем подтверждение удаления
-                var result = MessageBox.Show($"Вы уверены, что хотите удалить достижение '{selectedItem.Title}'?", "Удаление достижения", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var result = MessageBox.Show($"Вы уверены, что хотите удалить задание '{selectedItem.Title}'?", "Удаление задания", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     // Удаляем связанные записи из таблицы UserAchievements
@@ -141,7 +141,7 @@ namespace Technical_Software_Service
                     catch (Exception ex)
                     {
                         // Обрабатываем возможные ошибки при сохранении изменений
-                        MessageBox.Show($"Ошибка при удалении достижения: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show($"Ошибка при удалении задания: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
