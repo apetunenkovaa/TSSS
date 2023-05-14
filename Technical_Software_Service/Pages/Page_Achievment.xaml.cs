@@ -42,7 +42,7 @@ namespace Technical_Software_Service
             //Отображение кнопок
             if (user.Roles.Kind == "Администратор")
             {
-                btnAdd.Visibility = Visibility.Visible;
+                //btnAdd.Visibility = Visibility.Visible;
                 btnDelete.Visibility = Visibility.Visible;
                 btnEdit.Visibility = Visibility.Visible;
             }

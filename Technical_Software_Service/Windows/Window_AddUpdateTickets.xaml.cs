@@ -246,22 +246,25 @@ namespace Technical_Software_Service
                                 {
                                     case 1:
                                         score = 10;
-                                        break;
+                                MessageBox.Show($"Вам начислено {score} очков за добавление заявки");
+                                break;
                                     case 2:
                                         score = 15;
-                                        break;
+                                MessageBox.Show($"Вам начислено {score} очков за добавление заявки");
+                                break;
                                     case 3:
                                         score = 5;
-                                        break;
+                                MessageBox.Show($"Вам начислено {score} очков за добавление заявки");
+                                break;
                                     case 4:
                                         score = 1;
-                                        break;
+                                MessageBox.Show($"Вам начислено {score} очко за добавление заявки");
+                                break;
                                     default:
                                         break;
                                 }
                             }
                             user.Score += score;
-                            MessageBox.Show($"Вам начислено {score} очков за добавление заявки");
 
                             //Увеличение счетчик CompletedCount для отслеживания числа закрытых заявок.
                             user.CreateCountTickets++;
@@ -370,22 +373,25 @@ namespace Technical_Software_Service
                                 {
                                     case 1:
                                         score = 10;
+                                        MessageBox.Show($"Вам начислено {score} очков за закрытие заявки");
                                         break;
                                     case 2:
                                         score = 15;
+                                        MessageBox.Show($"Вам начислено {score} очков за закрытие заявки");
                                         break;
                                     case 3:
                                         score = 5;
+                                        MessageBox.Show($"Вам начислено {score} очков за закрытие заявки");
                                         break;
                                     case 4:
                                         score = 1;
+                                        MessageBox.Show($"Вам начислено {score} очко за закрытие заявки");
                                         break;
                                     default:
                                         break;
                                 }
                             }
                             user.Score += score;
-                            MessageBox.Show($"Вам начислено {score} очков за закрытие заявки");
 
                             //Увеличение счетчик CompletedCount для отслеживания числа закрытых заявок.
                             user.CompletedCountTicketsClosed++;

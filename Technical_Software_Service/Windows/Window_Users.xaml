@@ -77,11 +77,11 @@
                     </WrapPanel>
 
                     <WrapPanel Margin="10">
-                        <TextBlock Text="Счет" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
+                        <TextBlock Text="Очки" FontSize="16px" FontFamily="Manrope" Margin="0 5 5 0"/>
                         <TextBox Name="tbScore" Padding="2px" FontSize="16px" Height="30px" Width="80" FontFamily="Manrope"/>
                         <TextBlock Text="Уровень" FontSize="16px" FontFamily="Manrope" Margin="10 5 5 0"/>
                         <TextBox Name="tbLevel" Padding="2px" FontSize="16px" Height="30px" Width="130" FontFamily="Manrope"/>
-                        <TextBlock Text="XP" FontSize="16px" FontFamily="Manrope" Margin="10 5 5 0"/>
+                        <TextBlock Text="Опыт" FontSize="16px" FontFamily="Manrope" Margin="10 5 5 0"/>
                         <TextBox Name="tbXP" Padding="2px" FontSize="16px" Height="30px" Width="50" FontFamily="Manrope"/>
                     </WrapPanel>
                 <TextBlock Margin="0 10 0 0" Text="* - поля обязательные к заполнению" FontSize="16px" FontFamily="Manrope" HorizontalAlignment="Center"/>

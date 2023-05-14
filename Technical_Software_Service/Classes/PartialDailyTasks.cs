@@ -12,7 +12,7 @@ namespace Technical_Software_Service
         {
             get
             {
-                return "XP: " + XP;
+                return "Опыт: " + XP;
             }
         }
         public string score
