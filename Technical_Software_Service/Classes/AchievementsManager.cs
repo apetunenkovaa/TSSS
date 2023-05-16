@@ -92,27 +92,27 @@ namespace Technical_Software_Service.Classes
 
             if (level >= 10)
             {
-                UnlockAchievement(user, "Ученик");
+                UnlockAchievement(user, "Достижение 10 уровней");
             }
 
             if (level >= 25)
             {
-                UnlockAchievement(user, "Опытный");
+                UnlockAchievement(user, "Достижение 25 уровней");
             }
 
             if (level >= 50)
             {
-                UnlockAchievement(user, "Продвинутый");
+                UnlockAchievement(user, "Достижение 50 уровней");
             }
 
             if (level >= 75)
             {
-                UnlockAchievement(user, "Эксперт");
+                UnlockAchievement(user, "Достижение 75 уровней");
             }
 
             if (level >= 100)
             {
-                UnlockAchievement(user, "Мастер");
+                UnlockAchievement(user, "Достижение 100 уровней ");
             }
         }
 
