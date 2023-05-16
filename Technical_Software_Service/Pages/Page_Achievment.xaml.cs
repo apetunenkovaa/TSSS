@@ -101,6 +101,9 @@ namespace Technical_Software_Service
 
                         // Обновляем содержимое ListView
                         lstAchievment.ItemsSource = DataBase.Base.Achievements.ToList();
+
+                        // Уведомление об успешном удалении
+                        MessageBox.Show($"Достижение '{selectedItem.Title}' успешно удалено.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     catch (Exception ex)
                     {

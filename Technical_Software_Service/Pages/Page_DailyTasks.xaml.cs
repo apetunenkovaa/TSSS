@@ -137,6 +137,9 @@ namespace Technical_Software_Service
 
                         // Обновляем содержимое ListView
                         lstDailyTasks.ItemsSource = DataBase.Base.DailyTasks.ToList();
+
+                        // Уведомление об успешном удалении
+                        MessageBox.Show($"Задание '{selectedItem.Title}' успешно удалено.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     catch (Exception ex)
                     {
