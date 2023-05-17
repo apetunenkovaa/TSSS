@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Technical_Software_Service
 {
@@ -20,12 +21,48 @@ namespace Technical_Software_Service
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private int sec = 28800;
+        private DispatcherTimer dispatcherTimer;
         public MainWindow()
         {
             InitializeComponent();
             DataBase.Base = new HelpdeskEntities();
             ClassFrame.MainF = Mframe;
             ClassFrame.MainF.Navigate(new Page_Authorization());
+            dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Tick += timerTick;
+            dispatcherTimer.Start();
+        }
+
+        void timerTick(object sender, EventArgs e)
+        {
+            if (sec != 0)
+            {
+                sec--;
+                int minutes = sec / 60;
+                int newSec = sec - minutes * 60;
+                int hour = minutes / 60;
+                int newMinnutes = minutes - hour * 60;
+
+                Timer.Text = $"До конца рабочего дня осталось:{hour}:{newMinnutes}:{newSec}";
+            }
+            else
+            {
+                dispatcherTimer.Stop();
+                MessageBox.Show("Вы отработали 8 часов!", "Рабочий день окончен", MessageBoxButton.OK);
+                this.Close();
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            int minutes = sec / 60;
+            int newSec = sec - minutes * 60;
+            int hour = minutes / 60;
+            int newMinnutes = minutes - hour * 60;
+            MessageBox.Show($"Вы ещё не закончили свою работу на сегодня, осталось работать {hour}:{newMinnutes}:{newSec}, Вы уверены, что хотите выйти?", "Предупреждение", MessageBoxButton.YesNo);
         }
     }
 }
