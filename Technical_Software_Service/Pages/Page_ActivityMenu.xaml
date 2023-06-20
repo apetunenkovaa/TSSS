@@ -19,6 +19,10 @@
         <TabControl Grid.Row="1">
             <TabItem Header="Заявки" FontSize="18px" VerticalAlignment="Center" FontFamily="Manrope">
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="106*"/>
+                        <ColumnDefinition Width="291*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.Background>
                         <ImageBrush ImageSource="\Resources\Gradient.jpg"/>
                     </Grid.Background>
@@ -27,7 +31,7 @@
                         <RowDefinition Height="5*"/>
                         <RowDefinition Height="35"/>
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
+                    <Grid Grid.Row="0" Grid.ColumnSpan="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.5*"/>
                             <ColumnDefinition Width="1.2*"/>
@@ -55,14 +59,14 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Margin="10" Grid.Column="0">
-                                                <TextBlock Text="{Binding Title}" FontSize="16px" FontFamily="Manrope" FontWeight="Bold"/>
-                                                <TextBlock Text="{Binding Requesters}" FontSize="16px" FontFamily="Manrope"/>
-                                                <TextBlock Text="{Binding Date}" FontSize="16px" FontFamily="Manrope"/>
-                                                <TextBlock Text="{Binding Category}" FontSize="16px" FontFamily="Manrope"/>
-                                                <TextBlock Text="{Binding States}" FontSize="16px" FontFamily="Manrope"/>
-                                                <TextBlock Text="{Binding Importance}" FontSize="16px" FontFamily="Manrope"/>
-                                                <TextBlock Text="{Binding Score}" FontSize="16px" FontFamily="Manrope"/>
-                                            </StackPanel>
+                                            <TextBlock Text="{Binding Title}" FontSize="16px" FontFamily="Manrope" FontWeight="Bold"/>
+                                            <TextBlock Text="{Binding Requesters}" FontSize="16px" FontFamily="Manrope"/>
+                                            <TextBlock Text="{Binding Date}" FontSize="16px" FontFamily="Manrope"/>
+                                            <TextBlock Text="{Binding Category}" FontSize="16px" FontFamily="Manrope"/>
+                                            <TextBlock Text="{Binding States}" FontSize="16px" FontFamily="Manrope"/>
+                                            <TextBlock Text="{Binding Importance}" FontSize="16px" FontFamily="Manrope"/>
+                                            <TextBlock Text="{Binding Score}" FontSize="16px" FontFamily="Manrope"/>
+                                        </StackPanel>
                                         <WrapPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top">
                                             <Button Name="btnUpdate" Content="Редактировать" Style="{StaticResource Button}" Uid="{Binding Id}" Click="btnUpdate_Click"/>
                                         </WrapPanel>
@@ -71,7 +75,7 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Name="tbCount" FontSize="18px" FontFamily="Manrope"/>
+                    <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Name="tbCount" FontSize="18px" FontFamily="Manrope" Grid.Column="1" Margin="184.607,7,397,6"/>
                 </Grid>
             </TabItem>
 
@@ -130,7 +134,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Рейтинг пользователей" FontSize="18px" VerticalAlignment="Center" FontFamily="Manrope">
+            <TabItem Header="Рейтинг пользователей" FontSize="18px" VerticalAlignment="Center" FontFamily="Manrope" Visibility="Collapsed">
                 <Grid>
                     <Grid.Background>
                         <ImageBrush ImageSource="/Resources/Gradient.jpg"/>
@@ -166,7 +170,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Личный кабинет" FontSize="18px" VerticalAlignment="Center" FontFamily="Manrope">
+            <TabItem Header="Личный кабинет" FontSize="18px" VerticalAlignment="Center" FontFamily="Manrope" Visibility="Collapsed">
                 <Grid>
                     <Grid.Background>
                         <ImageBrush ImageSource="/Resources/Gradient.jpg"/>
@@ -256,10 +260,10 @@
                     <StackPanel Grid.Row="2" Orientation="Horizontal">
                         <Button Name="btnAddUser" Content="Добавить пользователя" Click="btnAddUser_Click" Width="200" Style="{StaticResource Button}" HorizontalAlignment="Right"/>
                         <Button Name="btnDeleteUser" Visibility="Collapsed" Content="Удалить пользователя" Click="btnDeleteUser_Click" Width="200" Style="{StaticResource Button}"/>
-                    </StackPanel>                    
+                    </StackPanel>
                 </Grid>
             </TabItem>
-            <TabItem Name="titNotifications" Header="Уведомления" FontSize="18px" VerticalAlignment="Center" FontFamily="Manrope" Visibility="Collapsed">
+            <TabItem Name="titNotifications" Header="Уведомления" FontSize="18px" VerticalAlignment="Center" FontFamily="Manrope" Visibility="Collapsed" >
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -268,7 +272,7 @@
 
                     <Button x:Name="btnUpdate" Content="Обновить список" Style="{StaticResource Button}" HorizontalAlignment="Left" Click="btnUpdate_Click_1" />
                     <Button x:Name="btnAdd" Content="Добавить заявку" Style="{StaticResource Button}" HorizontalAlignment="Right" Click="btnAdd_Click"/>
-                    
+
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width ="*"/>

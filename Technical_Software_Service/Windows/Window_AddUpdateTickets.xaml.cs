@@ -246,19 +246,19 @@ namespace Technical_Software_Service
                                 {
                                     case 1:
                                         score = 10;
-                                MessageBox.Show($"Вам начислено {score} очков за добавление заявки");
+                                //MessageBox.Show($"Вам начислено {score} очков за добавление заявки");
                                 break;
                                     case 2:
                                         score = 15;
-                                MessageBox.Show($"Вам начислено {score} очков за добавление заявки");
+                                //MessageBox.Show($"Вам начислено {score} очков за добавление заявки");
                                 break;
                                     case 3:
                                         score = 5;
-                                MessageBox.Show($"Вам начислено {score} очков за добавление заявки");
+                                //MessageBox.Show($"Вам начислено {score} очков за добавление заявки");
                                 break;
                                     case 4:
                                         score = 1;
-                                MessageBox.Show($"Вам начислено {score} очко за добавление заявки");
+                                //MessageBox.Show($"Вам начислено {score} очко за добавление заявки");
                                 break;
                                     default:
                                         break;

@@ -24,6 +24,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.IO;
 using System.Globalization;
+using System.Windows.Threading;
 
 namespace Technical_Software_Service
 {
@@ -31,12 +32,15 @@ namespace Technical_Software_Service
     /// Логика взаимодействия для Page_Anything.xaml
     /// </summary>
     public partial class Page_Anything : Page
+
     {
+
+        private DispatcherTimer dispatcherTimer;
         private BackgroundWorker backgroundWorker;
         private DateTime seasonEndDate = DateTime.Now.AddHours(8); // Закончить сезон через 8 часов
         private System.Timers.Timer countdownTimer = new System.Timers.Timer(1000);
         private ObservableCollection<Users> users = new ObservableCollection<Users>();
-
+       
         Users user;
 
         public Page_Anything(Users user)
@@ -45,6 +49,11 @@ namespace Technical_Software_Service
             this.user = user;
             UpdateList();
             Filter();
+
+            //dispatcherTimer = new DispatcherTimer();
+            //dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+            //dispatcherTimer.Tick += timerMethod;
+            //dispatcherTimer.Start();
 
             //Уровень и опыт пользователя
             LevelManager levelManager = new LevelManager(user);
@@ -383,6 +392,7 @@ namespace Technical_Software_Service
         }
         //ZdK9zqCN2hJ24mkkxxLF
         List<ClassMessage> messages = new List<ClassMessage>();
+        int ct;
         //Обновление листа
         private void UpdateList()
         {
@@ -397,6 +407,7 @@ namespace Technical_Software_Service
                 for (int i = 0; i < inbox.Count; i++)
                 {
                     MimeMessage messagees = inbox.GetMessage(i);
+                    int ct;
                     ClassMessage cm = new ClassMessage();
 
                     cm.message = messagees;
@@ -406,12 +417,13 @@ namespace Technical_Software_Service
                     messages.Add(cm);
 
                 }
+                client.Disconnect(true);
             }
             notificationsLV.ItemsSource = Enumerable.Reverse(messages);
             notificationsLV.SelectedValuePath = "id";
-
+            ct = messages.Count;
+            
         }
-
         private void notificationsLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int id = Convert.ToInt32(notificationsLV.SelectedValue);
@@ -421,6 +433,33 @@ namespace Technical_Software_Service
             tbSender.Text = mime.From.ToString();
             tbBody.Text = mime.TextBody.ToString();
         }
+
+        //void timerMethod(object sender, EventArgs e)
+        //{
+        //    messages.Clear();
+        //    using (ImapClient client = new ImapClient())
+        //    {
+        //        if (!client.IsConnected)
+        //        {
+        //            client.Connect("imap.mail.ru", 993, true);
+        //            client.Authenticate("helpdesk_chit@mail.ru", "ZdK9zqCN2hJ24mkkxxLF");
+        //        }
+        //        IMailFolder inbox = client.Inbox;
+        //        inbox.Open(FolderAccess.ReadOnly);
+
+
+
+        //        if (inbox.Count != ct)
+        //        {
+        //            titNotifications.Background = new SolidColorBrush(Color.FromRgb(245, 192, 163));
+        //        }
+
+        //        client.Disconnect(true);
+        //    }
+
+        //}
+
+
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) // Добавление заявки
         {

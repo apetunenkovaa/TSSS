@@ -62,7 +62,15 @@ namespace Technical_Software_Service
             int newSec = sec - minutes * 60;
             int hour = minutes / 60;
             int newMinnutes = minutes - hour * 60;
-            MessageBox.Show($"Вы ещё не закончили свою работу на сегодня, осталось работать {hour}:{newMinnutes}:{newSec}, Вы уверены, что хотите выйти?", "Предупреждение", MessageBoxButton.YesNo);
+            var res = MessageBox.Show($"Вы ещё не закончили свою работу на сегодня, осталось работать {hour}:{newMinnutes}:{newSec}, Вы уверены, что хотите выйти?", "Предупреждение", MessageBoxButton.YesNo);
+            if(res == MessageBoxResult.No)
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                MessageBox.Show("Вы не отработали установленное количество времени", "Рабочий день окончен досрочно", MessageBoxButton.OK);
+            }
         }
     }
 }
